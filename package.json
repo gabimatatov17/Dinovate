@@ -1,0 +1,23 @@
+{
+  "name": "dinovate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miawoolfson/Dinovate.git"
+  },
+  "author": "Din,Gabi,Mia,Noam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miawoolfson/Dinovate/issues"
+  },
+  "homepage": "https://github.com/miawoolfson/Dinovate#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
