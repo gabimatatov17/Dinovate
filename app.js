@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));   
