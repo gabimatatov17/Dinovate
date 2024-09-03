@@ -6,6 +6,7 @@ const app = express();
 
 // routes
 const home = require('./routes/home');
+const cart = require('./routes/cart');
 
 // express settings
 app.set('views', path.join(__dirname, 'views'));   
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 app.use("/", home);
+app.use("/cart", cart)
 
 // Start the server
 const port = 3000;
