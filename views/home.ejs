@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Generator</title>
+    <link rel="stylesheet" href="/styles/home.css">
+</head>
+<body>
+    <header>
+        <h1>Card Generator</h1>
+        <p>Create beautiful and personalized cards easily.</p>
+    </header>
+
+    <main>
+        <section id="generator">
+            <form id="card-form">
+                <label for="title">Card Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter card title" required>
+
+                <label for="message">Card Message:</label>
+                <textarea id="message" name="message" placeholder="Enter your message" rows="4" required></textarea>
+
+                <button type="submit">Generate Card</button>
+            </form>
+        </section>
+
+        <section id="card-preview">
+            <h2>Preview</h2>
+            <div id="card" class="card">
+                <h3 id="card-title">Your Title Here</h3>
+                <p id="card-message">Your message will appear here.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/home.js"></script>
+</body>
+</html>
