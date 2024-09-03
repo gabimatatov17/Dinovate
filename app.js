@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Start the server
-const port = 3000;
+const port = 80;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
