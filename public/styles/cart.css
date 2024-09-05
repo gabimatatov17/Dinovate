@@ -1,0 +1,91 @@
+/* Original CSS */
+body {
+    padding-top: 50px;
+}
+
+#shopping-cart {
+    margin-top: 50px;
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-item img {
+    margin-right: 20px;
+}
+
+hr {
+    margin: 0;
+    border: none;
+    border-top: 1px solid lightgrey;
+}
+
+.btn-link {
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.cart-summary {
+    margin-top: 20px;
+}
+
+/* New CSS Updates */
+
+/* Align the "Item" and "Price" headers to the left */
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px; /* Adjust the left padding for slight alignment */
+}
+
+.order-summary div {
+    text-align: left; /* Left align text */
+}
+
+/* Style for the add button and hover effect */
+.add-button {
+    font-size: 1.2rem;
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.add-button:hover::after {
+    content: 'Add Another';
+    position: absolute;
+    bottom: -25px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.plus-icon {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+/* Align the price and button with proper spacing */
+.cart-item-actions .cart-price {
+    margin-right: 15px;
+}
