@@ -23,3 +23,7 @@ function togglePasswordConfirm() {
         passwordToggle.textContent = '👁️';
     }
 }
+
+function changeColor(documentElement) {
+    documentElement.style.color = 'black';
+}

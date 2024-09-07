@@ -7,6 +7,8 @@ const app = express();
 // routes
 const home = require('./routes/home');
 const cart = require('./routes/cart');
+const login = require('./routes/login');
+const signup = require('./routes/signup');
 
 // express settings
 app.set('views', path.join(__dirname, 'views'));   
@@ -18,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
 app.use("/", home);
-app.use("/cart", cart)
+app.use("/cart", cart);
+app.use("/login", login);
+app.use("/signup", signup)
 
 // Start the server
 const port = 3000;

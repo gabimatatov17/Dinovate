@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="../public/styles/login.css">
+    <link rel="stylesheet" href="/styles/login.css">
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-box">
@@ -25,12 +27,19 @@
                         <span class="toggle-password" onclick="togglePassword()">👁️</span>
                     </div>
                 </div>
+                <div class="admin-option">
+                    <label for="admin">
+                        <input type="checkbox">
+                        <p>Admin login</p>
+                    </label>
+                </div>
                 <button type="submit" class="login-button">LOGIN</button>
             </form>
-            <p class="signup-text">Don't have an account? <a href="#">Sign Up</a></p>
+            <p class="signup-text">Don't have an account? <a href="/signup">Sign Up</a></p>
         </div>
     </div>
 
-    <script src="../public/js/login.js"></script>
+    <script src="/js/login.js"></script>
 </body>
+
 </html>
