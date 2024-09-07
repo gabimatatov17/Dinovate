@@ -62,12 +62,20 @@ h2 {
     color: #333;
 }
 
-.input-group input {
+.input-group input,
+.input-group select,
+.input-group input[type="date"]{
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.input-group select,
+.input-group input[type="date"]{
+    appearance: none; 
+    color: #888888;
 }
 
 .password-wrapper {
@@ -113,3 +121,13 @@ h2 {
 .signup-text a:hover {
     text-decoration: underline;
 }
+
+/* .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    appearance: none; 
+    color: #888888;
+} */
