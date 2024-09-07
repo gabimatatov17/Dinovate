@@ -113,3 +113,32 @@ h2 {
 .signup-text a:hover {
     text-decoration: underline;
 }
+
+.admin-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0 20px 0;
+    color: #333;
+}
+
+.admin-option label {
+    display: flex;
+    align-items: center;
+}
+
+#admin {
+    accent-color: #333;
+}
+
+.admin-option label p {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.admin-option label input {
+    cursor: pointer;
+    transform: scale(1.25); /* Increase the size of the checkbox */
+    margin-right: 8px;
+}
