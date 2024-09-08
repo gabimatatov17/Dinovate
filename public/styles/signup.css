@@ -122,12 +122,14 @@ h2 {
     text-decoration: underline;
 }
 
-/* .input-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    appearance: none; 
-    color: #888888;
-} */
+.error-banner {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    padding: 15px; /* Padding around the text */
+    margin-bottom: 20px; /* Space below the banner */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Centered text */
+    font-size: 16px; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow */
+}
