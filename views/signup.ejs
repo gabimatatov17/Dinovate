@@ -57,10 +57,13 @@
                 </div>
                 
                 <% if (error) { %>
-                    <div class="error-banner">
+                    <div class="server-error-banner">
                         <h4><%= error %></h4>  
                     </div>
                 <% } %>
+                <div class="client-error-banner">
+                </div> 
+
                 <button type="submit" class="login-button">SIGN UP</button>
             </form>
             <p class="signup-text">Already have an account? <a href="/login">Login</a></p>
@@ -68,6 +71,7 @@
     </div>
 
     <script src="/js/signup.js"></script>
+    <script src="/js/formValidation.js"></script>
 </body>
 
 </html>

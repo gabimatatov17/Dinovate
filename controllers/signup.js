@@ -7,7 +7,6 @@ async function showSignupPage(req, res) {
     root: path,
     error: null
   });
-  console.log("Entered");
 }
 
 async function registerUser(req, res) {
@@ -15,7 +14,6 @@ async function registerUser(req, res) {
   const { firstName, lastName, email, gender, dob, password, confirmPassword } = req.body;
   try {
     if (await customersService.getCustomerByEmail(email)) {
-      console.log("email alredy taken")
       return res.render("signup", {
         root: path,
         error: "Email already taken"
@@ -24,10 +22,7 @@ async function registerUser(req, res) {
     else {
       await registerService.registerNewUser(firstName, lastName, email, gender, dob, password);
       // Render to login page (Optional - can be render to home)
-      res.redirect("login", {
-        root: path,
-        error: null
-      });
+      res.redirect("/login")
     }
   }
   catch (error) {

@@ -122,14 +122,20 @@ h2 {
     text-decoration: underline;
 }
 
-.error-banner {
-    background-color: #f44336; /* Red background */
-    color: white; /* White text */
-    padding: 15px; /* Padding around the text */
-    margin-bottom: 20px; /* Space below the banner */
-    border-radius: 5px; /* Rounded corners */
-    text-align: center; /* Centered text */
-    font-size: 16px; /* Adjust font size */
-    font-weight: bold; /* Make the text bold */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow */
+.server-error-banner,
+.client-error-banner {
+    background-color: #f44336;
+    color: white; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    border-radius: 5px; 
+    text-align: center; 
+    font-size: 14px; 
+    font-weight: normal; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.5; 
+}
+
+.client-error-banner {    
+    display: none; 
 }
