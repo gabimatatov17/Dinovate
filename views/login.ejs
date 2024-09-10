@@ -15,24 +15,30 @@
             <div class="icon">
                 <span>Dinovate</span>
             </div>
-            <form id="login-form">
+            <form id="login-form" action="/login" method="post">
                 <div class="input-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
                     <div class="password-wrapper">
-                        <input type="password" id="password" placeholder="Enter your password" required>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
                         <span class="toggle-password" onclick="togglePassword()">👁️</span>
                     </div>
                 </div>
                 <div class="admin-option">
                     <label for="admin">
-                        <input type="checkbox">
+                        <input type="checkbox" id="admin" name="admin">
                         <p>Admin login</p>
                     </label>
                 </div>
+                <% if (error) { %>
+                    <div class="server-error-banner">
+                        <h4><%= error %></h4>  
+                    </div>
+                <% } %>
+                <div class="client-error-banner"></div>
                 <button type="submit" class="login-button">LOGIN</button>
             </form>
             <p class="signup-text">Don't have an account? <a href="/signup">Sign Up</a></p>
@@ -40,6 +46,7 @@
     </div>
 
     <script src="/js/login.js"></script>
+    <script src="js/loginFormValidation.js"></script>
 </body>
 
 </html>
