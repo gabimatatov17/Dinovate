@@ -1,4 +1,4 @@
-# MongoDB Docker Restore Procedure
+# MongoDB Docker Load Data Procedure
 
 This guide provides step-by-step instructions to load the sample data to  mongodb container. 
 
