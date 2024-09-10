@@ -139,6 +139,24 @@ h2 {
 
 .admin-option label input {
     cursor: pointer;
-    transform: scale(1.25); /* Increase the size of the checkbox */
+    transform: scale(1.25); 
     margin-right: 8px;
+}
+
+.server-error-banner,
+.client-error-banner {
+    background-color: #f44336;
+    color: white; 
+    padding: 15px; 
+    margin-bottom: 10px; 
+    border-radius: 5px; 
+    text-align: center; 
+    font-size: 14px; 
+    font-weight: normal; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.5; 
+}
+
+.client-error-banner {    
+    display: none; 
 }
