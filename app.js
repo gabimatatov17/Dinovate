@@ -12,7 +12,6 @@ const login = require('./routes/login');
 const signup = require('./routes/signup');
 
 
-
 // Connecting to MongoDB instance
 mongoose.connect("mongodb://localhost:27017/Dinovate")
     .then(() => console.log('MongoDB connected'))

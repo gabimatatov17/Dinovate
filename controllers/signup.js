@@ -1,5 +1,5 @@
 const path = require("path").resolve(__dirname, "..");
-const registerService = require("../services/registerService");
+const signupService = require("../services/signupService");
 const customersService = require("../services/customers");
 
 async function showSignupPage(req, res) {
@@ -20,7 +20,7 @@ async function registerUser(req, res) {
       });
     }
     else {
-      await registerService.registerNewUser(firstName, lastName, email, gender, dob, password);
+      await signupService.registerNewUser(firstName, lastName, email, gender, dob, password);
       // Render to login page (Optional - can be render to home)
       res.redirect("/login")
     }
