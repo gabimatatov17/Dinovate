@@ -15,10 +15,12 @@ app.use(express.static("public"));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 // routes
 app.use("/", home);
-app.use("/cart", cart)
+app.use("/cart", cart);
 
 // Start the server
 const port = 3000;
