@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateCartTotal() {
     let total = 0;
     const cartItems = document.getElementsByClassName('cart-item');
-    
+
     for (let i = 0; i < cartItems.length; i++) {
         const priceElement = cartItems[i].getElementsByClassName('cart-price')[0];
         const price = parseFloat(priceElement.innerText.replace('₪', ''));
@@ -38,7 +38,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
 
     try {
         // Send the address data to the server for validation
-        const response = await fetch('/cart/validate-address', {  // FIXED URL
+        const response = await fetch('/cart/validate-address', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,8 +50,16 @@ document.getElementById('address-form').addEventListener('submit', async functio
 
         // Handle the API response and display the result to the user
         if (result.valid) {
-            messageElement.textContent = result.message; // Display success message from the server
-            messageElement.style.color = 'green';
+            // Display the order placed message with animation
+            const orderPlacedMessage = document.getElementById('order-placed-message');
+            orderPlacedMessage.style.display = 'flex';
+
+            // Optionally, redirect to another page after a delay
+            setTimeout(() => {
+                // Redirect or hide the message
+                orderPlacedMessage.style.display = 'none';
+                // window.location.href = '/thank-you'; // Redirect if needed
+            }, 3000);
         } else {
             messageElement.textContent = result.message; // Display error message from the server
             messageElement.style.color = 'red';
