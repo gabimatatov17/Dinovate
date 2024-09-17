@@ -20,6 +20,10 @@ const cardSchema = new mongoose.Schema({
     dateAdded: {
         type: Date,
         default: Date.now 
+    },
+    image_location: {
+        type: String,
+        required: true
     }
 });
 
@@ -44,8 +48,11 @@ module.exports = Card;
 //         cardName: "getwell_card_1",
 //         price: 19.90,
 //         labels: ["men", "women", "family"]
+//         image_location:"/image/baby.jpg"
+//         
 //     }
 // ];
+// labels: ["baby", "birthday", "greetin"]
 
 // Card.insertMany(cards)
 //     .then(() => console.log('All cards saved successfully!'))
