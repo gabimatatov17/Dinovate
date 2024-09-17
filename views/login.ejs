@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/styles/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Welcome</h2>
+            <div class="icon">
+                <span>Dinovate</span>
+            </div>
+            <form id="login-form" action="/login" method="post">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                    </div>
+                </div>
+                <div class="admin-option">
+                    <label for="admin">
+                        <input type="checkbox" id="admin" name="admin">
+                        <p>Admin login</p>
+                    </label>
+                </div>
+                <% if (error) { %>
+                    <div class="server-error-banner">
+                        <h4><%= error %></h4>  
+                    </div>
+                <% } %>
+                <div class="client-error-banner"></div>
+                <button type="submit" class="login-button">LOGIN</button>
+            </form>
+            <p class="signup-text">Don't have an account? <a href="/signup">Sign Up</a></p>
+        </div>
+    </div>
+
+    <script src="/js/login.js"></script>
+    <script src="js/loginFormValidation.js"></script>
+</body>
+
+</html>
