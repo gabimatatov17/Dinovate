@@ -38,12 +38,11 @@ document.getElementById('address-form').addEventListener('submit', async functio
 
     try {
         // Send the address data to the server for validation
-        const response = await fetch('/cart/validate-address', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ street, locality, postal_code, country: 'ISR' })
+        const response = await axios.post('/cart/validate-address', {
+            street,
+            locality,
+            postal_code,
+            country: 'ISR'
         });
 
         const result = await response.json();
