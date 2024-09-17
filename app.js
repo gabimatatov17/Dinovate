@@ -31,6 +31,8 @@ app.use(express.json());
 // routes
 app.use("/", home);
 app.use("/cart", cart);
+app.use("/login", login);
+app.use("/signup", signup)
 
 
 // Start the server
