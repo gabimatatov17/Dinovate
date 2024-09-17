@@ -1,5 +1,4 @@
 // controllers/cart.js
-const path = require("path");
 const axios = require('axios');
 
 const AUTH_ID = 'd6a9a83a-8cec-0efa-a575-fc718a67dc74';
@@ -21,18 +20,20 @@ async function validateAddress(req, res) {
       console.log('Sending GET request to SmartyStreets:', url);  // Log the full URL
 
       const response = await axios.get(url);
-
       const data = response.data;
+      
       console.log('SmartyStreets API response status:', response.status);  // Log the response status
       console.log('SmartyStreets API response data:', data);  // Log the API response data
 
       if (response.status === 200 && data.length > 0) {
           const addressAnalysis = data[0].analysis;
-
+          console.log('data[0].analysis=', data[0].analysis, 'legnth:', data.length)
+          console.log('addressAnalysis.verification_status-', addressAnalysis.verification_status)
           // Check the verification status
           switch (addressAnalysis.verification_status) {
               case 'Verified':
               case 'Partial':
+                  console.log(res.json({ valid: true, message: 'Address is valid!', address: data[0] }))
                   return res.json({ valid: true, message: 'Address is valid!', address: data[0] });
               case 'Ambiguous':
                   return res.json({ valid: false, message: 'Multiple addresses found. Please provide more precise information.' });
