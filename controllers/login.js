@@ -1,5 +1,4 @@
 const path = require("path").resolve(__dirname, "..");
-const adminsService = require("../services/admins");
 const customersService = require("../services/customers");
 
 
@@ -13,34 +12,26 @@ async function showLoginPage(req, res) {
 
 async function authenticateUser(req, res) {
   console.log(req.body); // Check for incoming data
-  const { email, password, admin } = req.body;
+  const { email, password } = req.body;
+
   try {
-    if (admin) {
-      let adminUser = await adminsService.getAdminByEmail(email)
-      if (adminUser) {
-        if (password === adminUser.password) {
+    let customerUser = await customersService.getCustomerByEmail(email)
+    if (customerUser) {
+      if (password === customerUser.password) {
+        if (customerUser.isAdmin) {
           console.log("Admin Authenticated")
-          res.redirect('/'); // redirect to home
+          res.redirect('/admin'); // redirect to admin page
         } else {
-          res.render('login', { root: path, error: "Invalid Admin Password" });
-        }
-      } else {
-        res.render('login', { root: path, error: "No Admin Found" });
-      }
-    }
-    else {
-      let customerUser = await customersService.getCustomerByEmail(email)
-      if (customerUser) {
-        if (password === customerUser.password) {
           console.log("Customer Authenticated")
           res.redirect('/'); // redirect to home
-        } else {
-          res.render('login', { root: path, error: "Invalid Customer Password" });
         }
       } else {
-        res.render('login', { root: path, error: "No Customer Found" });
+        res.render('login', { root: path, error: "Invalid Password" });
       }
+    } else {
+      res.render('login', { root: path, error: "User Not Found" });
     }
+    //  }
 
   } catch (error) {
     console.error('Error autenticate user:', error);
