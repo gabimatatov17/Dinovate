@@ -22,7 +22,7 @@ docker cp Dinovate/ mongodb:/tmp/Dinovate
 
 ### 4. Execute the mongo restore command
 ```bash
-docker exec mongodb mongorestore --db Dinovate /tmp/dump/Dinovate
+docker exec mongodb mongorestore --db Dinovate /tmp/Dinovate
 ```
 
 ### 5. Connect to the mongodb instance and check the db and the collections
