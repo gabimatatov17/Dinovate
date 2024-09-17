@@ -1,7 +1,6 @@
 // controllers/cart.js
 const path = require("path");
-const fetch = require('node-fetch');
-
+const axios = require('axios');
 
 const AUTH_ID = 'd6a9a83a-8cec-0efa-a575-fc718a67dc74';
 const AUTH_TOKEN = 'M6Me2e765MsZki1cllyE';
@@ -21,11 +20,9 @@ async function validateAddress(req, res) {
   try {
       console.log('Sending GET request to SmartyStreets:', url);  // Log the full URL
 
-      const response = await fetch(url, {
-          method: 'GET',
-      });
+      const response = await axios.get(url);
 
-      const data = await response.json();
+      const data = response.data;
       console.log('SmartyStreets API response status:', response.status);  // Log the response status
       console.log('SmartyStreets API response data:', data);  // Log the API response data
 
