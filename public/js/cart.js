@@ -1,10 +1,4 @@
-function personalizeCard() {
-    alert("Personalization page coming soon!");
-}
-
-function addAnotherCard() {
-    alert("Another card added for personalization!");
-}
+// public/js/cart.js
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCartTotal();
@@ -13,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateCartTotal() {
     let total = 0;
     const cartItems = document.getElementsByClassName('cart-item');
-    
+
     for (let i = 0; i < cartItems.length; i++) {
         const priceElement = cartItems[i].getElementsByClassName('cart-price')[0];
         const price = parseFloat(priceElement.innerText.replace('₪', ''));
@@ -23,3 +17,56 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100;
     document.getElementById('items-total').innerText = total.toFixed(2);
 }
+
+// Address validation submission
+document.getElementById('address-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const street = document.getElementById('street').value.trim();
+    const locality = document.getElementById('locality').value.trim();
+    const postal_code = document.getElementById('postal_code').value.trim();
+
+    const messageElement = document.getElementById('validation-message');
+    messageElement.textContent = ''; // Clear previous messages
+
+    // Client-side validation to ensure all fields are filled
+    if (!street || !locality || !postal_code) {
+        messageElement.textContent = 'Please fill in all the required fields.';
+        messageElement.style.color = 'red';
+        return;
+    }
+
+    try {
+        // Send the address data to the server for validation
+        const response = await fetch('/cart/validate-address', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ street, locality, postal_code, country: 'ISR' })
+        });
+
+        const result = await response.json();
+
+        // Handle the API response and display the result to the user
+        if (result.valid) {
+            // Display the order placed message with animation
+            const orderPlacedMessage = document.getElementById('order-placed-message');
+            orderPlacedMessage.style.display = 'flex';
+
+            // Optionally, redirect to another page after a delay
+            setTimeout(() => {
+                // Redirect or hide the message
+                orderPlacedMessage.style.display = 'none';
+                // window.location.href = '/thank-you'; // Redirect if needed
+            }, 3000);
+        } else {
+            messageElement.textContent = result.message; // Display error message from the server
+            messageElement.style.color = 'red';
+        }
+    } catch (error) {
+        // Handle unexpected errors (e.g., network issues)
+        messageElement.textContent = 'Error occurred while validating the address. Please try again later.';
+        messageElement.style.color = 'red';
+    }
+});

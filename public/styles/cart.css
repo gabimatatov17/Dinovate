@@ -1,4 +1,4 @@
-/* Original CSS */
+/* General Styles */
 body {
     padding-top: 50px;
 }
@@ -7,61 +7,33 @@ body {
     margin-top: 50px;
 }
 
-.cart-item {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border-bottom: 1px solid lightgrey;
-}
-
-.cart-item-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cart-item img {
-    margin-right: 20px;
-}
-
-hr {
-    margin: 0;
+/* Cart Summary Card */
+.card {
     border: none;
-    border-top: 1px solid lightgrey;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.btn-link {
-    text-decoration: none;
-    font-size: 0.9rem;
+/* Cart Items Table */
+.table-cart th,
+.table-cart td {
+    vertical-align: middle;
 }
 
-.cart-summary {
-    margin-top: 20px;
+.table-cart img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
-/* New CSS Updates */
-
-/* Align the "Item" and "Price" headers to the left */
-.order-summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 15px; /* Adjust the left padding for slight alignment */
-}
-
-.order-summary div {
-    text-align: left; /* Left align text */
-}
-
-/* Style for the add button and hover effect */
+/* Add Button Styles */
 .add-button {
     font-size: 1.2rem;
     background-color: #f8f9fa;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -71,11 +43,11 @@ hr {
 .add-button:hover::after {
     content: 'Add Another';
     position: absolute;
-    bottom: -25px;
+    bottom: -30px;
     background-color: rgba(0, 0, 0, 0.75);
     color: #fff;
     padding: 5px 10px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 4px;
     white-space: nowrap;
 }
@@ -85,7 +57,36 @@ hr {
     color: #007bff;
 }
 
-/* Align the price and button with proper spacing */
-.cart-item-actions .cart-price {
-    margin-right: 15px;
+/* Order Placed Message Styles */
+.order-placed-message {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Above other elements */
+}
+
+.order-placed-message .message-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeInScale 0.5s ease-in-out;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
