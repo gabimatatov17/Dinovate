@@ -1,7 +1,7 @@
 # web-project
 heloo
 
-### To run with Google map API run this command;
+### To run with Google map API run this command:
 
 ```bash
 npm run prod
