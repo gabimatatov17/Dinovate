@@ -10,6 +10,7 @@ const home = require('./routes/home');
 const cart = require('./routes/cart');
 const login = require('./routes/login');
 const signup = require('./routes/signup');
+const stores = require('./routes/stores')
 
 
 // Connecting to MongoDB instance
@@ -33,7 +34,7 @@ app.use("/", home);
 app.use("/cart", cart);
 app.use("/login", login);
 app.use("/signup", signup)
-
+app.use("/stores", stores)
 
 // Start the server
 const port = 3000;
