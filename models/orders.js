@@ -49,10 +49,10 @@ module.exports = Order;
 // const orders = [
 //     {
 //         orderId: 1,
-//         customerId: 1,
+//         customerId: 6,
 //         cards: [
 //             {
-//                 cardId: 1,
+//                 cardId: 7,
 //                 greeting: "Happy Birthday Victoria!"
 //             }
 //         ],
@@ -61,10 +61,10 @@ module.exports = Order;
 //     },
 //     {
 //         orderId: 2,
-//         customerId: 2,
+//         customerId: 7,
 //         cards: [
 //             {
-//                 cardId: 2,
+//                 cardId: 21,
 //                 greeting: "Get Well Soon Jude!"
 //             }
 //         ],
@@ -73,14 +73,14 @@ module.exports = Order;
 //     },
 //     {
 //         orderId: 3,
-//         customerId: 2,
+//         customerId: 7,
 //         cards: [
 //             {
-//                 cardId: 1,
+//                 cardId: 8,
 //                 greeting: "Happy Birthday Megan!"
 //             },
 //             {
-//                 cardId: 2,
+//                 cardId: 21,
 //                 greeting: "Get Well Soon David!"
 //             }
 //         ],
