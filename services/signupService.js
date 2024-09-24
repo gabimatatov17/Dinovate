@@ -1,8 +1,8 @@
 const Customer = require('../models/customers');
 
 const getNextCustomerId = async () => {
-    const latestCustomerId = await Customer.findOne().sort({ customerId: -1 }).exec();
-    return latestCustomerId ? latestCustomerId.customerId + 1 : 1;
+    const latestCustomerId = await Customer.findOne().sort({ id: -1 }).exec();
+    return latestCustomerId ? latestCustomerId.id + 1 : 1;
 };
 
 async function registerNewUser(firstName, lastName, email, gender, birthDate, password) {
@@ -11,7 +11,7 @@ async function registerNewUser(firstName, lastName, email, gender, birthDate, pa
 
     // Create the new user
     const newUser = new Customer({
-        customerId: nextCustomerId,
+        id: nextCustomerId,
         firstName: firstName,
         lastName: lastName,
         email: email,

@@ -1,0 +1,165 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar-brand span {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links li {
+    display: inline;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+}
+
+.navbar-links a:hover {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* Container for map and list */
+.map-container {
+    flex-grow: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#map {
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    margin-top: 50px;
+}
+
+/* Store list container */
+#store-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+    overflow: scroll;
+    flex-grow: 1;
+}
+
+/* Individual store details */
+.store-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.store-image {
+    margin-right: 100px;
+}
+
+.store-image img {
+    width: 300px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.store-details {
+    flex-grow: 1;
+}
+
+.store-details h4 {
+    font-size: 16px;
+    color: #000;
+    font-weight: lighter;
+    line-height: 2;
+}
+
+.separator {
+    height: 3px;
+    background-color: black;
+    width: 100%;
+}
+
+.store-phone {
+    margin-left: 0;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.store-phone i {
+    margin-right: 10px;
+}
+
+.store-phone h4 {
+    font-size: 18px;
+    color: #000;
+    font-weight: lighter;
+    margin-top: 5px;
+}
+
+.phone-number {
+    background: rgb(36, 36, 36);
+    margin-top: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 4px;
+    width: 100%;
+    color: white;
+    font-weight: lighter;
+}
+
+.copy-rights {
+    height: 20px;
+    background-color: black;
+    width: 100%;
+    color: rgb(192, 192, 192);
+    font-size: 10px;
+    text-align: center;
+    padding: 5px;
+}
