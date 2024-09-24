@@ -33,7 +33,6 @@ async function validateAddress(req, res) {
           switch (addressAnalysis.verification_status) {
               case 'Verified':
               case 'Partial':
-                  console.log(res.json({ valid: true, message: 'Address is valid!', address: data[0] }))
                   return res.json({ valid: true, message: 'Address is valid!', address: data[0] });
               case 'Ambiguous':
                   return res.json({ valid: false, message: 'Multiple addresses found. Please provide more precise information.' });

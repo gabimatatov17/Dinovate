@@ -45,7 +45,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
             country: 'ISR'
         });
 
-        const result = await response.json();
+        const result = response.data;
 
         // Handle the API response and display the result to the user
         if (result.valid) {
