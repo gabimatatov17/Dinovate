@@ -1,14 +1,23 @@
 // controllers/cart.js
-const path = require("path");
 const axios = require('axios');
+const Card = require('../models/products');  // Assuming Card represents your products collection
 
 const AUTH_ID = 'd6a9a83a-8cec-0efa-a575-fc718a67dc74';
 const AUTH_TOKEN = 'M6Me2e765MsZki1cllyE';
 
 // Renders the shopping cart page
 async function showCart(req, res) {
-    res.render("cart"); // Render cart.ejs template
+  let cart = req.session.cart || [];
+  let total = 0;
+
+  // Calculate total price for the cart
+  for (const item of cart) {
+      total += item.price * item.quantity;
+  }
+
+  res.render("cart", { cart, total }); // Pass cart and total price to the view
 }
+
 
 // Validates the address using SmartyStreets International API
 async function validateAddress(req, res) {
@@ -21,14 +30,15 @@ async function validateAddress(req, res) {
       console.log('Sending GET request to SmartyStreets:', url);  // Log the full URL
 
       const response = await axios.get(url);
-
       const data = response.data;
+      
       console.log('SmartyStreets API response status:', response.status);  // Log the response status
       console.log('SmartyStreets API response data:', data);  // Log the API response data
 
       if (response.status === 200 && data.length > 0) {
           const addressAnalysis = data[0].analysis;
-
+          console.log('data[0].analysis=', data[0].analysis, 'legnth:', data.length)
+          console.log('addressAnalysis.verification_status-', addressAnalysis.verification_status)
           // Check the verification status
           switch (addressAnalysis.verification_status) {
               case 'Verified':
