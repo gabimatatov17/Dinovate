@@ -21,8 +21,8 @@ async function registerUser(req, res) {
     }
     else {
       await signupService.registerNewUser(firstName, lastName, email, gender, dob, password);
-      // Render to login page (Optional - can be render to home)
-      res.redirect("/login")
+      // Render to home page
+      res.redirect("/")
     }
   }
   catch (error) {
