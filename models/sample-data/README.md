@@ -30,5 +30,5 @@ docker exec mongodb mongorestore --db Dinovate /tmp/Dinovate
 mongosh --port 27017
 show dbs
 use Dinovate
-show collection
+show collections
 ```
