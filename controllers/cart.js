@@ -1,13 +1,23 @@
 // controllers/cart.js
 const axios = require('axios');
+const Card = require('../models/products');  // Assuming Card represents your products collection
 
 const AUTH_ID = 'd6a9a83a-8cec-0efa-a575-fc718a67dc74';
 const AUTH_TOKEN = 'M6Me2e765MsZki1cllyE';
 
 // Renders the shopping cart page
 async function showCart(req, res) {
-    res.render("cart"); // Render cart.ejs template
+  let cart = req.session.cart || [];
+  let total = 0;
+
+  // Calculate total price for the cart
+  for (const item of cart) {
+      total += item.price * item.quantity;
+  }
+
+  res.render("cart", { cart, total }); // Pass cart and total price to the view
 }
+
 
 // Validates the address using SmartyStreets International API
 async function validateAddress(req, res) {
