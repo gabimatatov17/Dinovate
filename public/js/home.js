@@ -1,11 +1,9 @@
-document.getElementById('card-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+const toggleButton = document.getElementById('toggle-button');
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.querySelector('main');
 
-    // Get input values
-    const title = document.getElementById('title').value;
-    const message = document.getElementById('message').value;
-
-    // Update card preview
-    document.getElementById('card-title').textContent = title;
-    document.getElementById('card-message').textContent = message;
+toggleButton.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    mainContent.classList.toggle('shift');
 });
+
