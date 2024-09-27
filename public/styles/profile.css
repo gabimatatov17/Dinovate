@@ -1,0 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Banner Styles */
+.banner {
+    background: linear-gradient(90deg, #00c6ff, #0072ff); /* Matching colors from the login page */
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Logo Styling */
+.banner-logo {
+    display: flex;
+    align-items: center;
+}
+
+.banner-logo .logo-img {
+    height: 50px; /* Adjust the size of the logo */
+    margin-right: 10px; /* Space between logo and text */
+}
+
+.banner-logo .logo-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Navigation Styles */
+.banner-nav {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Spacing between the links */
+}
+
+.nav-link {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Spacing between text and icon */
+    transition: color 0.3s ease;
+}
+
+.nav-link i {
+    font-size: 20px; /* Icon size */
+}
+
+.nav-link:hover {
+    color: #ffd700; /* Slight color change on hover */
+}
+
+/* Responsive Behavior for smaller screens */
+@media (max-width: 768px) {
+    .banner-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px; /* Smaller gap for smaller screens */
+    }
+}
+
+/* Container for the page content */
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 80px auto; /* Adjust for space between banner and content */
+}
+
+h2, h3 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
