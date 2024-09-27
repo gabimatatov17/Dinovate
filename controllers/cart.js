@@ -1,9 +1,69 @@
 // controllers/cart.js
 const axios = require('axios');
-const Card = require('../models/products');  // Assuming Card represents your products collection
+const Order = require('../models/orders'); // Import the Order model
+const Customer = require('../models/customers');  // Import Customer model
+const Card = require('../models/products'); // Import Card model 
 
-const AUTH_ID = 'd6a9a83a-8cec-0efa-a575-fc718a67dc74';
-const AUTH_TOKEN = 'M6Me2e765MsZki1cllyE';
+
+//change this to be used in env!!
+const AUTH_ID = process.env.AUTH_ID;
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
+
+// A function to increase the quantity of an item in the cart
+async function addToCart(req, res) {
+  const { cardId } = req.body;
+
+  // Check if the cart exists in the session
+  if (!req.session.cart) {
+      return res.status(400).json({ success: false, message: "Cart is empty" });
+  }
+
+  const cart = req.session.cart;
+
+  // Find the item in the cart
+  const item = cart.find(item => item.cardId === cardId);
+
+  if (item) {
+      // Check if the quantity exceeds 5
+      if (item.quantity >= 5) {
+          return res.status(400).json({ success: false, message: "For large orders, please contact our support" });
+      }
+
+      // Increase the quantity by 1
+      item.quantity += 1;
+  }
+
+  req.session.cart = cart;  // Update the cart in the session
+  res.json({ success: true, cart });
+}
+
+// A function to remove an item from the cart
+async function removeFromCart(req, res) {
+  const { cardId } = req.body;
+
+  if (!req.session.cart) {
+      return res.status(400).json({ success: false, message: "Cart is empty" });
+  }
+
+  let cart = req.session.cart;
+
+  // Find the index of the item
+  const itemIndex = cart.findIndex(item => item.cardId === cardId);
+
+  if (itemIndex !== -1) {
+      cart.splice(itemIndex, 1);  // Remove the item from the cart
+  }
+
+  req.session.cart = cart;  // Update the cart in the session
+  res.json({ success: true, cart });
+}
+
+
+// Generates a unique order ID 
+async function generateOrderId() {
+  const lastOrder = await Order.findOne().sort({ orderId: -1 });  // Get the last order
+  return lastOrder ? lastOrder.orderId + 1 : 1;  // Increment orderId or start from 1
+}
 
 // Renders the shopping cart page
 async function showCart(req, res) {
@@ -42,8 +102,34 @@ async function validateAddress(req, res) {
           // Check the verification status
           switch (addressAnalysis.verification_status) {
               case 'Verified':
-              case 'Partial':
-                  return res.json({ valid: true, message: 'Address is valid!', address: data[0] });
+              case 'Partial': {
+                // Address is valid, now create an order
+                if (!req.session.customer || !req.session.cart) {
+                  console.log('cart or customer info missing')
+                  return res.json({ valid: false, message: 'Cart or customer information is missing. Please try again.' });
+                }
+
+                const shippingAddress = `${street}, ${locality}, ${postal_code}, ${country}`;
+
+                // Generate new orderId
+                const newOrderId = await generateOrderId();
+
+                // Create a new order object
+                const newOrder = new Order({
+                    orderId: newOrderId,
+                    customerId: req.session.customer.id,
+                    cards: req.session.cart.map(item => ({
+                        cardId: item.cardId,
+                        greeting: `Enjoy your ${item.cardName}!`  // Or ask the user for the greeting message
+                    })),
+                    totalPrice: req.session.cart.reduce((total, item) => total + (item.price * item.quantity), 0),
+                    shippingAdress: shippingAddress
+                });
+
+                // Save the order to the database
+                await newOrder.save();
+                return res.json({ valid: true, message: 'Address is valid!', order:newOrder, address: data[0] });
+            }
               case 'Ambiguous':
                   return res.json({ valid: false, message: 'Multiple addresses found. Please provide more precise information.' });
               case 'None':
@@ -57,9 +143,14 @@ async function validateAddress(req, res) {
       console.error('Error during address validation:', error);  // Log any unexpected errors
       res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
   }
+
+
 }
 
 module.exports = {
+  addToCart,
+  removeFromCart,
+  generateOrderId,
   showCart,
   validateAddress
 };
