@@ -17,7 +17,6 @@
 
 <!-- Banner Section -->
 <header>
-
     <!-- Updated Banner -->
     <div class="banner">
         <!-- Left Side: Logo -->
@@ -43,6 +42,7 @@
         </nav>
     </div>
 </header>
+
 <!-- Shopping Cart Section -->
 <section class="container mt-5" id="shopping-cart">
     <h3 class="text-center mb-5" style="text-decoration: underline;">Shopping Cart</h3>
@@ -63,19 +63,25 @@
                 <tbody class="cart-items">
                     <% if (cart.length > 0) { %>
                         <% cart.forEach(item => { %>
-                        <tr class="cart-item" data-cardid="<%= item.cardId %>">
-                            <td class="d-flex align-items-center">
-                                <img src="<%= item.image %>" alt="<%= item.cardName %>" class="img-thumbnail" width="100" height="100">
-                                <span class="ms-3"><%= item.cardName %></span>
-                            </td>
-                            <td class="cart-price">₪<%= item.price.toFixed(2) %></td>
-                            <td class="quantity"><%= item.quantity %></td>
-                            <td>₪<%= (item.price * item.quantity).toFixed(2) %></td>
-                            <td>
-                                <button class="btn btn-secondary add-button" aria-label="Add another item">+</button>
-                                <button class="btn btn-danger ms-2 remove-button">Remove</button>
-                            </td>
-                        </tr>
+                            <tr class="cart-item" data-cardid="<%= item.cardId %>">
+                                <td class="d-flex align-items-center">
+                                    <div class="item-image-and-button">
+                                        <img src="<%= item.image %>" alt="<%= item.cardName %>" class="img-thumbnail" width="100" height="100">
+                                        <div class="generate-greeting-btn-container mt-2">
+                                            <button class="btn generate-greeting-btn">New Greeting</button>
+                                        </div>
+                                    </div>
+                                    <span class="ms-3"><%= item.cardName %></span>
+                                </td>
+                                <td class="cart-price">₪<%= item.price.toFixed(2) %></td>
+                                <td class="quantity"><%= item.quantity %></td>
+                                <td>₪<%= (item.price * item.quantity).toFixed(2) %></td>
+                                <td>
+                                    <button class="btn btn-secondary add-button" aria-label="Add another item">+</button>
+                                    <button class="btn btn-danger ms-2 remove-button">Remove</button>
+                                </td>
+                            </tr>
+                                                       
                         <% }) %>
                     <% } else { %>
                         <tr>
