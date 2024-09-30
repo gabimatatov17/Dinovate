@@ -118,7 +118,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
             setTimeout(() => {
                 // Redirect or hide the message
                 orderPlacedMessage.style.display = 'none';
-                // window.location.href = '/thank-you'; // Redirect if needed
+                window.location.href = '/profile'; // Redirect if needed
             }, 3000);
         } else {
             messageElement.textContent = result.message; // Display error message from the server
@@ -130,3 +130,13 @@ document.getElementById('address-form').addEventListener('submit', async functio
         messageElement.style.color = 'red';
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener for the "Generate Greeting" button
+    document.querySelectorAll('.generate-greeting-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Generate Greeting button clicked!');  // Placeholder functionality
+        });
+    });
+});
+

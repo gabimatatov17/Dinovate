@@ -16,30 +16,32 @@
 <body>
 
 <!-- Banner Section -->
-<header class="banner">
-    <div class="container-fluid d-flex justify-content-between align-items-center banner-content">
-        <div class="left-nav">
-            <!-- Left Nav with Icons -->
-            <a href="/" class="nav-icon home-icon">🏠</a>
-            <a href="/cart" class="nav-icon cart-icon active">🛒</a>
+<header>
+    <!-- Updated Banner -->
+    <div class="banner">
+        <!-- Left Side: Logo -->
+        <div class="banner-logo">
+            <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
+            <span class="logo-text">Dinovate</span>
         </div>
 
-        <div class="right-nav">
-            <!-- Dropdown for Profile, Stores, Contact -->
+        <!-- Right Side: Navigation Links -->
+        <nav class="banner-nav">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/cart" class="nav-link">Cart</a>
+
+            <!-- Dropdown Menu -->
             <div class="dropdown">
-                <button class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    ⋮
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="/stores">Stores</a></li>
-                    <li><a class="dropdown-item" href="/contact">Contact</a></li>
-                </ul>
+                <a class="nav-link">More</a> <!-- Label for dropdown -->
+                <div class="dropdown-content">
+                    <a href="/profile">Profile</a>
+                    <a href="/stores">Stores</a>
+                    <a href="/contact">Contact</a>
+                </div>
             </div>
-        </div>
+        </nav>
     </div>
 </header>
-
 
 <!-- Shopping Cart Section -->
 <section class="container mt-5" id="shopping-cart">
@@ -61,19 +63,25 @@
                 <tbody class="cart-items">
                     <% if (cart.length > 0) { %>
                         <% cart.forEach(item => { %>
-                        <tr class="cart-item" data-cardid="<%= item.cardId %>">
-                            <td class="d-flex align-items-center">
-                                <img src="<%= item.image %>" alt="<%= item.cardName %>" class="img-thumbnail" width="100" height="100">
-                                <span class="ms-3"><%= item.cardName %></span>
-                            </td>
-                            <td class="cart-price">₪<%= item.price.toFixed(2) %></td>
-                            <td class="quantity"><%= item.quantity %></td>
-                            <td>₪<%= (item.price * item.quantity).toFixed(2) %></td>
-                            <td>
-                                <button class="btn btn-secondary add-button" aria-label="Add another item">+</button>
-                                <button class="btn btn-danger ms-2 remove-button">Remove</button>
-                            </td>
-                        </tr>
+                            <tr class="cart-item" data-cardid="<%= item.cardId %>">
+                                <td class="d-flex align-items-center">
+                                    <div class="item-image-and-button">
+                                        <img src="<%= item.image %>" alt="<%= item.cardName %>" class="img-thumbnail" width="100" height="100">
+                                        <div class="generate-greeting-btn-container mt-2">
+                                            <button class="btn generate-greeting-btn">New Greeting</button>
+                                        </div>
+                                    </div>
+                                    <span class="ms-3"><%= item.cardName %></span>
+                                </td>
+                                <td class="cart-price">₪<%= item.price.toFixed(2) %></td>
+                                <td class="quantity"><%= item.quantity %></td>
+                                <td>₪<%= (item.price * item.quantity).toFixed(2) %></td>
+                                <td>
+                                    <button class="btn btn-secondary add-button" aria-label="Add another item">+</button>
+                                    <button class="btn btn-danger ms-2 remove-button">Remove</button>
+                                </td>
+                            </tr>
+                                                       
                         <% }) %>
                     <% } else { %>
                         <tr>
