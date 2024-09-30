@@ -5,38 +5,39 @@
     <title>User Profile | Dinovate</title>
     <link rel="stylesheet" href="/styles/profile.css">
     <script src="https://kit.fontawesome.com/9d9796826b.js" crossorigin="anonymous"></script>
-
-
 </head>
 <body>
-    <header class="banner">
-        <div class="container-fluid d-flex justify-content-between align-items-center banner-content">
-            <div class="left-nav">
-                <!-- Left Nav with Icons -->
-                <a href="/" class="nav-icon home-icon">🏠</a>
-                <a href="/cart" class="nav-icon cart-icon active">🛒</a>
-            </div>
-    
-            <div class="right-nav">
-                <!-- Dropdown for Profile, Stores, Contact -->
-                <div class="dropdown">
-                    <button class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        ⋮
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                        <li><a class="dropdown-item" href="/stores">Stores</a></li>
-                        <li><a class="dropdown-item" href="/contact">Contact</a></li>
-                    </ul>
+    <header>
+    <!-- Updated Banner -->
+    <div class="banner">
+        <!-- Left Side: Logo -->
+        <div class="banner-logo">
+            <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
+            <span class="logo-text">Dinovate</span>
+        </div>
+
+        <!-- Right Side: Navigation Links -->
+        <nav class="banner-nav">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/cart" class="nav-link">Cart</a>
+
+            <!-- Dropdown Menu -->
+            <div class="dropdown">
+                <a class="nav-link">More</a> <!-- Label for dropdown -->
+                <div class="dropdown-content">
+                    <a href="/profile">Profile</a>
+                    <a href="/stores">Stores</a>
+                    <a href="/contact">Contact</a>
                 </div>
             </div>
-        </div>
-    </header>
-    
+        </nav>
+    </div>
+</header>
 
-
+    <!-- Profile Content -->
     <div class="container mt-5">
         <h2><%= customer.firstName %>'s Profile</h2>  
+        
         <!-- User Information -->
         <div class="profile-section">
             <h3>Personal Information</h3>
