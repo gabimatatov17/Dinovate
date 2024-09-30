@@ -188,3 +188,32 @@ body {
     font-size: 20px;
     color: #0072ff;  /* Match the blue of the login button */
 }
+
+
+/* Container to hold the image and button */
+.item-image-and-button {
+    display: flex;
+    flex-direction: column; /* Stack the image and button vertically */
+    align-items: center; /* Center the button under the image */
+}
+
+/* Styling the generate greeting button */
+.generate-greeting-btn {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 16px;  /* Smaller padding for a smaller button */
+    width: 120px;  /* Width of the button */
+    text-align: center;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for button */
+.generate-greeting-btn:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
+    transform: scale(1.05);
+}
