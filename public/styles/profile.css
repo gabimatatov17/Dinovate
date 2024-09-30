@@ -1,71 +1,107 @@
+/* Body styling */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f2f2f2;
+    margin: 0;  /* Ensure no margins */
+    overflow-x: hidden;  /* Prevent horizontal scroll */
 }
 
 /* Banner Styles */
 .banner {
-    background: linear-gradient(90deg, #00c6ff, #0072ff); /* Matching colors from the login page */
-    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    padding: 15px 0;
+    width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 
-/* Logo Styling */
+/* Logo Section */
 .banner-logo {
     display: flex;
     align-items: center;
+    margin-left: 20px;  /* Adjust left margin if needed */
 }
 
 .banner-logo .logo-img {
-    height: 50px; /* Adjust the size of the logo */
-    margin-right: 10px; /* Space between logo and text */
+    height: 50px;  /* Adjust the logo size */
+    margin-right: 10px;  /* Spacing between logo and text */
 }
 
-.banner-logo .logo-text {
-    color: white;
-    font-size: 24px;
+.logo-text {
+    font-size: 20px;
     font-weight: bold;
+    color: white;
 }
 
-/* Navigation Styles */
+/* Navigation Section */
 .banner-nav {
     display: flex;
     align-items: center;
-    gap: 25px; /* Spacing between the links */
+    gap: 20px;  /* Spacing between navigation links */
+    margin-right: 20px;  /* Adjust right margin if needed */
 }
 
 .nav-link {
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Spacing between text and icon */
-    transition: color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-link i {
-    font-size: 20px; /* Icon size */
-}
-
+/* Hover effect for links */
 .nav-link:hover {
-    color: #ffd700; /* Slight color change on hover */
+    background-color: #d1e8ff;  /* Pale blue hover color */
+    color: #0072ff;
 }
 
-/* Responsive Behavior for smaller screens */
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown .dropdown-content a {
+    color: #0072ff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown .dropdown-content a:hover {
+    background-color: #d1e8ff;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     .banner-nav {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px; /* Smaller gap for smaller screens */
+        gap: 10px;
     }
 }
 
