@@ -16,31 +16,33 @@
 <body>
 
 <!-- Banner Section -->
-<header class="banner">
-    <div class="container-fluid d-flex justify-content-between align-items-center banner-content">
-        <div class="left-nav">
-            <!-- Left Nav with Icons -->
-            <a href="/" class="nav-icon home-icon">🏠</a>
-            <a href="/cart" class="nav-icon cart-icon active">🛒</a>
+<header>
+
+    <!-- Updated Banner -->
+    <div class="banner">
+        <!-- Left Side: Logo -->
+        <div class="banner-logo">
+            <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
+            <span class="logo-text">Dinovate</span>
         </div>
 
-        <div class="right-nav">
-            <!-- Dropdown for Profile, Stores, Contact -->
+        <!-- Right Side: Navigation Links -->
+        <nav class="banner-nav">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/cart" class="nav-link">Cart</a>
+
+            <!-- Dropdown Menu -->
             <div class="dropdown">
-                <button class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    ⋮
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="/stores">Stores</a></li>
-                    <li><a class="dropdown-item" href="/contact">Contact</a></li>
-                </ul>
+                <a class="nav-link">More</a> <!-- Label for dropdown -->
+                <div class="dropdown-content">
+                    <a href="/profile">Profile</a>
+                    <a href="/stores">Stores</a>
+                    <a href="/contact">Contact</a>
+                </div>
             </div>
-        </div>
+        </nav>
     </div>
 </header>
-
-
 <!-- Shopping Cart Section -->
 <section class="container mt-5" id="shopping-cart">
     <h3 class="text-center mb-5" style="text-decoration: underline;">Shopping Cart</h3>
