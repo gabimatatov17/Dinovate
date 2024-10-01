@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const cartController = require("../controllers/cart");
+const authenticationMiddleware = require('../middleware/authMiddleware');
+
+// If a user is not authenticated, they will be redirected to the login page.
+router.use(authenticationMiddleware.ensureAuthenticated);
 
 router.get('/', cartController.showCart);  // This should call cartController.showCart
 
