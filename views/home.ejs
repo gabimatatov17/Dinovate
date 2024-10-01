@@ -53,24 +53,24 @@
                     <!-- Profile Icon with Dropdown -->
                     <div class="profile-icon">
                         <% if (isAuthenticated) { %>
-                            <a class="nav-link profile-icon" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link profile-icon" href="#" id="profileDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-user"></i>
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                                 <li><a class="dropdown-item" href="/profile">My Profile</a></li>
-                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                <li><a class="dropdown-item" id="logout-link" href="/logout">Logout</a></li>
                             </ul>
-                        <% } else { %>   
-                            <button id="login-button" name="login-button" class="button" onclick="window.location.replace('/login')">Login</button>
-                        <% } %>
+                            <% } else { %>
+                                <div class="d-flex">
+                                    <button id="login-button" name="login-button" class="button"
+                                        onclick="window.location.replace('/login')">Login</button>
+                                </div>
+                                <% } %>
 
                     </div>
                     <!-- end -->
-
-                    <!-- <div class="d-flex"> -->
-
-                    <!-- </div> -->
 
                     <div>
                         <button id="toggle-button" class="openbtn">&#9776;</button>

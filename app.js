@@ -15,6 +15,7 @@ const Card = require('./models/products');  // Adjust the path if necessary
 const home = require('./routes/home');
 const cart = require('./routes/cart');
 const login = require('./routes/login');
+const logout = require('./routes/logout');
 const signup = require('./routes/signup');
 const stores = require('./routes/stores')
 const profileRoute = require('./routes/profile');
@@ -79,6 +80,7 @@ app.use(express.json());
 app.use("/", home);
 app.use("/cart", cart);
 app.use("/login", login);
+app.use("/logout", logout);
 app.use("/signup", signup)
 app.use("/stores", stores)
 app.use('/profile', profileRoute);
