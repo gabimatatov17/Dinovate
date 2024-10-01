@@ -1,12 +1,13 @@
+/* General Body Style */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color:  #c2e9fb !important;
+    background-color: #c2e9fb !important;
     color: #333;
 }
 
-
+/* Button Styling */
 .button {
     background: linear-gradient(90deg, #00c6ff, #0072ff);
     color: white;
@@ -20,9 +21,12 @@ body {
     transition: background 0.3s;
 }
 
-.navbar-brand{
-    text-line-through-color: #00c6ff;
+.navbar-brand {
+    text-decoration: line-through;
+    text-decoration-color: #00c6ff;
 }
+
+/* Toggle Button (Hamburger Menu) */
 .openbtn {
     border: none;
     background-color: transparent;
@@ -31,52 +35,48 @@ body {
     padding-left: 10px;
 }
 
-.openbtn:hover{
+.openbtn:hover {
     color: #0072ff;
 }
 
-/* The sidebar menu */
+/* Sidebar Styling */
 .sidebar {
-    height: 100%; /* 100% Full-height */
-    width: 200px; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
     top: 0;
     right: -220px;
     margin-top: 72px;
-    background: linear-gradient(90deg, #00c6ff, #0072ff); /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
 }
 
-/* The sidebar links */
 .sidebar a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: white;
-  display: block;
-  transition: 0.3s;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
 }
 
-.padding{
+.padding {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* When you mouse over the navigation links, change their color */
 .sidebar a:hover {
-  color: #f1f1f1;
+    color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
 .sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
 .sidebar.open {
@@ -88,41 +88,93 @@ body {
     color: #55a1ea;
 }
 
+/* Blocks Container (for image blocks) */
 .blocks-container {
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
-    gap: 15px; /* Space between blocks */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
     padding: 20px;
 }
 
 .image-block {
-    background-color: white; /* Background for each block */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    padding: 10px; /* Inner padding */
-    text-align: center; /* Center text and images */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
 }
 
 .image-block img {
-    width: 100%; /* Responsive image */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 5px; /* Rounded corners for images */
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .image-block p {
-    margin-top: 8px; /* Space above text */
-    color: #333; /* Text color */
+    margin-top: 8px;
+    color: #333;
 }
 
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+/* Main Content Transition */
 #main {
-  transition: margin-left .5s; /* If you want a transition effect */
-  padding: 20px;
+    transition: margin-left .5s;
+    padding: 20px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+/* Responsive Sidebar for Smaller Screens */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+/* Profile Icon Styling */
+.profile-icon {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* Profile Dropdown Menu */
+.profile-icon .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    min-width: 150px;
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.profile-icon .dropdown-menu a {
+    padding: 10px 20px;
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-icon .dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Profile Icon (User) */
+.profile-icon i {
+    color: #0072ff;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.profile-icon i:hover {
+    color: #00c6ff;
 }
