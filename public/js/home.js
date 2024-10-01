@@ -7,3 +7,7 @@ toggleButton.addEventListener('click', () => {
     mainContent.classList.toggle('shift');
 });
 
+function toggleProfileOptions() {
+    const options = document.getElementById('profile-options');
+    options.style.display = options.style.display === 'none' ? 'block' : 'none';
+}

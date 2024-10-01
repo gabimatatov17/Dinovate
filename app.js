@@ -10,7 +10,6 @@ const app = express();
 
 // simulation for cart session
 const Card = require('./models/products');  // Adjust the path if necessary
-const Customer = require('./models/customers');  // Your Customer model
 
 // routes
 const home = require('./routes/home');

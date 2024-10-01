@@ -19,8 +19,6 @@ async function authenticateUser(req, res) {
     let customerUser = await customersService.getCustomerByEmail(email);
 
     if (customerUser) {
-      // // Log the customerUser object to see what is being retrieved
-      // console.log("Customer User Data:", customerUser); 
 
       if (password === customerUser.password) {
 
