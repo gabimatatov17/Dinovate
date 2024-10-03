@@ -5,6 +5,7 @@ body {
     padding: 0;
     background-color: rgba(194, 233, 251, 0.4) !important;
     color: #333;
+    height: 100%;
 }
 
 /* Button Styling */
@@ -116,9 +117,10 @@ body {
 }
 
 /* Main Content Transition */
-#main {
+main {
     transition: margin-left .5s;
     padding: 20px;
+    flex-grow: 1;
 }
 
 /* Responsive Sidebar for Smaller Screens */

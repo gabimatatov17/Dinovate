@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Ensure body and html take up full height */
+.footer-bar {
+    background-color: #ffffff;
+    color: #8d939c;
+    padding-top: 10px;
+    text-align: center;
+    margin-top: auto;
+    position: fixed;
+    display: flex;                 /* Make footer a flex container */
+    justify-content: center;       /* Horizontally center content */
+    align-items: center;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
