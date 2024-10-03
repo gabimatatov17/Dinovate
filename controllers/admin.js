@@ -9,7 +9,6 @@ async function showAdminView(req, res) {
     var isAuthenticated = sessionCostumer ? true : false;
 
     const items = await productsService.getAllProducts();
-    console.log(items);
     const chunkSize = 4;
     let result = [];
 
@@ -48,6 +47,16 @@ async function showAdminView(req, res) {
     
   }
 
+
+async function deleteItem(req,res) {
+
+    const cardID = req.params.id;
+    const response = await productsService.removeProduct(cardID);
+    res.send(response);
+
+}
+
 module.exports = {
-    showAdminView
+    showAdminView,
+    deleteItem
 }
