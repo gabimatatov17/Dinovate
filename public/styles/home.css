@@ -3,7 +3,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #c2e9fb !important;
+    background-color: rgba(194, 233, 251, 0.4) !important;
     color: #333;
 }
 
