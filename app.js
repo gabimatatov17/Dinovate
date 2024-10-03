@@ -13,6 +13,7 @@ const Card = require('./models/products');  // Adjust the path if necessary
 
 // routes
 const home = require('./routes/home');
+const admin = require('./routes/admin');
 const cart = require('./routes/cart');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
@@ -81,9 +82,10 @@ app.use("/", home);
 app.use("/cart", cart);
 app.use("/login", login);
 app.use("/logout", logout);
-app.use("/signup", signup)
-app.use("/stores", stores)
+app.use("/signup", signup);
+app.use("/stores", stores);
 app.use('/profile', profileRoute);
+app.use('/admin', admin);
 
 
 // Start the server
