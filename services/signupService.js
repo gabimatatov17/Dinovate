@@ -23,6 +23,9 @@ async function registerNewUser(firstName, lastName, email, gender, birthDate, pa
 
     // Save the new user/customer
     await newUser.save();
+
+    // Return the newly created user
+    return newUser;
 }
 
 module.exports = { registerNewUser };
