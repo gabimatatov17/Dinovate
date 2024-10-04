@@ -1,5 +1,10 @@
 const path = require("path").resolve(__dirname, "..");
 const productsService = require("../services/products");
+const customersService = require("../services/customers");
+const storesService = require("../services/stores");
+const ordersService = require("../services/orders");
+
+const { getStoresDetails } = require("../services/stores");
 
 
 async function showAdminView(req, res) {
@@ -50,9 +55,35 @@ async function showAdminView(req, res) {
 
 async function deleteItem(req,res) {
 
-    const cardID = req.params.id;
-    const response = await productsService.removeProduct(cardID);
-    res.send(response);
+    const type = req.params.type;
+    const ID = req.params.id;
+    let response = null;
+
+    switch (type) {
+
+        case 'products':
+
+            response = await productsService.removeProduct(ID);
+            res.send(response);
+
+        case 'customers':
+
+            response = await customersService.removeCustomer(ID);
+            res.send(response);
+
+        case 'orders':
+
+            response = await ordersService.removeOrder(ID);
+            res.send(response);
+
+        case 'stores':
+
+            response = await storesService.removeStore(ID);
+            res.send(response);
+
+
+    }
+    
 
 }
 
