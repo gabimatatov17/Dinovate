@@ -12,35 +12,19 @@
 
     <!-- FontAwesome for icons -->
     <script src="https://kit.fontawesome.com/9d9796826b.js" crossorigin="anonymous"></script>
+
+    <!--  Footer CSS -->
+    <link rel="stylesheet" href="/styles/footer.css">
+
+    <!--  Navbar CSS -->
+    <link rel="stylesheet" href="/styles/navbar.css">
 </head>
+
 <body>
 
 <!-- Banner Section -->
 <header>
-    <!-- Updated Banner -->
-    <div class="banner">
-        <!-- Left Side: Logo -->
-        <div class="banner-logo">
-            <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
-            <span class="logo-text">Dinovate</span>
-        </div>
-
-        <!-- Right Side: Navigation Links -->
-        <nav class="banner-nav">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/cart" class="nav-link">Cart</a>
-
-            <!-- Dropdown Menu -->
-            <div class="dropdown">
-                <a class="nav-link">More</a> <!-- Label for dropdown -->
-                <div class="dropdown-content">
-                    <a href="/profile">Profile</a>
-                    <a href="/stores">Stores</a>
-                    <a href="/contact">Contact</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <%- include('navbar') %>
 </header>
 
 <!-- Shopping Cart Section -->
@@ -132,6 +116,9 @@
         <h4 id="order-id">Your order ID is: </h4> <!-- Placeholder for dynamic orderId -->
     </div>
 </div>
+
+<%- include('footer') %>
+
 
 <!-- Axios CDN -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
