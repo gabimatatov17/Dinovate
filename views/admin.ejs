@@ -105,8 +105,8 @@
                                         <img src="<%= item.image_location %>" alt="<%= item.name %>">
                                     </a>
                                     <ul class="product-links">
-                                        <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>')"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>')"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
+                                        <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product-content">

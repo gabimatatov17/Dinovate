@@ -1,15 +1,14 @@
-function editItem(item) {
+function editItem(item, type) {
 
     item = JSON.parse(item);
     window.alert("Editting " + item.cardName);
 
 }
-function deleteItem(item) {
+function deleteItem(item, type) {
 
     item = JSON.parse(item);
     if (confirm("Are you sure you want to delete  " + item.cardName + "?")) {
-        // Send a DELETE request to the backend
-        fetch(`/admin/${item.cardId}`, {
+        fetch(`/admin/${type}/${item.cardId}`, {
             method: 'DELETE'
         })
         .then(response => {
