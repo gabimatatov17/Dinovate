@@ -13,7 +13,7 @@
 
         <!-- Dropdown Menu -->
         <div class="dropdown">
-            <a class="nav-link">More</a> <!-- Label for dropdown -->
+            <a class="nav-link">More</a>
             <div class="dropdown-content">
                 <a href="/stores">Stores</a>
                 <a href="/contact">Contact</a>
@@ -26,19 +26,13 @@
                 <a class="nav-link">
                     <i class="fa fa-user"></i>
                 </a>
-
                 <div class="dropdown-content">
                     <a href="/profile">My Profile</a>
                     <a id="logout-link" href="/logout">Logout</a>
                 </div>
-                <% } else { %>
-                    <div class="d-flex">
-                        <button id="login-button" name="login-button" class="login-button"
-                            onclick="window.location.replace('/login')">Login</button>
-                    </div>
-                    <% } %>
-
+            <% } else { %>
+                <button id="login-button" class="login-button" onclick="window.location.replace('/login')">Login</button>
+            <% } %>
         </div>
-        <!-- end -->
     </nav>
 </div>
