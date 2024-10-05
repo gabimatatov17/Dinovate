@@ -75,7 +75,11 @@ async function showCart(req, res) {
       total += item.price * item.quantity;
   }
 
-  res.render("cart", { cart, total }); // Pass cart and total price to the view
+  // extract data from session
+  var sessionCostumer = req.session.customer;
+  var isAuthenticated = sessionCostumer ? true : false;
+
+  res.render("cart", { cart, total, isAuthenticated }); // Pass cart and total price to the view
 }
 
 
@@ -143,7 +147,6 @@ async function validateAddress(req, res) {
       console.error('Error during address validation:', error);  // Log any unexpected errors
       res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
   }
-
 
 }
 
