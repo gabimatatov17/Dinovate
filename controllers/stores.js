@@ -4,10 +4,14 @@ const storesService = require("../services/stores");
 // Render the stores page
 async function showStoresPage(req, res) {
     try {
-        const storesDetails = await storesService.getStoresDetails();
+
+        var sessionCostumer = req.session.customer;
+        var isAuthenticated = sessionCostumer ? true : false; 
+
         res.render("stores", {
             root: path,
-            googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+            googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, 
+            isAuthenticated
         });
     } catch (error) {
         console.error('Error rendering stores page:', error);
