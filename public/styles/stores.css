@@ -14,7 +14,7 @@ body {
 }
 
 /* Navbar Styling */
-.navbar {
+/* .navbar {
     background-color: black;
     color: white;
     display: flex;
@@ -52,7 +52,7 @@ body {
 .navbar-links a:hover {
     background-color: #555;
     border-radius: 5px;
-}
+} */
 
 /* Container for map and list */
 .map-container {
@@ -67,7 +67,7 @@ body {
     flex-grow: 1;
     height: 100%;
     width: 100%;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 /* Store list container */
@@ -80,6 +80,7 @@ body {
     border-top: 1px solid #ccc;
     overflow: scroll;
     flex-grow: 1;
+    margin-bottom: 25px;
 }
 
 /* Individual store details */
@@ -154,7 +155,7 @@ body {
     font-weight: lighter;
 }
 
-.copy-rights {
+/* .copy-rights {
     height: 20px;
     background-color: black;
     width: 100%;
@@ -162,4 +163,4 @@ body {
     font-size: 10px;
     text-align: center;
     padding: 5px;
-}
+} */
