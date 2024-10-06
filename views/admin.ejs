@@ -95,31 +95,67 @@
             <h1>Admin panel</h1>
             <h2>here you can do lots of shit</h2>
         </div>
-        <div class="row" >
-            <% items.forEach(function(row) { %>
-                    <% row.forEach(function(item) { %>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product-grid">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img src="<%= item.image_location %>" alt="<%= item.name %>">
-                                    </a>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><%= item.cardName %></h3>
-                                    <div class="price">$<%= item.price %>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                    
-            <% }); %>
+
+        <div id = "sectionSelector">
+
+            <input type="radio" class="btn-check" name="options" id="Prodcuts" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Prodcuts">Products</label>
+
+            <input type="radio" class="btn-check" name="options" id="Stores" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Stores">Stores</label>
+
+            <input type="radio" class="btn-check" name="options" id="Orders" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Orders">Orders</label>
+
         </div>
+
+        <div id = "products" style = "display: none;">
+
+            <div class="row" >
+
+                <% items.forEach(function(row) { %>
+
+                        <% row.forEach(function(item) { %>
+
+                            <div class="col-md-3 col-sm-6">
+
+                                <div class="product-grid">
+
+                                    <div class="product-image">
+
+                                        <a href="#" class="image">
+
+                                            <img src="<%= item.image_location %>" alt="<%= item.name %>">
+
+                                        </a>
+
+                                        <ul class="product-links">
+
+                                            <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
+                                        
+                                        </ul>
+                                    </div>
+
+                                    <div class="product-content">
+
+                                        <h3 class="title"><%= item.cardName %></h3>
+                                        <div class="price">$<%= item.price %></div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        <% }); %>
+                        
+                <% }); %>
+
+            </div>
+
+        </div>
+        
         
     </main>
 
