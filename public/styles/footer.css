@@ -10,7 +10,6 @@ html, body {
     padding-top: 10px;
     text-align: center;
     margin-top: auto;
-    position: fixed;
     display: flex;                 /* Make footer a flex container */
     justify-content: center;       /* Horizontally center content */
     align-items: center;
