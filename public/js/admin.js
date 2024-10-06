@@ -1,3 +1,21 @@
+function showElement() {
+
+    // get the selected
+    const selected = document.querySelector('input[name="options"]:checked');
+
+    // check if a radio button is selected
+    if (selected) {
+
+        console.log(selected.id);
+
+    } else {
+
+        console.log('nothing is selected');
+        
+    }
+
+}
+
 function editItem(item, type) {
 
     item = JSON.parse(item);
