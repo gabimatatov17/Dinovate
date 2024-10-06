@@ -33,10 +33,11 @@
         <h2>The place where you can get all the cards you wish for</h2>
     </div>
     <div class="blocks-container">
-        <div class="image-block">
-            <img src="/images/cards/baby.jpg" alt="Image 1 Description">
-            <p>Image 1 Description</p>
-        </div>
+        <% items.forEach(function(item) { %>
+            <div class="image-block" style="background-image: url('<%= item.image_location %>');">
+                <p><%= item.cardName %></p>
+            </div>
+        <% }); %>
     </div>
 </main>
 

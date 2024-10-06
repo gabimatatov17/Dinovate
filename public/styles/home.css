@@ -27,27 +27,46 @@ body {
 
 /* Blocks Container (for image blocks) */
 .blocks-container {
+    max-width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
-    padding: 20px;
+    padding: 0 20px;
+    width: 1300px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .image-block {
-    background-color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;        /* Make the image fill the block */
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    bottom: 0;
     text-align: center;
+    height: 400px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
 }
 
-.image-block img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+.image-block p{
+    color: black;
+    opacity: 0;
 }
 
-.image-block p {
-    margin-top: 8px;
-    color: #333;
+.image-block:hover p{
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+}
+
+.image-block:hover{
+    opacity: 0.3;
 }
