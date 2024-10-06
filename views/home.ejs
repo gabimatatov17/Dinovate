@@ -28,10 +28,11 @@
 </header>
 
 <main>
-    <div class="container">
-        <h1>Welcome to Dinovate</h1>
-        <h2>The place where you can get all the cards you wish for</h2>
+    <div class="headline">
+        <h1>Welcome to <span>Dinovate!</span></h1>
+        <p>Your one-stop shop for unique cards that bring joy to every occasion!</p>
     </div>
+
     <div class="blocks-container">
         <% items.forEach(function(item) { %>
             <div class="image-block" style="background-image: url('<%= item.image_location %>');">

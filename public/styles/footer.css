@@ -9,7 +9,7 @@ html, body {
     color: #8d939c;
     padding-top: 10px;
     text-align: center;
-    margin-top: auto;
+    margin-top: 20px;
     display: flex;                 /* Make footer a flex container */
     justify-content: center;       /* Horizontally center content */
     align-items: center;
