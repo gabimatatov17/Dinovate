@@ -15,4 +15,5 @@ localhost:3000/login login page
 localhost:3000/signup sigup page
 localhost:3000/cart cart page
 localhost:3000/stores stores page
+localhost:3000/admin admin page
 ```
