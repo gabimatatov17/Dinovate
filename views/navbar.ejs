@@ -20,20 +20,25 @@
             </div>
         </div>
 
-        <!-- Profile Icon with Dropdown -->
-        <div class="dropdown">
-            <% if (isAuthenticated) { %>
-                <a class="nav-link">
-                    <i class="fa fa-user"></i>
-                </a>
-                <div class="dropdown-content">
-                    <a href="/profile">My Profile</a>
-                    <a id="logout-link" href="/logout">Logout</a>
-                </div>
+            <!-- Profile Icon with Dropdown -->
+            <div class="dropdown">
+                <% if (isAuthenticated) { %>
+                    <a class="nav-link">
+                        <i class="fa fa-user"></i>
+                    </a>
+
+                    <div class="dropdown-content">
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout", id="logout-link">Logout</a>
+                    </div
+            </div>
                 <% } else { %>
-                    <button id="login-button" class="login-button"
+                <div class="d-flex">
+                    <button id="login-button" name="login-button" class="button"
                         onclick="window.location.replace('/login')">Login</button>
-                    <% } %>
-        </div>
-    </nav>
-</div>
+                </div>
+                <% } %>
+            <!-- end -->
+
+        </nav>
+    </div>
