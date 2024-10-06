@@ -90,6 +90,24 @@
     display: block;
 }
 
+/* Base button styles */
+.button {
+    background-color: white;     /* White background */
+    color: #0072ff;                 /* Blue text */
+    border: 0;      /* Blue border */
+    padding: 10px 20px;          /* Padding for the button */
+    font-size: 16px;             /* Font size */
+    font-weight: bold;           /* Bold text */
+    border-radius: 5px;          /* Rounded corners */
+    cursor: pointer;             /* Show pointer cursor */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect: blue background, white text */
+.button:hover {
+    background-color: #dadae4;
+}
+
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     .banner-nav {
