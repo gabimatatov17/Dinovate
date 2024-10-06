@@ -49,6 +49,56 @@ async function getCoordinates(address) {
     }
 }
 
+
+async function removeStore(storeID) {
+
+    const resp = await Store.deleteOne({storeId: storeID}).then(result => {
+
+        if (result.deletedCount == 0) {
+
+            return Promise.reject({status: 500, message: "Store not found"});
+
+        }
+        return Promise.resolve({status: 200});
+
+    }).catch(e => {
+
+        return Promise.reject({status: 500, message: e});
+
+    });
+
+    return resp;
+
+}
+
+
+async function editStore(storeID, data) {
+
+    try {
+
+        const result = await Order.updateOne({ storeId: storeID }, data, { 
+            runValidators: true
+        });
+
+        if (result.modifiedCount == 0) {
+
+            return ({status: 500, message: "Store not found"});
+
+        }
+
+        return ({status: 200});
+
+    } catch (e) {
+
+        console.error('Error updating item:', error);
+        return ({status: 500, message: e});
+
+    }
+
+}
+
 module.exports = {
-    getStoresDetails
+    getStoresDetails,
+    removeStore,
+    editStore
 }
