@@ -1,45 +1,39 @@
 <!-- Updated Banner -->
-    <div class="banner">
-        <!-- Left Side: Logo -->
-        <div class="banner-logo">
-            <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
-            <span class="logo-text">Dinovate</span>
+<div class="banner">
+    <!-- Left Side: Logo -->
+    <div class="banner-logo">
+        <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
+        <span class="logo-text">Dinovate</span>
+    </div>
+
+    <!-- Right Side: Navigation Links -->
+    <nav class="banner-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/cart" class="nav-link">Cart</a>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown">
+            <a class="nav-link">More</a>
+            <div class="dropdown-content">
+                <a href="/stores">Stores</a>
+                <a href="/contact">Contact</a>
+            </div>
         </div>
 
-        <!-- Right Side: Navigation Links -->
-        <nav class="banner-nav">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/cart" class="nav-link">Cart</a>
-
-            <!-- Dropdown Menu -->
-            <div class="dropdown">
-                <a class="nav-link">More</a> <!-- Label for dropdown -->
+        <!-- Profile Icon with Dropdown -->
+        <div class="dropdown">
+            <% if (isAuthenticated) { %>
+                <a class="nav-link">
+                    <i class="fa fa-user"></i>
+                </a>
                 <div class="dropdown-content">
-                    <a href="/stores">Stores</a>
-                    <a href="/contact">Contact</a>
+                    <a href="/profile">My Profile</a>
+                    <a id="logout-link" href="/logout">Logout</a>
                 </div>
-            </div>
-
-            <!-- Profile Icon with Dropdown -->
-            <div class="dropdown">
-                <% if (isAuthenticated) { %>
-                    <a class="nav-link">
-                        <i class="fa fa-user"></i>
-                    </a>
-
-                    <div class="dropdown-content">
-                        <a href="/profile">My Profile</a>
-                        <a href="/logout", id="logout-link">Logout</a>
-                    </div>
-                    <% } else { %>
-                        <div class="d-flex">
-                            <button id="login-button" name="login-button" class="button"
-                                onclick="window.location.replace('/login')">Login</button>
-                        </div>
-                        <% } %>
-
-            </div>
-            <!-- end -->
-
-        </nav>
-    </div>
+                <% } else { %>
+                    <button id="login-button" class="login-button"
+                        onclick="window.location.replace('/login')">Login</button>
+                    <% } %>
+        </div>
+    </nav>
+</div>
