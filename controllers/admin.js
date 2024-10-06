@@ -1,10 +1,8 @@
 const path = require("path").resolve(__dirname, "..");
 const productsService = require("../services/products");
-const customersService = require("../services/customers");
 const storesService = require("../services/stores");
 const ordersService = require("../services/orders");
-
-const { getStoresDetails } = require("../services/stores");
+const { compile } = require("ejs");
 
 
 async function showAdminView(req, res) {
@@ -55,35 +53,77 @@ async function showAdminView(req, res) {
 
 async function deleteItem(req,res) {
 
-    const type = req.params.type;
     const ID = req.params.id;
+    const type = req.params.type;
     let response = null;
 
-    switch (type) {
+    try {
+        switch (type) {
+            case 'products':
 
-        case 'products':
+                response = await productsService.removeProduct(ID);
+                console.log(response);
+                return res.send(response);
 
-            response = await productsService.removeProduct(ID);
-            res.send(response);
+            case 'orders':
 
-        case 'customers':
+                response = await ordersService.removeOrder(ID);
+                console.log(response);
+                return res.send(response);
 
-            response = await customersService.removeCustomer(ID);
-            res.send(response);
+            case 'stores':
 
-        case 'orders':
+                response = await storesService.removeStore(ID);
+                console.log(response);
+                return res.send(response);
 
-            response = await ordersService.removeOrder(ID);
-            res.send(response);
+            default:
 
-        case 'stores':
-
-            response = await storesService.removeStore(ID);
-            res.send(response);
-
-
+                return res.status(404).send({ status: 404, message: "Type not supported" });
+        }
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).send({ status: 500, message: "Internal Server Error" });
     }
-    
+
+}
+
+
+async function editItem(req, res) {
+
+    const ID = req.params.id;
+    const type = req.params.type;
+    const data = req.params.data;
+    let response = null;
+
+    try {
+        switch (type) {
+            case 'products':
+
+                response = await productsService.editProduct(ID, data);
+                console.log(response);
+                return res.send(response);
+
+            case 'orders':
+
+                response = await ordersService.editOrder(ID, data);
+                console.log(response);
+                return res.send(response);
+
+            case 'stores':
+
+                response = await storesService.editStore(ID, data);
+                console.log(response);
+                return res.send(response);
+
+            default:
+
+                return res.status(404).send({ status: 404, message: "Type not supported" });
+        }
+    } catch (error) {
+        console.error("Error editing item:", error);
+        res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
 
 }
 

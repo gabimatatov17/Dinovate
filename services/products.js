@@ -33,7 +33,34 @@ async function removeProduct(productID) {
 
 }
 
+
+async function editProduct(productID, data) {
+
+    try {
+
+        const result = await Order.updateOne({ productId: productID }, data, { 
+            runValidators: true
+        });
+
+        if (result.modifiedCount == 0) {
+
+            return ({status: 500, message: "Product not found"});
+
+        }
+
+        return ({status: 200});
+
+    } catch (e) {
+
+        console.error('Error updating item:', error);
+        return ({status: 500, message: e});
+
+    }
+
+}
+
 module.exports = {
     getAllProducts,
-    removeProduct
+    removeProduct,
+    editProduct
 }
