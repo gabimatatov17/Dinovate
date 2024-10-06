@@ -30,15 +30,14 @@
                     <div class="dropdown-content">
                         <a href="/profile">My Profile</a>
                         <a href="/logout", id="logout-link">Logout</a>
-                    </div>
-                    <% } else { %>
-                        <div class="d-flex">
-                            <button id="login-button" name="login-button" class="button"
-                                onclick="window.location.replace('/login')">Login</button>
-                        </div>
-                        <% } %>
-
+                    </div
             </div>
+                <% } else { %>
+                <div class="d-flex">
+                    <button id="login-button" name="login-button" class="button"
+                        onclick="window.location.replace('/login')">Login</button>
+                </div>
+                <% } %>
             <!-- end -->
 
         </nav>
