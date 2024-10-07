@@ -80,7 +80,7 @@ body {
     border-top: 1px solid #ccc;
     overflow: scroll;
     flex-grow: 1;
-    margin-bottom: 25px;
+    /* margin-bottom: 5px; */
 }
 
 /* Individual store details */
