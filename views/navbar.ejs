@@ -8,9 +8,11 @@
 
     <!-- Right Side: Navigation Links -->
     <nav class="banner-nav">
+        <% if (isAdmin) { %>
+            <a href="/admin" class="nav-link">Admin Panel</a>
+        <% } %>
         <a href="/" class="nav-link">Home</a>
         <a href="/cart" class="nav-link">Cart</a>
-
         <!-- Dropdown Menu -->
         <div class="dropdown">
             <a class="nav-link">More</a>
@@ -30,7 +32,7 @@
                     <div class="dropdown-content">
                         <a href="/profile">My Profile</a>
                         <a href="/logout", id="logout-link">Logout</a>
-                    </div
+                    </div>
             </div>
                 <% } else { %>
                 <div class="d-flex">
