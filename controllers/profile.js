@@ -12,9 +12,14 @@ async function showProfile(req, res) {
 
         var sessionCostumer = req.session.customer;
         var isAuthenticated = sessionCostumer ? true : false;
+        if (sessionCostumer) {
+            var isAdmin = sessionCostumer.isAdmin;
+          } else {
+            var isAdmin = null;
+          }
 
         // Render the profile page and pass customer data and orders
-        res.render('profile', { customer, orders, isAuthenticated });
+        res.render('profile', { customer, orders, isAuthenticated, isAdmin });
     } catch (error) {
         console.error('Error fetching profile data:', error);
         res.status(500).send('Server error. Please try again later.');

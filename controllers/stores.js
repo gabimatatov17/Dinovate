@@ -6,12 +6,18 @@ async function showStoresPage(req, res) {
     try {
 
         var sessionCostumer = req.session.customer;
-        var isAuthenticated = sessionCostumer ? true : false; 
+        var isAuthenticated = sessionCostumer ? true : false;
+        if (sessionCostumer) {
+            var isAdmin = sessionCostumer.isAdmin;
+          } else {
+            var isAdmin = null;
+          }
 
         res.render("stores", {
             root: path,
             googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, 
-            isAuthenticated
+            isAuthenticated, 
+            isAdmin
         });
     } catch (error) {
         console.error('Error rendering stores page:', error);

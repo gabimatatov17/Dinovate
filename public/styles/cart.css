@@ -24,6 +24,7 @@ body {
 #shopping-cart {
     width: 100%;
     margin-top: 80px;  /* Adjusted to prevent overlap with the sticky banner */
+    flex: 1;
 }
 
 .row {
