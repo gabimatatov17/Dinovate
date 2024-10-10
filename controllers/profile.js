@@ -6,12 +6,20 @@ async function showProfile(req, res) {
     try {
         // Fetch the logged-in user's details from the session
         const customer = await Customer.findOne({ id: req.session.customer.id });
-        
+
         // Fetch the user's orders based on their customerId
         const orders = await Order.find({ customerId: customer.id });
 
+        var sessionCostumer = req.session.customer;
+        var isAuthenticated = sessionCostumer ? true : false;
+        if (sessionCostumer) {
+            var isAdmin = sessionCostumer.isAdmin;
+          } else {
+            var isAdmin = null;
+          }
+
         // Render the profile page and pass customer data and orders
-        res.render('profile', { customer, orders });
+        res.render('profile', { customer, orders, isAuthenticated, isAdmin });
     } catch (error) {
         console.error('Error fetching profile data:', error);
         res.status(500).send('Server error. Please try again later.');

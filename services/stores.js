@@ -1,6 +1,8 @@
 const axios = require('axios');
 const Store = require('../models/stores');
 
+
+// Function to get return stores details
 async function getStoresDetails() {
     const storesDetails = [];
     const stores = await Store.find({}).exec();
@@ -24,6 +26,7 @@ async function getStoresDetails() {
     }
     return storesDetails;
 }
+
 
 // Function to get coordinates for a single address
 async function getCoordinates(address) {

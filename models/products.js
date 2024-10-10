@@ -86,77 +86,77 @@ module.exports = Card;
 //         cardName: "birthday_card_1",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday.jpg"
+//         image_location: "/images/cards/birthday.jpg"
 //     },
 //     {
 //         cardId: 8,
 //         cardName: "birthday_card_2",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday2.jpg"
+//         image_location: "/images/cards/birthday2.jpg"
 //     },
 //     {
 //         cardId: 9,
 //         cardName: "birthday_card_3",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday3.jpg"
+//         image_location: "/images/cards/birthday3.jpg"
 //     },
 //     {
 //         cardId: 10,
 //         cardName: "birthday_card_4",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday4.jpg"
+//         image_location: "/images/cards/birthday4.jpg"
 //     },
 //     {
 //         cardId: 11,
 //         cardName: "birthday_card_5",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday5.jpg"
+//         image_location: "/images/cards/birthday5.jpg"
 //     },
 //     {
 //         cardId: 12,
 //         cardName: "birthday_card_6",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday6.jpg"
+//         image_location: "/images/cards/birthday6.jpg"
 //     },
 //     {
 //         cardId: 13,
 //         cardName: "birthday_card_7",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday7.jpg"
+//         image_location: "/images/cards/birthday7.jpg"
 //     },
 //     {
 //         cardId: 14,
 //         cardName: "birthday_card_8",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday8.jpg"
+//         image_location: "/images/cards/birthday8.jpg"
 //     },
 //     {
 //         cardId: 15,
 //         cardName: "birthday_card_9",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday9.jpg"
+//         image_location: "/images/cards/birthday9.jpg"
 //     },
 //     {
 //         cardId: 16,
 //         cardName: "birthday_card_10",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday10.jpg"
+//         image_location: "/images/cards/birthday10.jpg"
 //     },
 //     {
 //         cardId: 17,
 //         cardName: "birthday_card_11",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
-//         image_location: "/images/cards/birhday11.jpg"
+//         image_location: "/images/cards/birthday11.jpg"
 //     },
 //     //////
 //     {

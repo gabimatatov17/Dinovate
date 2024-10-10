@@ -20,34 +20,120 @@ body {
     align-items: center;
 }
 
-.container {
-    text-align: center;
-    color: #55a1ea;
+body {
+    background-color: #f0f4f8; /* Soft background for contrast */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
 }
+
+.headline {
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, #e0f7fa, #81d4fa); /* Light blue gradient */
+    padding: 40px 20px; /* Responsive padding */
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden; /* Hide overflow from animations */
+    transition: transform 0.3s; /* Smooth scale transition */
+}
+
+.headline:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+}
+
+.headline h1 {
+    font-size: 3rem; /* Larger, modern font size */
+    color: #0277bd; /* Darker blue for contrast */
+    margin-bottom: 10px;
+    font-weight: bold; /* Bold font for modern aesthetic */
+    letter-spacing: 2px; /* Spacing for a contemporary look */
+}
+
+.headline h1 span {
+    color: #00bcd4; /* Bright cyan for emphasis */
+    font-style: italic; /* Italic style for the brand name */
+}
+
+.headline p {
+    font-size: 1.4rem; /* Slightly larger font for the description */
+    color: #555; /* Darker color for readability */
+    margin-top: 0;
+    opacity: 0; /* Start hidden for animation */
+    animation: fadeIn 1s forwards; /* Animation for the paragraph */
+    animation-delay: 0.5s; /* Delay to sync with headline */
+}
+
+/* Animation for the headline */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Adding a subtle shimmer effect on the headline */
+.headline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5));
+    animation: shimmer 2s infinite; /* Continuous shimmer animation */
+    opacity: 0.5; /* Slightly transparent */
+    border-radius: 15px; /* Match border radius */
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
 
 /* Blocks Container (for image blocks) */
 .blocks-container {
+    max-width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
-    padding: 20px;
+    padding: 0 20px;
+    width: 1300px;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .image-block {
-    background-color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;        /* Make the image fill the block */
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    bottom: 0;
     text-align: center;
+    height: 400px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
 }
 
-.image-block img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
+.image-block p{
+    color: black;
+    opacity: 0;
 }
 
-.image-block p {
-    margin-top: 8px;
-    color: #333;
+.image-block:hover p{
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+}
+
+.image-block:hover{
+    background-color: rgba(0,0,0,0.3);
+    background-blend-mode: multiply;
 }
