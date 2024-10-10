@@ -6,7 +6,7 @@
 .product-grid .product-image{
     overflow: hidden;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 .product-grid .product-image a.image{display: block; }
 .product-grid .product-image img{
@@ -98,5 +98,28 @@
 .row {
 
     text-align: center;
+
+}
+#sectionSelector {
+
+    text-align: center;
+    margin-top: 30px;
+
+}
+.container {
+
+    text-align: center;
+
+}
+.showPopUp {
+
+    display: flex;
+    justify-content: center;
+
+  }
+.row {
+
+    height: 70vh;
+    overflow-y: scroll;
 
 }
