@@ -59,8 +59,54 @@ async function editProduct(productID, data) {
 
 }
 
+
+async function createProduct(name, price, labels, image) {
+
+    try {
+
+        // Check if a card with the same cardName already exists
+        const existingCard = await Card.findOne({ cardName: name });
+
+        if (existingCard) {
+
+            return {status: 400, message: 'Card name already exists.' };
+
+        }
+
+        // Create a new card
+        const cardCount = await Card.countDocuments();
+        const newCard = new Card({
+            cardId: cardCount + 1,
+            cardName: name,
+            price,
+            labels: labels.split(',').map(label => label.trim()), // Convert labels from comma-separated string to array
+            image_location: image
+        });
+
+        // Save the new card to the database
+        await newCard.save();
+
+        return {
+            status: 200, 
+            message: 'Card created successfully'
+        };
+    
+    } 
+    catch (err) {
+
+        console.error('Error creating card:', err.message);
+        return {
+            status: 500,
+            message: `Error creating card: ${err.message}`
+        };
+
+    }
+
+}
+
 module.exports = {
     getAllProducts,
     removeProduct,
-    editProduct
+    editProduct,
+    createProduct
 }

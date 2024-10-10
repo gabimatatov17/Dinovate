@@ -30,7 +30,8 @@ async function showAdminView(req, res) {
 
                 root: path,
                 isAuthenticated: isAuthenticated,
-                items: result
+                items: result,
+                isAdmin: isAdmin
 
             });
 
@@ -127,7 +128,40 @@ async function editItem(req, res) {
 
 }
 
+
+async function createItem(req, res) {
+
+    const type = req.body.type;
+
+    switch (type) {
+
+        case "products":
+
+            // unpack the item
+            const { cardName, price, labels, image_location } = req.body;
+
+            // Process the received data (e.g., save to database)
+            console.log('Received product data:', {
+                cardName,
+                price,
+                labels,
+                image_location,
+            });
+
+            const response = await productsService.createProduct(cardName, price, labels, image_location);
+
+            return res.send(response);
+
+        default:
+
+            return res.status(404).send({ status: 404, message: "Type not supported" });
+    }
+    
+
+}
+
 module.exports = {
     showAdminView,
-    deleteItem
+    deleteItem,
+    createItem
 }
