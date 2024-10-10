@@ -6,7 +6,33 @@ function showElement() {
     // check if a radio button is selected
     if (selected) {
 
-        console.log(selected.id);
+        var selectedID = selected.id;
+        var products = document.getElementById('products');
+        var stores = document.getElementById('stores');
+        var orders = document.getElementById('orders');
+
+        switch (selectedID) {
+
+            case "Products":
+
+                products.style.display = 'block';
+                stores.style.display = 'none';
+                orders.style.display = 'none';
+            
+            case "Stores":
+
+                products.style.display = 'none';
+                stores.style.display = 'block';
+                orders.style.display = 'none';
+            
+            case "Orders":
+
+                products.style.display = 'none';
+                stores.style.display = 'none';
+                orders.style.display = 'block';
+
+        }
+
 
     } else {
 
@@ -22,6 +48,7 @@ function editItem(item, type) {
     window.alert("Editting " + item.cardName);
 
 }
+
 function deleteItem(item, type) {
 
     item = JSON.parse(item);
@@ -55,5 +82,12 @@ function deleteItem(item, type) {
             window.alert("Error deleting item: " + error.message);
         });
     }
+
+}
+
+function showPopUp() {
+
+    var popup = document.getElementById('popupSection');
+    popup.style.display = "block";
 
 }

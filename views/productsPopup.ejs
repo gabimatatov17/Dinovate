@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/styles/popup.css">
+    </head>
+    <body>
+
+        <div class="modal-overlay" onclick="closePopup(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <span class="close-icon" onclick="closePopup(event)">✖</span> <!-- Close icon -->
+                <h2>Create Card</h2>
+                <form id="product-form" onSubmit="createItem('products')">
+                    <div class="input-group">
+                        <label for="cardName">Product Name</label>
+                        <input type="text" id="cardName" name="cardName" placeholder="Enter product name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price" placeholder="Enter product price" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="labels">Labels (comma-separated)</label>
+                        <input type="text" id="labels" name="labels" placeholder="Enter labels" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="image_location">Image Location (URL)</label>
+                        <input type="url" id="image_location" name="image_location" placeholder="Enter image URL" required>
+                    </div>
+                    <button type="submit" class="submit-button">Create Product</button>
+                </form>
+            </div>
+        </div>
+        
+        <script src="/js/popup.js"></script>
+    </body>
+</html>
