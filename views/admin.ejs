@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Card Generator</title>
-    <link rel="stylesheet" href="/styles/home.css">
-    <link rel="stylesheet" href="/styles/admin.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -15,114 +13,95 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles/admin.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
 </head>
 
 <body>
 
-    <header class="site-header sticky-top py-1">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Dinovate</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
-
-                    <!-- Profile Icon with Dropdown -->
-                    <div class="profile-icon">
-                        <% if (isAuthenticated) { %>
-                            <a class="nav-link profile-icon" href="#" id="profileDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                            </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                                <li><a class="dropdown-item" href="/profile">My Profile</a></li>
-                                <li><a class="dropdown-item" id="logout-link" href="/logout">Logout</a></li>
-                            </ul>
-                            <% } else { %>
-                                <div class="d-flex">
-                                    <button id="login-button" name="login-button" class="button"
-                                        onclick="window.location.replace('/login')">Login</button>
-                                </div>
-                                <% } %>
-
-                    </div>
-                    <!-- end -->
-
-                    <div>
-                        <button id="toggle-button" class="openbtn">&#9776;</button>
-                    </div>
-                    <div id="sidebar" class="sidebar">
-                        <a class="fa fa-home" href="#">
-                            <span class="padding">Home</span>
-                        </a>
-                        <a class="fa fa-shopping-cart" href="#">
-                            <span class="padding">Cart</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+    <header class="site-header">
+        <%- include('navbar') %>
     </header>
 
     <main>
         <div class="container">
             <h1>Admin panel</h1>
-            <h2>here you can do lots of shit</h2>
         </div>
-        <div class="row" >
-            <% items.forEach(function(row) { %>
-                    <% row.forEach(function(item) { %>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="product-grid">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img src="<%= item.image_location %>" alt="<%= item.name %>">
-                                    </a>
-                                    <ul class="product-links">
-                                        <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>')"></i></a></li>
-                                        <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>')"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><%= item.cardName %></h3>
-                                    <div class="price">$<%= item.price %>
+
+        <div id = "sectionSelector">
+
+            <input type="radio" class="btn-check" name="options" id="Products" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Products">Products</label>
+
+            <input type="radio" class="btn-check" name="options" id="Stores" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Stores">Stores</label>
+
+            <input type="radio" class="btn-check" name="options" id="Orders" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Orders">Orders</label>
+
+        </div>
+
+        <div id = "products">
+
+            <div class="row" >
+
+                <% items.forEach(function(row) { %>
+
+                        <% row.forEach(function(item) { %>
+
+                            <div class="col-md-3 col-sm-6">
+
+                                <div class="product-grid">
+
+                                    <div class="product-image">
+
+                                        <a href="#" class="image">
+
+                                            <img src="<%= item.image_location %>" alt="<%= item.name %>">
+
+                                        </a>
+
+                                        <ul class="product-links">
+
+                                            <li><a href="#"><i class="fas fa-pencil-alt" onClick="editItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
+                                        
+                                        </ul>
                                     </div>
+
+                                    <div class="product-content">
+
+                                        <h3 class="title"><%= item.cardName %></h3>
+                                        <div class="price">$<%= item.price %></div>
+
+                                    </div>
+
                                 </div>
+
                             </div>
-                        </div>
-                    <% }); %>
-                    
-            <% }); %>
+
+                        <% }); %>
+                        
+                <% }); %>
+
+            </div>
+
+            <div class = "showPopUp">
+
+                <button type="button" name = "products" class="btn btn-outline-primary" onClick = "showPopUp()">Create</button>
+    
+            </div>
+    
+            <div id = "popupSection" style = "display: none;">
+                <%- include('productsPopup') %>
+            </div>
+
         </div>
-        
+
     </main>
 
+    <%- include('footer') %>
     <script src="/js/admin.js"></script>
 </body>
 
