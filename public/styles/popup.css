@@ -17,11 +17,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure the modal is on top */
+    z-index: 1000;
+    /* Ensure the modal is on top */
 }
 
 /* Modal Content */
@@ -49,12 +51,18 @@ body {
     color: #333;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.input-group select {
+    appearance: none;
+    color: #888888;
 }
 
 .submit-button {
