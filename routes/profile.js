@@ -12,4 +12,6 @@ router.get('/', profileController.showProfile);
 // Route to handle profile updates
 router.post('/update', profileController.updateProfile);
 
+router.delete('/delete', profileController.deleteUser);
+
 module.exports = router;

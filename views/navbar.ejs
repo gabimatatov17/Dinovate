@@ -1,9 +1,8 @@
-<!-- Updated Banner -->
+<!-- Updated Navbar with Dinovate text in white -->
 <div class="banner">
-    <!-- Left Side: Logo -->
+    <!-- Left Side: Dinovate Text Only (No Image) -->
     <div class="banner-logo">
-        <img src="/images/logo/dinovate.jpg" class="logo-img" alt="Dinovate Logo">
-        <span class="logo-text">Dinovate</span>
+        <span class="logo-text">Dinovate</span> <!-- "Dinovate" text on the left -->
     </div>
 
     <!-- Right Side: Navigation Links -->
@@ -13,6 +12,7 @@
         <% } %>
         <a href="/" class="nav-link">Home</a>
         <a href="/cart" class="nav-link">Cart</a>
+
         <!-- Dropdown Menu -->
         <div class="dropdown">
             <a class="nav-link">More</a>
@@ -22,25 +22,19 @@
             </div>
         </div>
 
-            <!-- Profile Icon with Dropdown -->
-            <div class="dropdown">
-                <% if (isAuthenticated) { %>
-                    <a class="nav-link">
-                        <i class="fa fa-user"></i>
-                    </a>
-
-                    <div class="dropdown-content">
-                        <a href="/profile">My Profile</a>
-                        <a href="/logout", id="logout-link">Logout</a>
-                    </div>
-            </div>
-                <% } else { %>
-                <div class="d-flex">
-                    <button id="login-button" name="login-button" class="button"
-                        onclick="window.location.replace('/login')">Login</button>
+        <!-- Profile Icon with Dropdown -->
+        <div class="dropdown">
+            <% if (isAuthenticated) { %>
+                <a class="nav-link">
+                    <i class="fa fa-user"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="/profile">My Profile</a>
+                    <a href="/logout" id="logout-link">Logout</a>
                 </div>
-                <% } %>
-            <!-- end -->
-
-        </nav>
-    </div>
+            <% } else { %>
+                <button id="login-button" name="login-button" class="button" onclick="window.location.replace('/login')">Login</button>
+            <% } %>
+        </div>
+    </nav>
+</div>
