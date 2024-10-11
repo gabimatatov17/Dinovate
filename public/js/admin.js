@@ -125,12 +125,9 @@ function closePopup(event) {
     }
 }
 
-function createItem(type) {
-    
+function createItem(type) { 
     event.preventDefault();
-
     switch (type) {
-
         case "products":
 
             // Get the form data
@@ -138,6 +135,7 @@ function createItem(type) {
             const price = document.getElementById('price').value;
             const labels = document.getElementById('labels').value;
             const image_location = document.getElementById('image_location').value;
+            const twitter_post = document.getElementById('twitter_post').value;
 
             if (confirm("Are you sure you want to create  " + cardName + "?")) {
                 fetch(`/admin`, {
@@ -150,7 +148,8 @@ function createItem(type) {
                         cardName,
                         price,
                         labels,
-                        image_location
+                        image_location,
+                        twitter_post                        
                     })
                 })
                 .then(response => {
@@ -160,18 +159,14 @@ function createItem(type) {
                     return response.json();
                 })
                 .then(data => {
-
                     window.alert(data.message);
                     location.reload(); 
-
                 })
                 .catch(error => {
                     window.alert("Error creating item: " + error.message);
                 });
             }
-
     }
-
 }
 
 function editItem(type) {
@@ -209,16 +204,12 @@ function editItem(type) {
                     return response.json();
                 })
                 .then(data => {
-
                     window.alert(data.message);
                     location.reload(); 
-
                 })
                 .catch(error => {
                     window.alert("Error editting item: " + error.message);
                 });
             }
-
     }
-
 }
