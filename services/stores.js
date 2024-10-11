@@ -68,7 +68,7 @@ async function removeStore(storeID) {
 
 async function editStore(storeID, data) {
     try {
-        const result = await Order.updateOne({ storeId: storeID }, data, { 
+        const result = await Store.updateOne({ storeId: storeID }, data, { 
             runValidators: true
         });
 
@@ -76,15 +76,33 @@ async function editStore(storeID, data) {
             return ({status: 500, message: "Store not found"});
 
         }
-        return ({status: 200});
+        return ({status: 200, message: "Success" });
     } catch (e) {
         console.error('Error updating item:', error);
         return ({status: 500, message: e});
     }
 }
 
+
+async function getAllStores() {
+
+    try {
+
+        const stores = await Store.find().exec();
+        return stores;
+
+    } catch (error) {
+
+        console.error('Error finding stores: ', error);
+        return null;
+
+    }
+
+}
+
 module.exports = {
     getStoresDetails,
     removeStore,
-    editStore
+    editStore,
+    getAllStores
 }
