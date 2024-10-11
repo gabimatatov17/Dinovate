@@ -167,3 +167,34 @@
 .simple-footer {
     position: fixed;
 }
+.storeActions {
+
+    text-align: center;
+
+}
+.storeIcon {
+
+    margin: 3px;
+    color: black;
+
+}
+#addStoreBtn {
+
+    margin: auto;
+
+}
+.no-border-input {
+    border: none;
+    background: none;
+    outline: none;
+    width: 100%;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin: 0; 
+    font-family: inherit;
+}
+
+.no-border-input:focus {
+    outline: none;
+}

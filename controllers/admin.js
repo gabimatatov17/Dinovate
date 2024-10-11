@@ -4,6 +4,7 @@ const storesService = require("../services/stores");
 const ordersService = require("../services/orders");
 const twitterService = require("../services/twitter");
 const { compile } = require("ejs");
+const moment = require('moment');
 
 
 async function getPopUp(req, res) {
@@ -37,23 +38,32 @@ async function showAdminView(req, res) {
     var sessionCostumer = req.session.customer;
     var isAuthenticated = sessionCostumer ? true : false;
 
-    const items = await productsService.getAllProducts();
+    const products = await productsService.getAllProducts();
+    const stores = await storesService.getAllStores();
+
+    // parse products
     const chunkSize = 4;
     let result = [];
 
-    for (let i = 0; i < items.length; i += chunkSize) {
+    for (let i = 0; i < products.length; i += chunkSize) {
         // Create a chunk of 4 items and push to result
-        result.push(items.slice(i, i + chunkSize));
+        result.push(products.slice(i, i + chunkSize));
     }
+
+    // parse stores
+    stores.forEach(store => {
+        store.formattedDateAdded = moment(store.dateAdded).format('DD/MM/YYYY');
+    });
 
     if (isAuthenticated) {
         var isAdmin = sessionCostumer.isAdmin;
         if (isAdmin) {
             res.render("admin", {
                 root: path,
-                isAuthenticated: isAuthenticated,
-                items: result,
-                isAdmin: isAdmin
+                isAuthenticated,
+                products: result,
+                isAdmin,
+                stores
             });
         }
         else {
@@ -77,19 +87,16 @@ async function deleteItem(req,res) {
             case 'products':
 
                 response = await productsService.removeProduct(ID);
-                console.log(response);
                 return res.send(response);
 
             case 'orders':
 
                 response = await ordersService.removeOrder(ID);
-                console.log(response);
                 return res.send(response);
 
             case 'stores':
 
                 response = await storesService.removeStore(ID);
-                console.log(response);
                 return res.send(response);
 
             default:
@@ -106,29 +113,42 @@ async function deleteItem(req,res) {
 
 async function editItem(req, res) {
 
-    const ID = req.body.id;
     const type = req.params.type;
-    const data = req.body.data;
+    const body = req.body;
+    const ID = body.id;
+    let data = null;
     let response = null;
 
     try {
         switch (type) {
             case 'products':
 
+                data = body.data;
                 response = await productsService.editProduct(ID, data);
-                console.log(response);
                 return res.send(response);
 
             case 'orders':
 
                 response = await ordersService.editOrder(ID, data);
-                console.log(response);
                 return res.send(response);
 
             case 'stores':
 
+                const storeName = body.storeName;
+                const storeAddress = body.storeAddress;
+                const phoneNumber = body.phoneNumber;
+                const workingHours = body.workingHours;
+                const imageLocation = body.imageLocation;
+
+                data = {
+                    storeName,
+                    storeAddress,
+                    phoneNumber,
+                    workingHours,
+                    imageLocation
+                }
+
                 response = await storesService.editStore(ID, data);
-                console.log(response);
                 return res.send(response);
 
             default:

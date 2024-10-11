@@ -43,38 +43,75 @@ function showElement() {
 }
 
 function deleteItem(item, type) {
-
+    
     item = JSON.parse(item);
-    if (confirm("Are you sure you want to delete  " + item.cardName + "?")) {
-        fetch(`/admin/${type}/${item.cardId}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
 
-            if (data.status == 200) {
+    if (type == "products") {
+        
+        if (confirm("Are you sure you want to delete  " + item.cardName + "?")) {
+            fetch(`/admin/${type}/${item.cardId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status == 200) {
+    
+                    window.alert("successfully deleted " + item.cardName);
+    
+                }
+                else {
+    
+                    window.alert("could not delete " + item.cardName + ": " + data.message);
+    
+                }
+                
+                location.reload(); // Reloads the page to reflect changes
+            })
+            .catch(error => {
+                window.alert("Error deleting item: " + error.message);
+            });
+        }
 
-                window.alert("successfully deleted " + item.cardName);
-
-            }
-            else {
-
-                window.alert("could not delete " + item.cardName + ": " + data.message);
-
-            }
-            
-            // Optionally, refresh the page or remove the item from the DOM
-            location.reload(); // Reloads the page to reflect changes
-        })
-        .catch(error => {
-            window.alert("Error deleting item: " + error.message);
-        });
     }
+    else if (type == "stores") {
+
+        if (confirm("Are you sure you want to delete  " + item.storeName + "?")) {
+            fetch(`/admin/${type}/${item.storeId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+    
+                if (data.status == 200) {
+    
+                    window.alert("successfully deleted " + item.storeName);
+    
+                }
+                else {
+    
+                    window.alert("could not delete " + item.storeName + ": " + data.message);
+    
+                }
+                
+                location.reload(); // Reloads the page to reflect changes
+            })
+            .catch(error => {
+                window.alert("Error deleting item: " + error.message);
+            });
+        }
+
+    }
+    
 
 }
 
@@ -169,47 +206,87 @@ function createItem(type) {
     }
 }
 
-function editItem(type) {
+function editItem(type, args = null) {
     
     event.preventDefault();
 
-    switch (type) {
+    if (type == "products") {
 
-        case "products":
+        // Get the form data
+        const cardName = document.getElementById('cardName').value;
+        const cardId = document.getElementById('cardId').value;
+        const price = document.getElementById('price').value;
+        const image_location = document.getElementById('image_location').value;
 
-            // Get the form data
-            const cardName = document.getElementById('cardName').value;
-            const cardId = document.getElementById('cardId').value;
-            const price = document.getElementById('price').value;
-            const image_location = document.getElementById('image_location').value;
-
-            if (confirm("Are you sure you want to edit  " + cardName + "?")) {
-                fetch(`/admin/${type}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: cardId,
-                        data: {
-                            price,
-                            image_location
-                        }
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+        if (confirm("Are you sure you want to edit  " + cardName + "?")) {
+            fetch(`/admin/${type}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: cardId,
+                    data: {
+                        price,
+                        image_location
                     }
-                    return response.json();
                 })
-                .then(data => {
-                    window.alert(data.message);
-                    location.reload(); 
-                })
-                .catch(error => {
-                    window.alert("Error editting item: " + error.message);
-                });
-            }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.alert(data.message);
+                location.reload(); 
+            })
+            .catch(error => {
+                window.alert("Error editting item: " + error.message);
+            });
+        }
+    }
+    else if (type == "stores") {
+
+        const storeId = args.storeId;
+        const storeName = document.getElementById(`storeName${storeId}`).value;
+        const storeAddress = document.getElementById(`storeAddress${storeId}`).value;
+        const phoneNumber = document.getElementById(`phoneNumber${storeId}`).value;
+        const workingHours = document.getElementById(`workingHours${storeId}`).value;
+        const imageLocation = document.getElementById(`imageLocation${storeId}`).value;
+
+        const data = {
+            id: storeId,
+            storeName,
+            storeAddress,
+            phoneNumber,
+            workingHours,
+            imageLocation
+        };
+
+        if (confirm("Are you sure you want to edit  " + storeName + "?")) {
+            fetch(`/admin/${type}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.alert(data.message);
+                location.reload(); 
+            })
+            .catch(error => {
+                window.alert("Error editting item: " + error.message);
+            });
+        }
+
     }
 }
