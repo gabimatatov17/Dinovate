@@ -20,14 +20,20 @@ async function getPopUp(req, res) {
             }
 
             if (action == "Edit") {        
+
                 const cardName = req.query.cardName;
                 const object = await productsService.getProduct(cardName);
                 const combinedObj = Object.assign({}, renderObject, object._doc);
-                console.log(combinedObj);
         
                 return res.render('productsPopup', combinedObj);
+
             }
+
             return res.render('productsPopup', renderObject);
+
+        case "stores":
+
+            return res.render('storesPopup');
     }
 }
 
@@ -186,7 +192,7 @@ async function createItem(req, res) {
 
             response = await productsService.createProduct(cardName, price, labels, image_location);
             if (twitter_post === 'yes'){
-                const tweet = await twitterService.postToTwitter({ cardName, price, labels })
+                const tweet = await twitterService.postProductToTwitter({ cardName, price, labels })
                 console.log("Tweet successful: ", tweet);
             }
             return res.send(response);
@@ -194,8 +200,10 @@ async function createItem(req, res) {
         case "stores":
 
             // Process the received data
-            console.log('Received store data:', req.body);
-            response = await storesService.createStore(req.body);
+            const body = req.body;
+            delete body.type;
+            console.log('Received store data:', body);
+            response = await storesService.createStore(body);
             return res.send(response);
 
         default:

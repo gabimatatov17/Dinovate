@@ -81,91 +81,136 @@ function deleteItem(item, type) {
 
 }
 
-function showProductsPopUp(data) {
+function showPopUp(data) {
 
-    const popup = $('#productsPopupSection');
+    const popup = $('#popupSection');
     const type = data.type;
-    const action = data.action;
+    let endpoint = null;
 
-    switch (type) {
+    if (type == "products") {
 
-        case "products":
+        const action = data.action;
+        endpoint = "/admin/popup/products?action=";
 
-            const endpoint = "/admin/popup/products?action=";
+        if (action == 'Create') {
 
-            if (action == 'Create') {
+            $.ajax({
+                url: `${endpoint}Create`,
+                method: 'GET',
+                success: function(html) {
+                    popup.html(html);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error loading popup:', error);
+                }
+            });
 
-                $.ajax({
-                    url: `${endpoint}Create`,
-                    method: 'GET',
-                    success: function(html) {
-                        popup.html(html);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error loading popup:', error);
-                    }
-                });
+        } else {
 
-            } else {
+            const cardName = data.cardName;
 
-                const cardName = data.cardName;
+            $.ajax({
+                url: `${endpoint}Edit&cardName=${cardName}`,
+                method: 'GET',
+                success: function(html) {
+                    popup.html(html);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error loading popup:', error);
+                }
+            });
 
-                $.ajax({
-                    url: `${endpoint}Edit&cardName=${cardName}`,
-                    method: 'GET',
-                    success: function(html) {
-                        popup.html(html);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error loading popup:', error);
-                    }
-                });
+        }
+    }   
+    else if (type == "stores") {
 
+        endpoint = "/admin/popup/stores";
+        $.ajax({
+            url: `${endpoint}`,
+            method: 'GET',
+            success: function(html) {
+                popup.html(html);
+            },
+            error: function(xhr, status, error) {
+                console.log('Error loading popup:', error);
             }
+        });
 
     }
 
 }
 
-function clouseProductsPopup(event) {
+function closePopup(event) {
     if ($(event.target).hasClass('modal-overlay') || $(event.target).hasClass('close-icon')) {
-        $('#productsPopupSection').html("");
+        $('#popupSection').html("");
     }
 }
 
 function createItem(type) { 
     event.preventDefault();
-    switch (type) {
-        case "products":
 
-            const cardName = $('#cardName').val();
-            const price = $('#price').val();
-            const labels = $('#labels').val();
-            const image_location = $('#image_location').val();
-            const twitter_post = $('#twitter_post').val();
+    if (type == "products") {
 
-            if (confirm("Are you sure you want to create  " + cardName + "?")) {
-                $.ajax({
-                    url: `/admin`,
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        type,
-                        cardName,
-                        price,
-                        labels,
-                        image_location,
-                        twitter_post
-                    }),
-                    success: function(data) {
-                        window.alert(data.message);
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        window.alert("Error creating item: " + error);
-                    }
-                });
-            }
+        const cardName = $('#cardName').val();
+        const price = $('#price').val();
+        const labels = $('#labels').val();
+        const image_location = $('#image_location').val();
+        const twitter_post = $('#twitter_post').val();
+
+        if (confirm("Are you sure you want to create  " + cardName + "?")) {
+            $.ajax({
+                url: `/admin`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    type,
+                    cardName,
+                    price,
+                    labels,
+                    image_location,
+                    twitter_post
+                }),
+                success: function(data) {
+                    window.alert(data.message);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error creating item: " + error);
+                }
+            });
+        }
+
+    }
+    else if (type == "stores") {
+
+        const storeName = $('#storeName').val();
+        const storeAddress = $('#storeAddress').val();
+        const phoneNumber = $('#phoneNumber').val();
+        const workingHours = $('#workingHours').val();
+        const imageLocation = $('#imageLocation').val();
+
+        if (confirm("Are you sure you want to create  " + storeName + "?")) {
+            $.ajax({
+                url: `/admin`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    type,
+                    storeName,
+                    storeAdress: storeAddress,
+                    phoneNumber,
+                    workingHours,
+                    imageLocation
+                }),
+                success: function(data) {
+                    window.alert(data.message);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error creating item: " + error);
+                }
+            });
+        }
     }
 }
 
