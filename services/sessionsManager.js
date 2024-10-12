@@ -2,6 +2,7 @@
 async function setCustomerSession(req, customerUser) {
     try {
         req.session.customer = {
+            _id: customerUser._id,  
             id: customerUser.id,
             firstName: customerUser.firstName,
             lastName: customerUser.lastName,
