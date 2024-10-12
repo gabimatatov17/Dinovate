@@ -1,3 +1,4 @@
+const mongoose = require('mongoose'); // Import mongoose
 const Customer = require('../models/customers');
 const Order = require('../models/orders');
 
@@ -5,18 +6,15 @@ const Order = require('../models/orders');
 async function showProfile(req, res) {
     try {
         // Fetch the logged-in user's details from the session
-        const customer = await Customer.findOne({ id: req.session.customer.id });
+        const customer = await Customer.findOne({ _id: req.session.customer._id });
 
         // Fetch the user's orders based on their customerId
-        const orders = await Order.find({ customerId: customer.id });
+        const orders = await Order.find({ customerId: customer._id });
 
-        var sessionCostumer = req.session.customer;
-        var isAuthenticated = sessionCostumer ? true : false;
-        if (sessionCostumer) {
-            var isAdmin = sessionCostumer.isAdmin;
-          } else {
-            var isAdmin = null;
-          }
+        // Check session details
+        const sessionCustomer = req.session.customer;
+        const isAuthenticated = sessionCustomer ? true : false;
+        const isAdmin = sessionCustomer?.isAdmin || false;
 
         // Render the profile page and pass customer data and orders
         res.render('profile', { customer, orders, isAuthenticated, isAdmin });
@@ -33,12 +31,12 @@ async function updateProfile(req, res) {
 
         // Update the user's information in the database
         await Customer.updateOne(
-            { id: req.session.customer.id },
+            { _id: req.session.customer._id },
             { firstName, lastName, email, gender, birthDate }
         );
 
         // Fetch updated customer details
-        const updatedCustomer = await Customer.findOne({ id: req.session.customer.id });
+        const updatedCustomer = await Customer.findOne({ _id: req.session.customer._id });
 
         // Update session with new customer data
         req.session.customer = updatedCustomer;
@@ -54,10 +52,10 @@ async function updateProfile(req, res) {
 // Delete user from the database
 async function deleteUser(req, res) {
     try {
-        const customerId = req.session.customer.id;
+        const customerId = req.session.customer._id;
 
         // Remove the customer from the database
-        await Customer.deleteOne({ id: customerId });
+        await Customer.deleteOne({ _id: customerId });
 
         // Clear session
         req.session.destroy();
@@ -69,7 +67,6 @@ async function deleteUser(req, res) {
         res.status(500).json({ message: 'Error deleting user' });
     }
 }
-
 
 module.exports = {
     showProfile,

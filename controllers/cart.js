@@ -4,8 +4,6 @@ const Order = require('../models/orders'); // Import the Order model
 const Customer = require('../models/customers');  // Import Customer model
 const Card = require('../models/products'); // Import Card model 
 
-
-//change this to be used in env!!
 const AUTH_ID = process.env.AUTH_ID;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
@@ -76,11 +74,11 @@ async function showCart(req, res) {
   }
 
   // extract data from session
-  var sessionCostumer = req.session.customer;
-  var isAuthenticated = sessionCostumer ? true : false;
+  var sessionCustumer = req.session.customer;
+  var isAuthenticated = sessionCustumer ? true : false;
 
-  if (sessionCostumer) {
-    var isAdmin = sessionCostumer.isAdmin;
+  if (sessionCustumer) {
+    var isAdmin = sessionCustumer.isAdmin;
   } else {
     var isAdmin = null;
   }
@@ -107,15 +105,16 @@ async function validateAddress(req, res) {
 
     if (response.status === 200 && data.length > 0) {
       const addressAnalysis = data[0].analysis;
-      console.log('data[0].analysis=', data[0].analysis, 'legnth:', data.length)
-      console.log('addressAnalysis.verification_status-', addressAnalysis.verification_status)
+      console.log('data[0].analysis=', data[0].analysis, 'length:', data.length);
+      console.log('addressAnalysis.verification_status-', addressAnalysis.verification_status);
+
       // Check the verification status
       switch (addressAnalysis.verification_status) {
         case 'Verified':
         case 'Partial': {
           // Address is valid, now create an order
           if (!req.session.customer || !req.session.cart) {
-            console.log('cart or customer info missing')
+            console.log('cart or customer info missing');
             return res.json({ valid: false, message: 'Cart or customer information is missing. Please try again.' });
           }
 
@@ -127,7 +126,7 @@ async function validateAddress(req, res) {
           // Create a new order object
           const newOrder = new Order({
             orderId: newOrderId,
-            customerId: req.session.customer.id,
+            customerId: req.session.customer._id,  // Correct the variable
             cards: req.session.cart.map(item => ({
               cardId: item.cardId,
               greeting: `Enjoy your ${item.cardName}!`  // Or ask the user for the greeting message
@@ -153,8 +152,8 @@ async function validateAddress(req, res) {
     console.error('Error during address validation:', error);  // Log any unexpected errors
     res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
   }
-
 }
+
 
 module.exports = {
   addToCart,
