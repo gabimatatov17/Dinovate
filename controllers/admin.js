@@ -2,6 +2,7 @@ const path = require("path").resolve(__dirname, "..");
 const productsService = require("../services/products");
 const storesService = require("../services/stores");
 const ordersService = require("../services/orders");
+const twitterService = require("../services/twitter");
 const { compile } = require("ejs");
 
 
@@ -10,32 +11,23 @@ async function getPopUp(req, res) {
     const type = req.params.type;
 
     switch (type) {
-
         case "products":
-            
+    
             const action = req.query.action;
-
             var renderObject = {
-        
                 action
-        
             }
-        
-            if (action == "Edit") {
-        
+
+            if (action == "Edit") {        
                 const cardName = req.query.cardName;
                 const object = await productsService.getProduct(cardName);
                 const combinedObj = Object.assign({}, renderObject, object._doc);
                 console.log(combinedObj);
         
                 return res.render('productsPopup', combinedObj);
-        
-        
             }
             return res.render('productsPopup', renderObject);
-
     }
-
 }
 
 
@@ -55,35 +47,23 @@ async function showAdminView(req, res) {
     }
 
     if (isAuthenticated) {
-
         var isAdmin = sessionCostumer.isAdmin;
-
         if (isAdmin) {
-
             res.render("admin", {
-
                 root: path,
                 isAuthenticated: isAuthenticated,
                 items: result,
                 isAdmin: isAdmin
-
             });
-
         }
         else {
-
             res.redirect('/');
-
         }
-
     }
     else {
-
         res.redirect('/login');
-
     }
-    
-  }
+}
 
 
 async function deleteItem(req,res) {
@@ -170,28 +150,26 @@ async function createItem(req, res) {
     switch (type) {
 
         case "products":
-
             // unpack the item
-            const { cardName, price, labels, image_location } = req.body;
-
+            const { cardName, price, labels, image_location, twitter_post } = req.body;
             // Process the received data (e.g., save to database)
             console.log('Received product data:', {
                 cardName,
                 price,
                 labels,
                 image_location,
+                twitter_post
             });
 
             const response = await productsService.createProduct(cardName, price, labels, image_location);
-
+            if (twitter_post === 'yes'){
+                const tweet = await twitterService.postToTwitter({ cardName, price, labels })
+                console.log("Tweet successful: ", tweet);
+            }
             return res.send(response);
-
         default:
-
             return res.status(404).send({ status: 404, message: "Type not supported" });
     }
-    
-
 }
 
 module.exports = {
