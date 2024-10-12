@@ -152,7 +152,7 @@
     text-align: center;
 }
 
-.showProductsPopUp {
+.showPopUp {
     display: flex;
     justify-content: center;
     margin: 30px;

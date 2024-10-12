@@ -101,12 +101,12 @@ async function getAllStores() {
 }
 
 
-async function createStore(ducment) {
+async function createStore(document) {
 
     try {
 
         // Check if a store with the same storeName already exists
-        const existingStore = await Store.findOne({ cardName: name });
+        const existingStore = await Store.findOne({ storeName: document.storeName });
         if (existingStore) {
             return { status: 400, message: 'Store name already exists.' };
         }
@@ -127,7 +127,7 @@ async function createStore(ducment) {
 
         return {
             status: 500,
-            message: "could not create store: ", err
+            message: `could not create store: ${err}`
         };
 
     }

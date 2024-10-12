@@ -4,9 +4,9 @@
     </head>
     <body>
 
-        <div class="modal-overlay" onclick="clouseProductsPopup(event)">
+        <div class="modal-overlay" onclick="closePopup(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
-                <span class="close-icon" onclick="clouseProductsPopup(event)">✖</span> <!-- Close icon -->
+                <span class="close-icon" onclick="closePopup(event)">✖</span> <!-- Close icon -->
                 
                 <% if (action == 'Create') { %>
                 <h2>Create Card</h2>

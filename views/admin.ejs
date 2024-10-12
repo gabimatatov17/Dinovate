@@ -67,7 +67,7 @@
 
                                         <ul class="product-links">
 
-                                            <li><a href="#"><i class="fas fa-pencil-alt" onClick="showProductsPopUp({type: 'products', action: 'Edit', cardName: '<%= item.cardName %>'})"></i></a></li>
+                                            <li><a href="#"><i class="fas fa-pencil-alt" onClick="showPopUp({type: 'products', action: 'Edit', cardName: '<%= item.cardName %>'})"></i></a></li>
                                             <li><a href="#"><i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(item) %>', 'products')"></i></a></li>
                                         
                                         </ul>
@@ -90,14 +90,12 @@
 
             </div>
 
-            <div class = "showProductsPopUp">
+            <div class = "showPopUp">
 
-                <button type="button" name = "products" class="btn btn-outline-primary" onClick = "showProductsPopUp({type: 'products', action: 'Create'})">Create</button>
+                <button type="button" name = "products" class="btn btn-outline-primary" onClick = "showPopUp({type: 'products', action: 'Create'})">Create</button>
     
             </div>
     
-            <div id = "productsPopupSection"></div>
-
         </div>
 
         <div id = "stores" style = "display: none">
@@ -169,7 +167,7 @@
 
             <div class="d-flex justify-content-end mb-2">
 
-                <button class="btn btn-success" id="addStoreBtn" onClick = "showStoresPopup()">
+                <button class="btn btn-success" id="addStoreBtn" onClick = "showPopUp({type: 'stores'})">
 
                     <i class="fas fa-plus-circle"></i> Add New Store
 
@@ -177,10 +175,10 @@
 
             </div>
 
-            <div id = "storesPopupSection"></div>
-
         </div>
 
+        <div id = "popupSection"></div>
+        
     </main>
 
     <%- include('footer') %>
