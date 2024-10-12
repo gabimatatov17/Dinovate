@@ -152,7 +152,7 @@
     text-align: center;
 }
 
-.showPopUp {
+.showProductsPopUp {
     display: flex;
     justify-content: center;
     margin: 30px;
@@ -160,7 +160,7 @@
 }
 
 .row {
-    height: 70vh;
+    height: 60vh;
     overflow-y: scroll;
 }
 
@@ -197,4 +197,10 @@
 
 .no-border-input:focus {
     outline: none;
+}
+
+.container {
+
+    margin-top: 2%;
+
 }

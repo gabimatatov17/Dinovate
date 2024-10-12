@@ -166,13 +166,16 @@ async function editItem(req, res) {
 async function createItem(req, res) {
 
     const type = req.body.type;
+    let response = null;
 
     switch (type) {
 
         case "products":
+            
             // unpack the item
             const { cardName, price, labels, image_location, twitter_post } = req.body;
-            // Process the received data (e.g., save to database)
+            
+            // Process the received data
             console.log('Received product data:', {
                 cardName,
                 price,
@@ -181,12 +184,20 @@ async function createItem(req, res) {
                 twitter_post
             });
 
-            const response = await productsService.createProduct(cardName, price, labels, image_location);
+            response = await productsService.createProduct(cardName, price, labels, image_location);
             if (twitter_post === 'yes'){
                 const tweet = await twitterService.postToTwitter({ cardName, price, labels })
                 console.log("Tweet successful: ", tweet);
             }
             return res.send(response);
+
+        case "stores":
+
+            // Process the received data
+            console.log('Received store data:', req.body);
+            response = await storesService.createStore(req.body);
+            return res.send(response);
+
         default:
             return res.status(404).send({ status: 404, message: "Type not supported" });
     }
