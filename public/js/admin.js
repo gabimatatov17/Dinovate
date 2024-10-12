@@ -1,123 +1,89 @@
 function showElement() {
-
     // get the selected
-    const selected = document.querySelector('input[name="options"]:checked');
+    const selected = $('input[name="options"]:checked');
 
     // check if a radio button is selected
-    if (selected) {
-
-        var selectedID = selected.id;
-        var products = document.getElementById('products');
-        var stores = document.getElementById('stores');
-        var orders = document.getElementById('orders');
+    if (selected.length) {
+        var selectedID = selected.attr('id');
+        var products = $('#products');
+        var stores = $('#stores');
+        var orders = $('#orders');
 
         switch (selectedID) {
-
             case "Products":
-
-                products.style.display = 'block';
-                stores.style.display = 'none';
-                orders.style.display = 'none';
+                products.show();
+                stores.hide();
+                orders.hide();
+                break;
             
             case "Stores":
-
-                products.style.display = 'none';
-                stores.style.display = 'block';
-                orders.style.display = 'none';
+                products.hide();
+                stores.show();
+                orders.hide();
+                break;
             
             case "Orders":
-
-                products.style.display = 'none';
-                stores.style.display = 'none';
-                orders.style.display = 'block';
-
+                products.hide();
+                stores.hide();
+                orders.show();
+                break;
         }
-
-
     } else {
-
         console.log('nothing is selected');
-        
     }
-
 }
 
 function deleteItem(item, type) {
-    
+
     item = JSON.parse(item);
 
     if (type == "products") {
-        
+
         if (confirm("Are you sure you want to delete  " + item.cardName + "?")) {
-            fetch(`/admin/${type}/${item.cardId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            $.ajax({
+                url: `/admin/${type}/${item.cardId}`,
+                method: 'DELETE',
+                success: function(data) {
+                    if (data.status == 200) {
+                        window.alert("successfully deleted " + item.cardName);
+                    } else {
+                        window.alert("could not delete " + item.cardName + ": " + data.message);
+                    }
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error deleting item: " + error);
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status == 200) {
-    
-                    window.alert("successfully deleted " + item.cardName);
-    
-                }
-                else {
-    
-                    window.alert("could not delete " + item.cardName + ": " + data.message);
-    
-                }
-                
-                location.reload(); // Reloads the page to reflect changes
-            })
-            .catch(error => {
-                window.alert("Error deleting item: " + error.message);
             });
         }
 
-    }
-    else if (type == "stores") {
+    } else if (type == "stores") {
 
         if (confirm("Are you sure you want to delete  " + item.storeName + "?")) {
-            fetch(`/admin/${type}/${item.storeId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+            $.ajax({
+                url: `/admin/${type}/${item.storeId}`,
+                method: 'DELETE',
+                success: function(data) {
+                    if (data.status == 200) {
+                        window.alert("successfully deleted " + item.storeName);
+                    } else {
+                        window.alert("could not delete " + item.storeName + ": " + data.message);
+                    }
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error deleting item: " + error);
                 }
-                return response.json();
-            })
-            .then(data => {
-    
-                if (data.status == 200) {
-    
-                    window.alert("successfully deleted " + item.storeName);
-    
-                }
-                else {
-    
-                    window.alert("could not delete " + item.storeName + ": " + data.message);
-    
-                }
-                
-                location.reload(); // Reloads the page to reflect changes
-            })
-            .catch(error => {
-                window.alert("Error deleting item: " + error.message);
             });
         }
 
     }
-    
 
 }
 
-function showPopUp(data) {
+function showProductsPopUp(data) {
 
-    const popup = document.getElementById('popupSection');
+    const popup = $('#productsPopupSection');
     const type = data.type;
     const action = data.action;
 
@@ -129,36 +95,41 @@ function showPopUp(data) {
 
             if (action == 'Create') {
 
-                fetch(`${endpoint}Create`)
-                .then(response => response.text())
-                .then(html => {
-                    popup.innerHTML = html;
-                })
-                .catch(err => console.log('Error loading popup:', err));
+                $.ajax({
+                    url: `${endpoint}Create`,
+                    method: 'GET',
+                    success: function(html) {
+                        popup.html(html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error loading popup:', error);
+                    }
+                });
 
-            }
-            else {
+            } else {
 
                 const cardName = data.cardName;
 
-                fetch(`${endpoint}Edit&cardName=${cardName}`)
-                .then(response => response.text())
-                .then(html => {
-                    popup.innerHTML = html;
-                })
-                .catch(err => console.log('Error loading popup:', err));
+                $.ajax({
+                    url: `${endpoint}Edit&cardName=${cardName}`,
+                    method: 'GET',
+                    success: function(html) {
+                        popup.html(html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error loading popup:', error);
+                    }
+                });
 
             }
 
     }
 
-
 }
 
-function closePopup(event) {
-    // Check if the click event occurred on the overlay or the close icon
-    if (event.target.classList.contains('modal-overlay') || event.target.classList.contains('close-icon')) {
-        document.querySelector('#popupSection').innerHTML = "";
+function clouseProductsPopup(event) {
+    if ($(event.target).hasClass('modal-overlay') || $(event.target).hasClass('close-icon')) {
+        $('#productsPopupSection').html("");
     }
 }
 
@@ -167,94 +138,78 @@ function createItem(type) {
     switch (type) {
         case "products":
 
-            // Get the form data
-            const cardName = document.getElementById('cardName').value;
-            const price = document.getElementById('price').value;
-            const labels = document.getElementById('labels').value;
-            const image_location = document.getElementById('image_location').value;
-            const twitter_post = document.getElementById('twitter_post').value;
+            const cardName = $('#cardName').val();
+            const price = $('#price').val();
+            const labels = $('#labels').val();
+            const image_location = $('#image_location').val();
+            const twitter_post = $('#twitter_post').val();
 
             if (confirm("Are you sure you want to create  " + cardName + "?")) {
-                fetch(`/admin`, {
+                $.ajax({
+                    url: `/admin`,
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         type,
                         cardName,
                         price,
                         labels,
                         image_location,
-                        twitter_post                        
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        twitter_post
+                    }),
+                    success: function(data) {
+                        window.alert(data.message);
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        window.alert("Error creating item: " + error);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    window.alert(data.message);
-                    location.reload(); 
-                })
-                .catch(error => {
-                    window.alert("Error creating item: " + error.message);
                 });
             }
     }
 }
 
 function editItem(type, args = null) {
-    
+
     event.preventDefault();
 
     if (type == "products") {
 
-        // Get the form data
-        const cardName = document.getElementById('cardName').value;
-        const cardId = document.getElementById('cardId').value;
-        const price = document.getElementById('price').value;
-        const image_location = document.getElementById('image_location').value;
+        const cardName = $('#cardName').val();
+        const cardId = $('#cardId').val();
+        const price = $('#price').val();
+        const image_location = $('#image_location').val();
 
         if (confirm("Are you sure you want to edit  " + cardName + "?")) {
-            fetch(`/admin/${type}`, {
+            $.ajax({
+                url: `/admin/${type}`,
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                contentType: 'application/json',
+                data: JSON.stringify({
                     id: cardId,
                     data: {
                         price,
                         image_location
                     }
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                }),
+                success: function(data) {
+                    window.alert(data.message);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error editting item: " + error);
                 }
-                return response.json();
-            })
-            .then(data => {
-                window.alert(data.message);
-                location.reload(); 
-            })
-            .catch(error => {
-                window.alert("Error editting item: " + error.message);
             });
         }
-    }
-    else if (type == "stores") {
+
+    } else if (type == "stores") {
 
         const storeId = args.storeId;
-        const storeName = document.getElementById(`storeName${storeId}`).value;
-        const storeAddress = document.getElementById(`storeAddress${storeId}`).value;
-        const phoneNumber = document.getElementById(`phoneNumber${storeId}`).value;
-        const workingHours = document.getElementById(`workingHours${storeId}`).value;
-        const imageLocation = document.getElementById(`imageLocation${storeId}`).value;
+        const storeName = $(`#storeName${storeId}`).val();
+        const storeAddress = $(`#storeAddress${storeId}`).val();
+        const phoneNumber = $(`#phoneNumber${storeId}`).val();
+        const workingHours = $(`#workingHours${storeId}`).val();
+        const imageLocation = $(`#imageLocation${storeId}`).val();
 
         const data = {
             id: storeId,
@@ -266,25 +221,17 @@ function editItem(type, args = null) {
         };
 
         if (confirm("Are you sure you want to edit  " + storeName + "?")) {
-            fetch(`/admin/${type}`, {
+            $.ajax({
+                url: `/admin/${type}`,
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(data) {
+                    window.alert(data.message);
                 },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                error: function(xhr, status, error) {
+                    window.alert("Error editting item: " + error);
                 }
-                return response.json();
-            })
-            .then(data => {
-                window.alert(data.message);
-                location.reload(); 
-            })
-            .catch(error => {
-                window.alert("Error editting item: " + error.message);
             });
         }
 

@@ -100,9 +100,44 @@ async function getAllStores() {
 
 }
 
+
+async function createStore(ducment) {
+
+    try {
+
+        // Check if a store with the same storeName already exists
+        const existingStore = await Store.findOne({ cardName: name });
+        if (existingStore) {
+            return { status: 400, message: 'Store name already exists.' };
+        }
+
+        // Count the stores
+        const storeCount = await Store.countDocuments();
+        document.storeId = storeCount + 1;
+
+        const store = await Store.create(document);
+
+        return {
+            status: 200,
+            message: "success"
+        };
+
+    }
+    catch (err) {
+
+        return {
+            status: 500,
+            message: "could not create store: ", err
+        };
+
+    }
+
+}
+
 module.exports = {
     getStoresDetails,
     removeStore,
     editStore,
-    getAllStores
+    getAllStores,
+    createStore
 }
