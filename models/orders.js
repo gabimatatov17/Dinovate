@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
         unique: true
     },
     customerId: {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     cards: {
@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
     },
     shippingAdress: {
         type: String,
-        required: true
+        required: true 
     },
     dateCreated: {
         type: Date,
