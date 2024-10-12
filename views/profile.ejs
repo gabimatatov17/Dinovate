@@ -13,6 +13,9 @@
     <!-- Navbar CSS -->
     <link rel="stylesheet" href="/styles/navbar.css">
 
+    <!-- Footer CSS -->
+    <link rel="stylesheet" href="/styles/footer.css">
+
     <!-- FontAwesome for icons -->
     <script src="https://kit.fontawesome.com/9d9796826b.js" crossorigin="anonymous"></script>
 </head>
@@ -45,12 +48,23 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="gender">Gender</label>
-                    <input type="text" class="form-control" name="gender" value="<%= customer.gender %>" required>
+                    <select name="gender" class="form-control" required>
+                        <option value="Male" <%= customer.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                        <option value="Female" <%= customer.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                        <option value="Other" <%= customer.gender === 'Other' ? 'selected' : '' %>>Other</option>
+                    </select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="birthDate">Birth Date</label>
                     <input type="date" class="form-control" name="birthDate" value="<%= customer.birthDate.toISOString().substring(0, 10) %>" required>
                 </div>
+
+                <!-- Password Change Option -->
+                <div class="form-group mb-3">
+                    <label for="password">New Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+
                 <button type="submit" class="btn btn-primary">Update Information</button>
             </form>
 
@@ -94,6 +108,11 @@
         </div>
     </div>
 
+    <!-- Footer Section -->
+    <footer class="footer">
+        <%- include('footer') %>
+    </footer>
+
     <!-- Confirmation Modal for Delete Action -->
     <div id="delete-confirmation-modal" class="modal">
         <div class="modal-content">
@@ -104,6 +123,7 @@
         </div>
     </div>
 
+    <!-- Profile JS -->
     <script src="/js/profile.js"></script>
 </body>
 </html>
