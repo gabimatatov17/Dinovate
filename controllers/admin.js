@@ -4,6 +4,7 @@ const storesService = require("../services/stores");
 const ordersService = require("../services/orders");
 const twitterService = require("../services/twitter");
 const { compile } = require("ejs");
+const moment = require('moment');
 
 
 async function getPopUp(req, res) {
@@ -19,14 +20,20 @@ async function getPopUp(req, res) {
             }
 
             if (action == "Edit") {        
+
                 const cardName = req.query.cardName;
                 const object = await productsService.getProduct(cardName);
                 const combinedObj = Object.assign({}, renderObject, object._doc);
-                console.log(combinedObj);
         
                 return res.render('productsPopup', combinedObj);
+
             }
+
             return res.render('productsPopup', renderObject);
+
+        case "stores":
+
+            return res.render('storesPopup');
     }
 }
 
@@ -37,23 +44,32 @@ async function showAdminView(req, res) {
     var sessionCostumer = req.session.customer;
     var isAuthenticated = sessionCostumer ? true : false;
 
-    const items = await productsService.getAllProducts();
+    const products = await productsService.getAllProducts();
+    const stores = await storesService.getAllStores();
+
+    // parse products
     const chunkSize = 4;
     let result = [];
 
-    for (let i = 0; i < items.length; i += chunkSize) {
+    for (let i = 0; i < products.length; i += chunkSize) {
         // Create a chunk of 4 items and push to result
-        result.push(items.slice(i, i + chunkSize));
+        result.push(products.slice(i, i + chunkSize));
     }
+
+    // parse stores
+    stores.forEach(store => {
+        store.formattedDateAdded = moment(store.dateAdded).format('DD/MM/YYYY');
+    });
 
     if (isAuthenticated) {
         var isAdmin = sessionCostumer.isAdmin;
         if (isAdmin) {
             res.render("admin", {
                 root: path,
-                isAuthenticated: isAuthenticated,
-                items: result,
-                isAdmin: isAdmin
+                isAuthenticated,
+                products: result,
+                isAdmin,
+                stores
             });
         }
         else {
@@ -77,19 +93,16 @@ async function deleteItem(req,res) {
             case 'products':
 
                 response = await productsService.removeProduct(ID);
-                console.log(response);
                 return res.send(response);
 
             case 'orders':
 
                 response = await ordersService.removeOrder(ID);
-                console.log(response);
                 return res.send(response);
 
             case 'stores':
 
                 response = await storesService.removeStore(ID);
-                console.log(response);
                 return res.send(response);
 
             default:
@@ -106,29 +119,42 @@ async function deleteItem(req,res) {
 
 async function editItem(req, res) {
 
-    const ID = req.body.id;
     const type = req.params.type;
-    const data = req.body.data;
+    const body = req.body;
+    const ID = body.id;
+    let data = null;
     let response = null;
 
     try {
         switch (type) {
             case 'products':
 
+                data = body.data;
                 response = await productsService.editProduct(ID, data);
-                console.log(response);
                 return res.send(response);
 
             case 'orders':
 
                 response = await ordersService.editOrder(ID, data);
-                console.log(response);
                 return res.send(response);
 
             case 'stores':
 
+                const storeName = body.storeName;
+                const storeAddress = body.storeAddress;
+                const phoneNumber = body.phoneNumber;
+                const workingHours = body.workingHours;
+                const imageLocation = body.imageLocation;
+
+                data = {
+                    storeName,
+                    storeAddress,
+                    phoneNumber,
+                    workingHours,
+                    imageLocation
+                }
+
                 response = await storesService.editStore(ID, data);
-                console.log(response);
                 return res.send(response);
 
             default:
@@ -146,13 +172,16 @@ async function editItem(req, res) {
 async function createItem(req, res) {
 
     const type = req.body.type;
+    let response = null;
 
     switch (type) {
 
         case "products":
+            
             // unpack the item
             const { cardName, price, labels, image_location, twitter_post } = req.body;
-            // Process the received data (e.g., save to database)
+            
+            // Process the received data
             console.log('Received product data:', {
                 cardName,
                 price,
@@ -161,12 +190,22 @@ async function createItem(req, res) {
                 twitter_post
             });
 
-            const response = await productsService.createProduct(cardName, price, labels, image_location);
+            response = await productsService.createProduct(cardName, price, labels, image_location);
             if (twitter_post === 'yes'){
-                const tweet = await twitterService.postToTwitter({ cardName, price, labels })
+                const tweet = await twitterService.postProductToTwitter({ cardName, price, labels })
                 console.log("Tweet successful: ", tweet);
             }
             return res.send(response);
+
+        case "stores":
+
+            // Process the received data
+            const body = req.body;
+            delete body.type;
+            console.log('Received store data:', body);
+            response = await storesService.createStore(body);
+            return res.send(response);
+
         default:
             return res.status(404).send({ status: 404, message: "Type not supported" });
     }

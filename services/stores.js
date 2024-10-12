@@ -68,7 +68,7 @@ async function removeStore(storeID) {
 
 async function editStore(storeID, data) {
     try {
-        const result = await Order.updateOne({ storeId: storeID }, data, { 
+        const result = await Store.updateOne({ storeId: storeID }, data, { 
             runValidators: true
         });
 
@@ -76,15 +76,68 @@ async function editStore(storeID, data) {
             return ({status: 500, message: "Store not found"});
 
         }
-        return ({status: 200});
+        return ({status: 200, message: "Success" });
     } catch (e) {
         console.error('Error updating item:', error);
         return ({status: 500, message: e});
     }
 }
 
+
+async function getAllStores() {
+
+    try {
+
+        const stores = await Store.find().exec();
+        return stores;
+
+    } catch (error) {
+
+        console.error('Error finding stores: ', error);
+        return null;
+
+    }
+
+}
+
+
+async function createStore(document) {
+
+    try {
+
+        // Check if a store with the same storeName already exists
+        const existingStore = await Store.findOne({ storeName: document.storeName });
+        if (existingStore) {
+            return { status: 400, message: 'Store name already exists.' };
+        }
+
+        // Count the stores
+        const storeCount = await Store.countDocuments();
+        document.storeId = storeCount + 1;
+
+        const store = await Store.create(document);
+
+        return {
+            status: 200,
+            message: "success"
+        };
+
+    }
+    catch (err) {
+
+        return {
+            status: 500,
+            message: `could not create store: ${err}`
+        };
+
+    }
+
+}
+
 module.exports = {
     getStoresDetails,
     removeStore,
-    editStore
+    editStore,
+    getAllStores,
+    createStore
 }

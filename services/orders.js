@@ -24,7 +24,7 @@ async function editOrder(orderID, data) {
         if (result.modifiedCount == 0) {
             return ({ status: 500, message: "Order not found" });
         }
-        return ({ status: 200 });
+        return ({ status: 200, message: "Success"  });
 
     } catch (e) {
         console.error('Error updating item:', error);

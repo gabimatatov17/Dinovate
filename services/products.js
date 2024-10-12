@@ -49,6 +49,7 @@ async function createProduct(name, price, labels, image) {
         if (existingCard) {
             return { status: 400, message: 'Card name already exists.' };
         }
+        
         // Create a new card
         const cardCount = await Card.countDocuments();
         const newCard = new Card({
