@@ -46,6 +46,7 @@ async function showAdminView(req, res) {
 
     const products = await productsService.getAllProducts();
     const stores = await storesService.getAllStores();
+    const orders = await ordersService.getAllOrders();
 
     // parse products
     const chunkSize = 4;
@@ -61,6 +62,11 @@ async function showAdminView(req, res) {
         store.formattedDateAdded = moment(store.dateAdded).format('DD/MM/YYYY');
     });
 
+    // parse orders
+    orders.forEach(order => {
+        order.formattedDateAdded = moment(order.dateAdded).format('DD/MM/YYYY');
+    });
+
     if (isAuthenticated) {
         var isAdmin = sessionCostumer.isAdmin;
         if (isAdmin) {
@@ -69,7 +75,8 @@ async function showAdminView(req, res) {
                 isAuthenticated,
                 products: result,
                 isAdmin,
-                stores
+                stores,
+                orders
             });
         }
         else {

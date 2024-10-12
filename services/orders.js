@@ -32,7 +32,26 @@ async function editOrder(orderID, data) {
     }
 }
 
+
+async function getAllOrders() {
+
+    try {
+
+        const orders = await Order.find().exec();
+        console.log(orders[0].cards[0]);
+        return orders;
+
+    } catch (error) {
+
+        console.error('Error finding orders: ', error);
+        return null;
+
+    }
+
+}
+
 module.exports = {
     removeOrder,
-    editOrder
+    editOrder,
+    getAllOrders
 };
