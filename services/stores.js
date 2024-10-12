@@ -73,7 +73,7 @@ async function editStore(storeID, data) {
         });
 
         if (result.modifiedCount == 0) {
-            return ({status: 500, message: "Store not found"});
+            return ({status: 500, message: "No changes commited"});
 
         }
         return ({status: 200, message: "Success" });

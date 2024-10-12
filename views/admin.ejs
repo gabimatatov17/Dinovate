@@ -98,21 +98,21 @@
     
         </div>
 
-        <div id = "stores" style = "display: none">
+        <div id = "stores" style = "display: none;">
 
-            <table class="table table-hover">
+            <table class="table table-hover table-striped table-bordered">
 
-                <thead>
+                <thead class="thead-dark">
 
-                    <tr class="table-primary">
+                    <tr>
 
                         <th scope="col">Store ID</th>
-                        <th scope="col">Store Name</th>
-                        <th scope="col">Store Address</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Working Hours</th>
-                        <th scope="col">Image Location</th>
                         <th scope="col">Date Added</th>
+                        <th scope="col">Store Name <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Store Address <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Phone Number <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Working Hours <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Image Location <i class="fas fa-pencil-alt"></i></th>
                         <th scope="col">Actions</th>
 
                     </tr>
@@ -128,6 +128,7 @@
                             <tr>
 
                                 <th scope="row"><%= store.storeId %></th>
+                                <td><%= store.formattedDateAdded %></td>
                                 <td>
                                     <input type="text" id="storeName<%= store.storeId %>" name="storeName" value="<%= store.storeName %>" class="no-border-input" required />
                                 </td>
@@ -143,15 +144,14 @@
                                 <td>
                                     <input type="text" id="imageLocation<%= store.storeId %>" name="imageLocation" value="<%= store.imageLocation %>" class="no-border-input" required />
                                 </td>
-                                <td><%= store.formattedDateAdded %></td>
                                 <td class="storesActions">
 
-                                    <button type="submit" class="btn btn-link p-0">
-                                        <i class="fas fa-check-circle"></i>
+                                    <button type="submit" class="btn btn-warning btn-sm">
+                                        Submit Change <i class="fas fa-check-circle"></i>
                                     </button>
 
-                                    <a href="#" class="storeIcon">
-                                        <i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(store) %>', 'stores')"></i>
+                                    <a href="#" class="btn btn-danger btn-sm">
+                                        Delete <i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(store) %>', 'stores')"></i>
                                     </a>
                                 </td>
 
@@ -176,9 +176,57 @@
             </div>
 
         </div>
+        
+        <div id = "orders" style = "display: none;">
+
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Cards count</th>
+                    <th scope="col">Customer ID <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Price ($) <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Shipping Address <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(function(order) { %>
+                        <form id="orderForm<%= order.orderId %>" onSubmit="editItem('orders', {orderId: '<%= order.orderId %>'})" action="/admin/orders">
+                            <tr>
+                                <th scope="row"><%= order.orderId %></th>
+                                <td><%= order.formattedDateAdded %></td>
+                                <td>
+                                    <%= order.cards.length %>
+                                </td>
+                                <td>
+                                    <input type="text" id="customerId<%= order.orderId %>" name="customerId" value="<%= order.customerId %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="number" id="totalPrice<%= order.orderId %>" name="totalPrice" value="<%= order.totalPrice %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="shippingAdress<%= order.orderId %>" name="shippingAdress" value="<%= order.shippingAdress %>" class="no-border-input" required />
+                                </td>
+                                <td class="ordersActions">
+                                    <button type="submit" class="btn btn-warning btn-sm">
+                                        Submit Change <i class="fas fa-check-circle"></i>
+                                    </button>
+                                    <a href="#" class="btn btn-danger btn-sm" onClick="deleteItem('<%= JSON.stringify(order) %>', 'orders')">
+                                        Delete <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </form>
+                    <% }); %>
+                </tbody>
+              </table>
+
+        </div>
 
         <div id = "popupSection"></div>
-        
+
     </main>
 
     <%- include('footer') %>
