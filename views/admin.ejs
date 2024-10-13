@@ -250,10 +250,11 @@
             
         </div>
 
-        <div id = "overview" style = "display: none;">
+        <div id = "overview" style = "display: none; display: flex; justify-content: center;">
             <svg id="chart" width="600" height="300">
                 <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Average Daily Orders per Month</text>
             </svg>
+            <div id="chart2"></div>
         </div>
 
         <div id = "popupSection"></div>
@@ -304,7 +305,61 @@
             svg.append("g")
                 .call(d3.axisLeft(y));
         }
+
+        function dailyOrders() {
+
+            const dailyOrders = <%- JSON.stringify(dailyOrders) %>;
+            console.log(dailyOrders);
+
+            // Set up dimensions for the graph
+            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                width = 800 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#chart2")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // X scale and axis
+            const x = d3.scaleBand()
+                .domain(dailyOrders.map(d => d._id))  // Use the date string as the domain
+                .range([0, width])
+                .padding(0.1);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Y scale and axis
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(dailyOrders, d => d.count)])
+                .nice()
+                .range([height, 0]);
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // Bars
+            svg.selectAll(".bar")
+                .data(dailyOrders)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d._id))
+                .attr("y", d => y(d.count))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.count))
+                .attr("fill", "steelblue");
+            
+        }
         renderAverageOrdersChart(data);
+        dailyOrders();
     </script>
     <script src="/js/admin.js"></script>
     <script src="/js/popup.js"></script>

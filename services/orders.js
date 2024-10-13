@@ -49,8 +49,32 @@ async function getAllOrders() {
 
 }
 
+async function getDailyOrderCount() {
+    try {
+        const dailyOrders = await Order.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $dateToString: { format: "%Y-%m-%d", date: "$dateCreated" }
+                    },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { _id: 1 }
+            }
+        ]);
+
+        return (dailyOrders);
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+
 module.exports = {
     removeOrder,
     editOrder,
-    getAllOrders
+    getAllOrders,
+    getDailyOrderCount
 };
