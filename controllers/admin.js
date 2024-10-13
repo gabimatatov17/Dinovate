@@ -223,7 +223,6 @@ async function createItem(req, res) {
             });
 
             response = await productsService.createProduct(cardName, price, labels, image_location);
-            console.log(response)
             if (response.status == 200 && twitter_post === 'yes'){
                 try {
                     const tweet = await twitterService.postProductToTwitter({ cardName, price, labels });
@@ -241,7 +240,6 @@ async function createItem(req, res) {
             delete body.type;
             console.log('Received store data:', body);
             response = await storesService.createStore(body);
-            console.log(response) //
             // Ensure response status is correct, and twitter_post exists
             if (response.status == 200 && req.body.twitter_post === 'yes') {
                 try {
