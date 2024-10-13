@@ -2,6 +2,7 @@ const path = require("path").resolve(__dirname, "..");
 const productsService = require("../services/products");
 const storesService = require("../services/stores");
 const ordersService = require("../services/orders");
+const usersService = require("../services/customers");
 const twitterService = require("../services/twitter");
 const { compile } = require("ejs");
 const moment = require('moment');
@@ -142,6 +143,9 @@ async function editItem(req, res) {
 
             case 'orders':
 
+                data = body;
+                delete data.id;
+
                 response = await ordersService.editOrder(ID, data);
                 return res.send(response);
 
@@ -218,10 +222,31 @@ async function createItem(req, res) {
     }
 }
 
+
+async function getUsers(req, res) {
+
+    const admin = req.params.admin;
+    try {
+        
+        const searchDict = {
+            isAdmin: admin
+        }
+        const response = await usersService.getCustomers(searchDict);
+        return res.send(response);
+
+    } catch (err) {
+
+        return res.send({status: 500, message: err});
+
+    }
+
+}
+
 module.exports = {
     showAdminView,
     deleteItem,
     createItem,
     getPopUp,
-    editItem
+    editItem,
+    getUsers
 }

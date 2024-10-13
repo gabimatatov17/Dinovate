@@ -7,7 +7,7 @@ async function removeOrder(orderID) {
         if (result.deletedCount == 0) {
             return Promise.reject({ status: 500, message: "Order not found" });
         }
-        return Promise.resolve({ status: 200 });
+        return Promise.resolve({ status: 200, message: "success"});
 
     }).catch(e => {
         return Promise.reject({ status: 500, message: e });
@@ -27,7 +27,7 @@ async function editOrder(orderID, data) {
         return ({ status: 200, message: "Success"  });
 
     } catch (e) {
-        console.error('Error updating item:', error);
+        console.error('Error updating item:', e);
         return ({ status: 500, message: e });
     }
 }
@@ -38,7 +38,6 @@ async function getAllOrders() {
     try {
 
         const orders = await Order.find().exec();
-        console.log(orders[0].cards[0]);
         return orders;
 
     } catch (error) {
