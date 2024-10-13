@@ -204,3 +204,8 @@
     margin-top: 2%;
 
 }
+#usertable {
+    height: 50vh; 
+    overflow: scroll;
+    border: 0px solid white;
+}
