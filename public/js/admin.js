@@ -9,6 +9,7 @@ function showElement() {
         var stores = $('#stores');
         var orders = $('#orders');
         var users = $('#users');
+        var overview = $('#overview');
 
         switch (selectedID) {
             case "Products":
@@ -16,6 +17,7 @@ function showElement() {
                 stores.hide();
                 orders.hide();
                 users.hide();
+                overview.hide();
                 break;
             
             case "Stores":
@@ -23,6 +25,7 @@ function showElement() {
                 stores.show();
                 orders.hide();
                 users.hide();
+                overview.hide();
                 break;
             
             case "Orders":
@@ -30,6 +33,7 @@ function showElement() {
                 stores.hide();
                 orders.show();
                 users.hide();
+                overview.hide();
                 break;
             
             case "Users":
@@ -37,6 +41,15 @@ function showElement() {
                 stores.hide();
                 orders.hide();
                 users.show();
+                overview.hide();
+                break;
+            
+            case "Overview":
+                products.hide();
+                stores.hide();
+                orders.hide();
+                users.hide();
+                overview.show();
                 break;
         }
     } else {
@@ -357,14 +370,14 @@ function getUsers() {
 
             let htmlObject = `
                 <div style="display: flex; justify-content: center;">
-                    <table class="table table-hover table-striped table-bordered" style="width: 60%; max-width: 800px;">
+                    <table class="table table-hover table-striped table-bordered" id="dataTable" style="width: 60%; max-width: 800px;">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">User ID</th>
                                 <th scope="col">Email</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="dataBody">
             `
             const users = data.message;
 
@@ -392,4 +405,5 @@ function getUsers() {
     });
 
 }
+
 getUsers();
