@@ -89,6 +89,61 @@ body {
     100% { transform: translateX(100%); }
 }
 
+/* public/styles.css */
+.filter-container {
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.filter-btn input[type="checkbox"] {
+    display: none;
+}
+
+.query-info {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.query-info h2 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.query-info p {
+    margin: 0;
+    color: #6c757d;
+}
+
+#item-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#item-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
 
 /* Blocks Container (for image blocks) */
 .blocks-container {

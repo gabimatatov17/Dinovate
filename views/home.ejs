@@ -34,8 +34,20 @@
         <p>Your one-stop shop for unique cards that bring joy to every occasion!</p>
     </div>
 
+    <form action="/" method="GET" id="filter-form">
+        <div class="filter-container">
+            <% allLabels.forEach(label => { %>
+                <label class="filter-btn <%= selectedLabels.includes(label) ? 'active' : '' %>">
+                    <input type="checkbox" name="labels" value="<%= label %>"
+                           <%= selectedLabels.includes(label) ? 'checked' : '' %>>
+                    <%= label %>
+                </label>
+            <% }); %>
+        </div>
+    </form>
+
     <div class="blocks-container">
-        <% items.forEach(function(item) { %>
+        <% filterdProducts.forEach(function(item) { %>
             <div class="image-block" style="background-image: url('<%= item.image_location %>');">
                 <p><%= item.cardName %></p>
             </div>
@@ -47,6 +59,9 @@
 
     <!-- Load JS files at the end to avoid render blocking -->
     <script src="/js/home.js" defer></script>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
