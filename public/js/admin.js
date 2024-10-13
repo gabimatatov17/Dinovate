@@ -8,24 +8,48 @@ function showElement() {
         var products = $('#products');
         var stores = $('#stores');
         var orders = $('#orders');
+        var users = $('#users');
+        var overview = $('#overview');
 
         switch (selectedID) {
             case "Products":
                 products.show();
                 stores.hide();
                 orders.hide();
+                users.hide();
+                overview.hide();
                 break;
             
             case "Stores":
                 products.hide();
                 stores.show();
                 orders.hide();
+                users.hide();
+                overview.hide();
                 break;
             
             case "Orders":
                 products.hide();
                 stores.hide();
                 orders.show();
+                users.hide();
+                overview.hide();
+                break;
+            
+            case "Users":
+                products.hide();
+                stores.hide();
+                orders.hide();
+                users.show();
+                overview.hide();
+                break;
+            
+            case "Overview":
+                products.hide();
+                stores.hide();
+                orders.hide();
+                users.hide();
+                overview.show();
                 break;
         }
     } else {
@@ -68,6 +92,26 @@ function deleteItem(item, type) {
                         window.alert("successfully deleted " + item.storeName);
                     } else {
                         window.alert("could not delete " + item.storeName + ": " + data.message);
+                    }
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error deleting item: " + error);
+                }
+            });
+        }
+
+    } else if (type == "orders") {
+
+        if (confirm("Are you sure you want to delete  " + item.orderId + "?")) {
+            $.ajax({
+                url: `/admin/${type}/${item.orderId}`,
+                method: 'DELETE',
+                success: function(data) {
+                    if (data.status == 200) {
+                        window.alert("successfully deleted " + item.orderId);
+                    } else {
+                        window.alert("could not delete " + item.orderId + ": " + data.message);
                     }
                     location.reload();
                 },
@@ -280,5 +324,86 @@ function editItem(type, args = null) {
             });
         }
 
+    } else if (type == "orders") {
+
+        const orderId = args.orderId;
+        const customerId = $(`#customerId${orderId}`).val();
+        const totalPrice = $(`#totalPrice${orderId}`).val();
+        const shippingAdress = $(`#shippingAdress${orderId}`).val();
+
+        const data = {
+            id: orderId,
+            customerId,
+            totalPrice,
+            shippingAdress
+        };
+
+        if (confirm("Are you sure you want to edit " + orderId + "?")) {
+            $.ajax({
+                url: `/admin/${type}`,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(data) {
+                    window.alert(data.message);
+                },
+                error: function(xhr, status, error) {
+                    window.alert("Error editting item: " + error);
+                }
+            });
+        }
+
     }
 }
+
+function getUsers() {
+
+    const container = $('#usertable');
+    let customerType = $('#userFilter').val();
+    let isAdmin = customerType == "admin" ? true : false;
+
+    $.ajax({
+        url: `/admin/users/${isAdmin}`,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(data) {
+
+            let htmlObject = `
+                <div style="display: flex; justify-content: center;">
+                    <table class="table table-hover table-striped table-bordered" id="dataTable" style="width: 60%; max-width: 800px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataBody">
+            `
+            const users = data.message;
+
+            for (user of users) {
+                
+                htmlObject += `
+                                <tr>
+                                    <th scope="row">${user.email}</th>
+                                    <td>${user._id}</td>
+                                </tr>
+                            `
+
+            }
+
+            htmlObject += `
+                        </tbody>
+                    </table>
+                </div>
+            `
+            container.html(htmlObject);
+        },
+        error: function(xhr, status, error) {
+            window.alert("Error querying users: " + error);
+        }
+    });
+
+}
+
+getUsers();
