@@ -223,9 +223,14 @@ async function createItem(req, res) {
             });
 
             response = await productsService.createProduct(cardName, price, labels, image_location);
-            if (twitter_post === 'yes'){
-                const tweet = await twitterService.postProductToTwitter({ cardName, price, labels })
-                console.log("Tweet successful: ", tweet);
+            console.log(response)
+            if (response.status == 200 && twitter_post === 'yes'){
+                try {
+                    const tweet = await twitterService.postProductToTwitter({ cardName, price, labels });
+                    console.log("Tweet successful: ", tweet);
+                } catch (e) {
+                    console.error("Error posting to Twitter: ", e);
+                }
             }
             return res.send(response);
 
@@ -236,6 +241,21 @@ async function createItem(req, res) {
             delete body.type;
             console.log('Received store data:', body);
             response = await storesService.createStore(body);
+            console.log(response) //
+            // Ensure response status is correct, and twitter_post exists
+            if (response.status == 200 && req.body.twitter_post === 'yes') {
+                try {
+                    const tweet = await twitterService.postStoreToTwitter({
+                        storeName: body.storeName,
+                        storeAddress: body.storeAdress,
+                        phoneNumber: body.phoneNumber,
+                        workingHours: body.workingHours
+                    });
+                    console.log("Tweet successful: ", tweet);
+                } catch (e) {
+                    console.error("Error posting to Twitter: ", e);
+                }
+            }
             return res.send(response);
 
         default:
