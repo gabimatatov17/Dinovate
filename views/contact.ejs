@@ -47,22 +47,27 @@
                     <textarea id="message" name="message" class="form-control" rows="9" placeholder="Enter your message here :)" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Send Message</button>
+                <% if (serverMassage) { %>
+                    <div class="server-massage-banner">
+                        <p><%= serverMassage %></p>
+                    </div>
+                <% } %>
             </form>
         </div>
 
         <!-- Video Section -->
         <div class="video-container flex-fill p-4">
             <div class="video-wrapper">
-                <h2>Watch Our Stores</h2>
+                <h2>Take a tour of our Headquarters</h2>
                 <video controls class="w-100 mb-3">
-                    <source src="/videos/first-video.mp4" type="video/mp4">
+                    <source src="/videos/HQ.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div class="video-wrapper">
                 <h2>Watch Our Customers Reviewes</h2>
                 <video controls class="w-100 mb-3">
-                    <source src="/videos/second-video.mp4" type="video/mp4">
+                    <source src="/videos/reviews.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
