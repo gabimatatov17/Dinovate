@@ -184,7 +184,7 @@
                   <tr>
                     <th scope="col">Order ID</th>
                     <th scope="col">Date Added</th>
-                    <th scope="col">Cards count</th>
+                    <th scope="col">Cards</th>
                     <th scope="col">Customer ID <i class="fas fa-pencil-alt"></i></th>
                     <th scope="col">Price ($) <i class="fas fa-pencil-alt"></i></th>
                     <th scope="col">Shipping Address <i class="fas fa-pencil-alt"></i></th>
@@ -198,7 +198,11 @@
                                 <th scope="row"><%= order.orderId %></th>
                                 <td><%= order.formattedDateAdded %></td>
                                 <td>
-                                    <%= order.cards.length %>
+                                    <ul>
+                                    <% order.cards.forEach(function(card) {%>
+                                        <li><%= card.greeting %> (Card ID: <%= card.cardId %>)</li>
+                                    <% }); %>
+                                    </ul>
                                 </td>
                                 <td>
                                     <input type="text" id="customerId<%= order.orderId %>" name="customerId" value="<%= order.customerId %>" class="no-border-input" required />
