@@ -85,6 +85,7 @@ async function showAdminView(req, res) {
     });
 
     ordersAverages.sort((a, b) => new Date(a.month) - new Date(b.month));
+    const dailyOrders = await ordersService.getDailyOrderCount();
 
     if (isAuthenticated) {
         var isAdmin = sessionCostumer.isAdmin;
@@ -96,7 +97,8 @@ async function showAdminView(req, res) {
                 isAdmin,
                 stores,
                 orders,
-                ordersAverages
+                ordersAverages,
+                dailyOrders
             });
         }
         else {
