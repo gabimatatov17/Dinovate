@@ -62,4 +62,24 @@ function updateContent() {
             history.pushState(null, '', `/?${queryString}`);
         })
         .catch(error => console.error('Error:', error));
+
+}
+
+function addToCart(cardId) {
+
+    console.log(cardId)
+
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: cardId
+    }).then(response => response.json())
+      .then(data => {
+          // Handle response (e.g., show a message, update cart display)
+          console.log('Card added:', data);
+      }).catch(error => {
+          console.error('Error:', error);
+      });
 }
