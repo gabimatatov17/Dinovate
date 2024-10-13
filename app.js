@@ -20,6 +20,7 @@ const logout = require('./routes/logout');
 const signup = require('./routes/signup');
 const stores = require('./routes/stores')
 const profileRoute = require('./routes/profile');
+const contact = require('./routes/contact');
 
 
 
@@ -86,6 +87,7 @@ app.use("/signup", signup);
 app.use("/stores", stores);
 app.use('/profile', profileRoute);
 app.use('/admin', admin);
+app.use('/contact', contact)
 
 
 // Start the server

@@ -10,6 +10,19 @@ async function getCustomerByEmail(email) {
     }
 }
 
+async function getCustomers(searchDict) {
+
+    try {
+        const customers = await Customer.find(searchDict).exec(); 
+        return {status: 200, message: customers};
+    } catch (error) {
+        console.error('Error finding customers by ', searchDict, error);
+        return {status: 400, message: 'Error finding customers by ', searchDict, error};
+    }
+
+}
+
 module.exports = {
-    getCustomerByEmail
+    getCustomerByEmail,
+    getCustomers
 }
