@@ -40,42 +40,42 @@ module.exports = Card;
 // const cards = [
 //     {
 //         cardId: 1,
-//         cardName: "baby_card_1",
+//         cardName: "Two Becomes Three Baby Card",
 //         price: 19.90,
 //         labels: ["baby", "men", "women", "family"],
 //         image_location: "/images/cards/baby.jpg"
 //     },
 //     {
 //         cardId: 2,
-//         cardName: "baby_card_2",
+//         cardName: "Baby Boy Card",
 //         price: 19.90,
 //         labels: ["baby", "family"],
 //         image_location: "/images/cards/babyboy.jpg"
 //     },
 //     {
 //         cardId: 3,
-//         cardName: "baby_card_3",
+//         cardName: "Elephant Baby Card",
 //         price: 19.90,
 //         labels: ["baby", "men", "women", "family"],
 //         image_location: "/images/cards/babyboy2.jpg"
 //     },
 //     {
 //         cardId: 4,
-//         cardName: "baby_card_4",
+//         cardName: "Football Baby Boy Card",
 //         price: 19.90,
 //         labels: ["baby", "men", "women", "family"],
 //         image_location: "/images/cards/babyboy3.jpg"
 //     },
 //     {
 //         cardId: 5,
-//         cardName: "baby_card_5",
+//         cardName: "Baby Girl Card",
 //         price: 19.90,
 //         labels: ["baby", "men", "women", "family"],
 //         image_location: "/images/cards/babygirl.jpg"
 //     },
 //     {
 //         cardId: 6,
-//         cardName: "baby_card_6",
+//         cardName: "Stork Baby Card",
 //         price: 19.90,
 //         labels: ["baby", "men", "women", "family"],
 //         image_location: "/images/cards/babygirl2.jpg"
@@ -83,77 +83,77 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 7,
-//         cardName: "birthday_card_1",
+//         cardName: "Form Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday.jpg"
 //     },
 //     {
 //         cardId: 8,
-//         cardName: "birthday_card_2",
+//         cardName: "Cute Peas Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday2.jpg"
 //     },
 //     {
 //         cardId: 9,
-//         cardName: "birthday_card_3",
+//         cardName: "Dancing Taco Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday3.jpg"
 //     },
 //     {
 //         cardId: 10,
-//         cardName: "birthday_card_4",
+//         cardName: "Cute Toast Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday4.jpg"
 //     },
 //     {
 //         cardId: 11,
-//         cardName: "birthday_card_5",
+//         cardName: "Get Drunk Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday5.jpg"
 //     },
 //     {
 //         cardId: 12,
-//         cardName: "birthday_card_6",
+//         cardName: "Puppy Holding Beer Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday6.jpg"
 //     },
 //     {
 //         cardId: 13,
-//         cardName: "birthday_card_7",
+//         cardName: "Tipex Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday7.jpg"
 //     },
 //     {
 //         cardId: 14,
-//         cardName: "birthday_card_8",
+//         cardName: "Chilling Snoopy Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday8.jpg"
 //     },
 //     {
 //         cardId: 15,
-//         cardName: "birthday_card_9",
+//         cardName: "Puppy Girl Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday9.jpg"
 //     },
 //     {
 //         cardId: 16,
-//         cardName: "birthday_card_10",
+//         cardName: "Margarita Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday10.jpg"
 //     },
 //     {
 //         cardId: 17,
-//         cardName: "birthday_card_11",
+//         cardName: "Gaming Birthday Card",
 //         price: 29.90,
 //         labels: ["birthday", "men", "women"],
 //         image_location: "/images/cards/birthday11.jpg"
@@ -161,21 +161,21 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 18,
-//         cardName: "greetings_card_1",
+//         cardName: "Cowngratulations Greeting Card",
 //         price: 39.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/congrats.jpg"
 //     },
 //     {
 //         cardId: 19,
-//         cardName: "greetings_card_2",
+//         cardName: "Books Greeting Card",
 //         price: 39.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/congrats2.jpg"
 //     },
 //     {
 //         cardId: 20,
-//         cardName: "greetings_card_3",
+//         cardName: "Zesty Greeting Card",
 //         price: 39.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/congrats3.jpg"
@@ -183,35 +183,35 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 21,
-//         cardName: "getwell_card_1",
+//         cardName: "General Get Well Card",
 //         price: 19.90,
 //         labels: ["getwell"],
 //         image_location: "/images/cards/getwell.jpg"
 //     },
 //     {
 //         cardId: 22,
-//         cardName: "getwell_card_2",
+//         cardName: "Big Hugs Get Well Card",
 //         price: 19.90,
 //         labels: ["getwell"],
 //         image_location: "/images/cards/getwell2.jpg"
 //     },
 //     {
 //         cardId: 23,
-//         cardName: "getwell_card_3",
+//         cardName: "Recovery Get Well Card",
 //         price: 19.90,
 //         labels: ["getwell"],
 //         image_location: "/images/cards/getwell3.jpg"
 //     },
 //     {
 //         cardId: 24,
-//         cardName: "getwell_card_4",
+//         cardName: "Hedgehog Get Well Card",
 //         price: 19.90,
 //         labels: ["getwell"],
 //         image_location: "/images/cards/getwell4.jpg"
 //     },
 //     {
 //         cardId: 25,
-//         cardName: "getwell_card_5",
+//         cardName: "Darth Vader Get Well Card",
 //         price: 19.90,
 //         labels: ["getwell"],
 //         image_location: "/images/cards/getwell5.jpg"
@@ -219,21 +219,21 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 26,
-//         cardName: "graduation_card_1",
+//         cardName: "General Graduation Card",
 //         price: 49.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/graduation.jpg"
 //     },
 //     {
 //         cardId: 27,
-//         cardName: "graduation_card_2",
+//         cardName: "Go Sister Graduation Card",
 //         price: 49.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/graduation2.jpg"
 //     },
 //     {
 //         cardId: 28,
-//         cardName: "graduation_card_3",
+//         cardName: "Mystery Graduation Card",
 //         price: 49.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/graduation3.jpg"
@@ -241,7 +241,7 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 29,
-//         cardName: "greetings_card_4",
+//         cardName: "Emojis Greeting Card",
 //         price: 39.90,
 //         labels: ["greetings"],
 //         image_location: "/images/cards/greetings.jpg"
@@ -249,7 +249,7 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 30,
-//         cardName: "mum_card_1",
+//         cardName: "Mothers Day Card",
 //         price: 59.90,
 //         labels: ["women", "family"],
 //         image_location: "/images/cards/mum.jpg"
@@ -257,21 +257,21 @@ module.exports = Card;
 //     //////
 //     {
 //         cardId: 31,
-//         cardName: "wedding_card_1",
+//         cardName: "Champagne Wedding Card",
 //         price: 79.90,
 //         labels: ["men", "women", "family", "wedding",],
 //         image_location: "/images/cards/wedding.jpg"
 //     },
 //     {
 //         cardId: 32,
-//         cardName: "wedding_card_2",
+//         cardName: "Painting Wedding Card",
 //         price: 79.90,
 //         labels: ["men", "women", "family", "wedding",],
 //         image_location: "/images/cards/wedding2.jpg"
 //     },
 //     {
 //         cardId: 33,
-//         cardName: "wedding_card_3",
+//         cardName: "Mr & Mrs Wedding Card",
 //         price: 79.90,
 //         labels: ["men", "women", "family", "wedding"],
 //         image_location: "/images/cards/wedding3.jpg"

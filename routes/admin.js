@@ -8,4 +8,7 @@ router.post('/', adminController.createItem);
 router.put('/:type', adminController.editItem);
 
 router.get('/popup/:type', adminController.getPopUp);
+
+router.get('/users/:admin', adminController.getUsers);
+
 module.exports = router;

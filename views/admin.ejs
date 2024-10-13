@@ -9,10 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/admin.css">
     <link rel="stylesheet" href="/styles/footer.css">
     <link rel="stylesheet" href="/styles/navbar.css">
@@ -40,13 +43,19 @@
             <input type="radio" class="btn-check" name="options" id="Orders" autocomplete="off" onClick = "showElement()">
             <label class="btn btn-secondary" for="Orders">Orders</label>
 
+            <input type="radio" class="btn-check" name="options" id="Users" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Users">Users</label>
+
+            <input type="radio" class="btn-check" name="options" id="Overview" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Overview">Overview</label>
+
         </div>
 
         <div id = "products">
 
             <div class="row" >
 
-                <% items.forEach(function(row) { %>
+                <% products.forEach(function(row) { %>
 
                         <% row.forEach(function(item) { %>
 
@@ -93,14 +102,265 @@
     
             </div>
     
-            <div id = "popupSection"></div>
+        </div>
+
+        <div id = "stores" style = "display: none;">
+
+            <table class="table table-hover table-striped table-bordered">
+
+                <thead class="thead-dark">
+
+                    <tr>
+
+                        <th scope="col">Store ID</th>
+                        <th scope="col">Date Added</th>
+                        <th scope="col">Store Name <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Store Address <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Phone Number <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Working Hours <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Image Location <i class="fas fa-pencil-alt"></i></th>
+                        <th scope="col">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <% stores.forEach(function(store) { %>
+
+                        <form id="storeForm<%= store.storeId %>" onSubmit = "editItem('stores', {storeId: '<%= store.storeId %>'})" action = "/admin/stores">
+                           
+                            <tr>
+
+                                <th scope="row"><%= store.storeId %></th>
+                                <td><%= store.formattedDateAdded %></td>
+                                <td>
+                                    <input type="text" id="storeName<%= store.storeId %>" name="storeName" value="<%= store.storeName %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="storeAddress<%= store.storeId %>" name="storeAddress" value="<%= store.storeAdress %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="phoneNumber<%= store.storeId %>" name="phoneNumber" value="<%= store.phoneNumber %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="workingHours<%= store.storeId %>" name="workingHours" value="<%= store.workingHours %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="imageLocation<%= store.storeId %>" name="imageLocation" value="<%= store.imageLocation %>" class="no-border-input" required />
+                                </td>
+                                <td class="storesActions">
+
+                                    <button type="submit" class="btn btn-warning btn-sm">
+                                        Submit Change <i class="fas fa-check-circle"></i>
+                                    </button>
+
+                                    <a href="#" class="btn btn-danger btn-sm">
+                                        Delete <i class="fas fa-trash" onClick="deleteItem('<%= JSON.stringify(store) %>', 'stores')"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                        </form>
+
+                    <% }); %>
+
+                </tbody>
+
+            </table>
+
+            <div class="d-flex justify-content-end mb-2">
+
+                <button class="btn btn-success" id="addStoreBtn" onClick = "showPopUp({type: 'stores'})">
+
+                    <i class="fas fa-plus-circle"></i> Add New Store
+
+                </button>
+
+            </div>
 
         </div>
+        
+        <div id = "orders" style = "display: none;">
+
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Cards</th>
+                    <th scope="col">Customer ID <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Price ($) <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Shipping Address <i class="fas fa-pencil-alt"></i></th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(function(order) { %>
+                        <form id="orderForm<%= order.orderId %>" onSubmit="editItem('orders', {orderId: '<%= order.orderId %>'})" action="/admin/orders">
+                            <tr>
+                                <th scope="row"><%= order.orderId %></th>
+                                <td><%= order.formattedDateAdded %></td>
+                                <td>
+                                    <ul>
+                                    <% order.cards.forEach(function(card) {%>
+                                        <li><%= card.greeting %> (Card ID: <%= card.cardId %>)</li>
+                                    <% }); %>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <input type="text" id="customerId<%= order.orderId %>" name="customerId" value="<%= order.customerId %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="number" id="totalPrice<%= order.orderId %>" name="totalPrice" value="<%= order.totalPrice %>" class="no-border-input" required />
+                                </td>
+                                <td>
+                                    <input type="text" id="shippingAdress<%= order.orderId %>" name="shippingAdress" value="<%= order.shippingAdress %>" class="no-border-input" required />
+                                </td>
+                                <td class="ordersActions">
+                                    <button type="submit" class="btn btn-warning btn-sm">
+                                        Submit Change <i class="fas fa-check-circle"></i>
+                                    </button>
+                                    <a href="#" class="btn btn-danger btn-sm" onClick="deleteItem('<%= JSON.stringify(order) %>', 'orders')">
+                                        Delete <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </form>
+                    <% }); %>
+                </tbody>
+              </table>
+
+        </div>
+
+        <div id = "users" style = "display: none;">
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <form id="userFilterForm" onSubmit="filterUsers()" style="text-align: center;">
+                    <label for="userFilter">Show Users:</label>
+                    <select id="userFilter" name="userRole" class="custom-select" onChange="getUsers()">
+                        <option value="admin">Admin Users</option>
+                        <option value="customer">Regular Customers</option>
+                    </select>
+                </form>
+            </div>
+            
+            <div id = "usertable"></div>
+            
+        </div>
+
+        <div id = "overview" style = "display: none; display: flex; justify-content: center;">
+            <svg id="chart" width="600" height="300">
+                <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Average Daily Orders per Month</text>
+            </svg>
+            <div id="chart2"></div>
+        </div>
+
+        <div id = "popupSection"></div>
 
     </main>
 
     <%- include('footer') %>
 
+    <script>
+        const data = <%- JSON.stringify(ordersAverages) %>;
+        function renderAverageOrdersChart(data) {
+            
+            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                width = 600 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#chart")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.month))
+                .range([0, width])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.averagePerDay)])
+                .nice()
+                .range([height, 0]);
+
+            svg.append("g")
+                .selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.month))
+                .attr("y", d => y(d.averagePerDay))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.averagePerDay))
+                .attr("fill", "#0072ff");
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+        }
+
+        function dailyOrders() {
+
+            const dailyOrders = <%- JSON.stringify(dailyOrders) %>;
+            console.log(dailyOrders);
+
+            // Set up dimensions for the graph
+            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                width = 800 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#chart2")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // X scale and axis
+            const x = d3.scaleBand()
+                .domain(dailyOrders.map(d => d._id))  // Use the date string as the domain
+                .range([0, width])
+                .padding(0.1);
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Y scale and axis
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(dailyOrders, d => d.count)])
+                .nice()
+                .range([height, 0]);
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // Bars
+            svg.selectAll(".bar")
+                .data(dailyOrders)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d._id))
+                .attr("y", d => y(d.count))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.count))
+                .attr("fill", "steelblue");
+            
+        }
+        renderAverageOrdersChart(data);
+        dailyOrders();
+    </script>
     <script src="/js/admin.js"></script>
     <script src="/js/popup.js"></script>
     <!-- <script src="/js/twitter.js"></script> -->
