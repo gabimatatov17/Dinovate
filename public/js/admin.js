@@ -232,6 +232,7 @@ function createItem(type) {
         const phoneNumber = $('#phoneNumber').val();
         const workingHours = $('#workingHours').val();
         const imageLocation = $('#imageLocation').val();
+        const twitter_post = $('#twitter_post').val();
 
         if (confirm("Are you sure you want to create  " + storeName + "?")) {
             $.ajax({
@@ -244,7 +245,8 @@ function createItem(type) {
                     storeAdress: storeAddress,
                     phoneNumber,
                     workingHours,
-                    imageLocation
+                    imageLocation,
+                    twitter_post
                 }),
                 success: function(data) {
                     window.alert(data.message);
