@@ -10,7 +10,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Add icon library -->
@@ -45,6 +45,9 @@
 
             <input type="radio" class="btn-check" name="options" id="Users" autocomplete="off" onClick = "showElement()">
             <label class="btn btn-secondary" for="Users">Users</label>
+
+            <input type="radio" class="btn-check" name="options" id="Overview" autocomplete="off" onClick = "showElement()">
+            <label class="btn btn-secondary" for="Overview">Overview</label>
 
         </div>
 
@@ -242,7 +245,15 @@
                     </select>
                 </form>
             </div>
+            
             <div id = "usertable"></div>
+            
+        </div>
+
+        <div id = "overview" style = "display: none;">
+            <svg id="chart" width="600" height="300">
+                <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Average Daily Orders per Month</text>
+            </svg>
         </div>
 
         <div id = "popupSection"></div>
@@ -251,6 +262,50 @@
 
     <%- include('footer') %>
 
+    <script>
+        const data = <%- JSON.stringify(ordersAverages) %>;
+        function renderAverageOrdersChart(data) {
+            
+            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+                width = 600 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("#chart")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.month))
+                .range([0, width])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.averagePerDay)])
+                .nice()
+                .range([height, 0]);
+
+            svg.append("g")
+                .selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.month))
+                .attr("y", d => y(d.averagePerDay))
+                .attr("width", x.bandwidth())
+                .attr("height", d => height - y(d.averagePerDay))
+                .attr("fill", "#0072ff");
+
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
+
+            svg.append("g")
+                .call(d3.axisLeft(y));
+        }
+        renderAverageOrdersChart(data);
+    </script>
     <script src="/js/admin.js"></script>
     <script src="/js/popup.js"></script>
     <!-- <script src="/js/twitter.js"></script> -->

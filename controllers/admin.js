@@ -64,9 +64,27 @@ async function showAdminView(req, res) {
     });
 
     // parse orders
+    let monthlyOrders = {};
     orders.forEach(order => {
         order.formattedDateAdded = moment(order.dateAdded).format('DD/MM/YYYY');
+        const date = new Date(order.dateCreated);
+        const month = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        
+        if (!monthlyOrders[month]) {
+            monthlyOrders[month] = { totalOrders: 0, days: new Set() };
+        }
+        
+        monthlyOrders[month].totalOrders++;
+        monthlyOrders[month].days.add(date.getDate());
     });
+
+    const ordersAverages = Object.keys(monthlyOrders).map(month => {
+        const { totalOrders, days } = monthlyOrders[month];
+        const averagePerDay = totalOrders / days.size;
+        return { month, averagePerDay };
+    });
+
+    ordersAverages.sort((a, b) => new Date(a.month) - new Date(b.month));
 
     if (isAuthenticated) {
         var isAdmin = sessionCostumer.isAdmin;
@@ -77,7 +95,8 @@ async function showAdminView(req, res) {
                 products: result,
                 isAdmin,
                 stores,
-                orders
+                orders,
+                ordersAverages
             });
         }
         else {
