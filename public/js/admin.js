@@ -343,16 +343,48 @@ function editItem(type, args = null) {
     }
 }
 
-function getUsers(admin = false) {
+function getUsers() {
 
-    const container = $('#users');
+    const container = $('#usertable');
+    let customerType = $('#userFilter').val();
+    let isAdmin = customerType == "admin" ? true : false;
+
     $.ajax({
-        url: `/admin/users/${admin}`,
+        url: `/admin/users/${isAdmin}`,
         method: 'GET',
         contentType: 'application/json',
         success: function(data) {
-            console.log(data);
-            container.html(data.message[0].firstName);
+
+            let htmlObject = `
+                <div style="display: flex; justify-content: center;">
+                    <table class="table table-hover table-striped table-bordered" style="width: 60%; max-width: 800px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `
+            const users = data.message;
+
+            for (user of users) {
+                
+                htmlObject += `
+                                <tr>
+                                    <th scope="row">${user.email}</th>
+                                    <td>${user._id}</td>
+                                </tr>
+                            `
+
+            }
+
+            htmlObject += `
+                        </tbody>
+                    </table>
+                </div>
+            `
+            container.html(htmlObject);
         },
         error: function(xhr, status, error) {
             window.alert("Error querying users: " + error);

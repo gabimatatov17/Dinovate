@@ -233,6 +233,16 @@
         </div>
 
         <div id = "users" style = "display: none;">
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <form id="userFilterForm" onSubmit="filterUsers()" style="text-align: center;">
+                    <label for="userFilter">Show Users:</label>
+                    <select id="userFilter" name="userRole" class="custom-select" onChange="getUsers()">
+                        <option value="admin">Admin Users</option>
+                        <option value="customer">Regular Customers</option>
+                    </select>
+                </form>
+            </div>
+            <div id = "usertable"></div>
         </div>
 
         <div id = "popupSection"></div>
