@@ -10,10 +10,10 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    cards: {
-        type: Array,
-        required: true
-    },
+    cards: [{
+        cardId: { type: Number, required: true },
+        greeting: { type: String, required: true }
+    }],
     totalPrice: {
         type: Number,
         required: true
@@ -49,7 +49,7 @@ module.exports = Order;
 // const orders = [
 //     {
 //         orderId: 1,
-//         customerId: 6,
+//         customerId: new mongoose.Types.ObjectId('66e9c7c00664e7375818f765'), // Use mongoose.Types.ObjectId()
 //         cards: [
 //             {
 //                 cardId: 7,
@@ -61,7 +61,7 @@ module.exports = Order;
 //     },
 //     {
 //         orderId: 2,
-//         customerId: 7,
+//         customerId: new mongoose.Types.ObjectId('66e9c7c00664e7375818f766'), // Use mongoose.Types.ObjectId()
 //         cards: [
 //             {
 //                 cardId: 21,
@@ -73,7 +73,7 @@ module.exports = Order;
 //     },
 //     {
 //         orderId: 3,
-//         customerId: 7,
+//         customerId: new mongoose.Types.ObjectId('66e9c7c00664e7375818f766'), // Use mongoose.Types.ObjectId()
 //         cards: [
 //             {
 //                 cardId: 8,
