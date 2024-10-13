@@ -20,4 +20,7 @@ router.post('/add', cartController.addToCart);  // This route will call cartCont
 // Route to handle removing an item from the cart
 router.post('/remove', cartController.removeFromCart);  // This route will call cartController.removeFromCart
 
+// Route to handle picup orders
+router.post('/pickup-order', cartController.handlePickupOrder);
+
 module.exports = router;

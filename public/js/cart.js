@@ -1,5 +1,4 @@
 // public/js/cart.js
-
 document.addEventListener('DOMContentLoaded', () => {
     updateCartTotal();
 
@@ -55,7 +54,6 @@ async function handleRemoveFromCart(event) {
     }
 }
 
-
 // Function to update cart total
 function updateCartTotal() {
     let total = 0;
@@ -72,7 +70,7 @@ function updateCartTotal() {
     document.getElementById('items-total').innerText = total.toFixed(2);
 }
 
-// Address validation submission
+// Address validation submission for regular orders only (Place Order button)
 document.getElementById('address-form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -83,7 +81,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
     const messageElement = document.getElementById('validation-message');
     messageElement.textContent = ''; // Clear previous messages
 
-    // Client-side validation to ensure all fields are filled
+    // Client-side validation to ensure all fields are filled for regular orders only
     if (!street || !locality || !postal_code) {
         messageElement.textContent = 'Please fill in all the required fields.';
         messageElement.style.color = 'red';
@@ -91,7 +89,6 @@ document.getElementById('address-form').addEventListener('submit', async functio
     }
 
     try {
-        // Send the address data to the server for validation
         const response = await axios.post('/cart/validate-address', {
             street,
             locality,
@@ -101,42 +98,58 @@ document.getElementById('address-form').addEventListener('submit', async functio
 
         const result = response.data;
 
-        console.log('result=', result)
-        // Handle the API response and display the result to the user
         if (result.valid) {
-            // Display the order placed message with animation
-            const orderPlacedMessage = document.getElementById('order-placed-message');
-            const orderIdElement = document.getElementById('order-id');
-
-            console.log('result.order.orderId', result.order.orderId)
-            // Update the message to include the order ID
-            orderIdElement.innerText = `Your order ID is: ${result.order.orderId}`;
-
-            orderPlacedMessage.style.display = 'flex'; // Show popup
-
-            // Optionally, redirect to another page after a delay
-            setTimeout(() => {
-                // Redirect or hide the message
-                orderPlacedMessage.style.display = 'none';
-                window.location.href = '/profile'; // Redirect if needed
-            }, 3000);
+            showOrderPlacedMessage(result.order.orderId); // Show order placed popup with order ID
         } else {
-            messageElement.textContent = result.message; // Display error message from the server
+            messageElement.textContent = result.message;
             messageElement.style.color = 'red';
         }
     } catch (error) {
-        // Handle unexpected errors (e.g., network issues)
         messageElement.textContent = 'Error occurred while validating the address. Please try again later.';
         messageElement.style.color = 'red';
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Add event listener for the "Generate Greeting" button
-    document.querySelectorAll('.generate-greeting-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            alert('Generate Greeting button clicked!');  // Placeholder functionality
-        });
-    });
+// Pickup Order Button - Show store locations when the "Pickup Order" button is clicked
+document.getElementById('pickup-order-btn').addEventListener('click', (event) => {
+    event.preventDefault();  // Prevent form submission
+
+    const storeLocations = document.getElementById('store-locations');
+    storeLocations.style.display = 'block';  // Show store locations dropdown
 });
 
+// Handle the confirmation of the store pickup without address validation
+document.getElementById('confirm-pickup-btn').addEventListener('click', async (event) => {
+    event.preventDefault();  // Prevent form submission
+
+    const storeAddress = document.getElementById('store-select').value;
+
+    try {
+        const response = await axios.post('/cart/pickup-order', { storeAddress });
+        if (response.data.success) {
+            showOrderPlacedMessage(response.data.order.orderId); // Show the same popup with order ID for pickup
+        } else {
+            alert('Error placing pickup order');
+        }
+    } catch (error) {
+        console.error('Error placing pickup order:', error);
+        alert('Error placing pickup order');
+    }
+});
+
+// Function to show the order placed popup with order ID (for both types of orders)
+function showOrderPlacedMessage(orderId) {
+    const orderPlacedMessage = document.getElementById('order-placed-message');
+    const orderIdElement = document.getElementById('order-id');
+
+    // Update the message to include the order ID
+    orderIdElement.innerText = `Your order ID is: ${orderId}`;
+    
+    orderPlacedMessage.style.display = 'flex'; // Show popup
+
+    // Optionally, redirect to another page after a delay
+    setTimeout(() => {
+        orderPlacedMessage.style.display = 'none';
+        window.location.href = '/profile'; // Redirect if needed
+    }, 3000);
+}

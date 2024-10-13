@@ -1,9 +1,6 @@
-// controllers/cart.js
 const axios = require('axios');
 const Order = require('../models/orders'); // Import the Order model
-const Customer = require('../models/customers');  // Import Customer model
-const Card = require('../models/products'); // Import Card model 
-
+const Store = require('../models/stores'); // Import the Store model
 const AUTH_ID = process.env.AUTH_ID;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
@@ -11,23 +8,18 @@ const AUTH_TOKEN = process.env.AUTH_TOKEN;
 async function addToCart(req, res) {
   const { cardId } = req.body;
 
-  // Check if the cart exists in the session
   if (!req.session.cart) {
     return res.status(400).json({ success: false, message: "Cart is empty" });
   }
 
   const cart = req.session.cart;
-
-  // Find the item in the cart
   const item = cart.find(item => item.cardId === cardId);
 
   if (item) {
-    // Check if the quantity exceeds 5
     if (item.quantity >= 5) {
       return res.status(400).json({ success: false, message: "For large orders, please contact our support" });
     }
 
-    // Increase the quantity by 1
     item.quantity += 1;
   }
 
@@ -44,8 +36,6 @@ async function removeFromCart(req, res) {
   }
 
   let cart = req.session.cart;
-
-  // Find the index of the item
   const itemIndex = cart.findIndex(item => item.cardId === cardId);
 
   if (itemIndex !== -1) {
@@ -56,11 +46,10 @@ async function removeFromCart(req, res) {
   res.json({ success: true, cart });
 }
 
-
-// Generates a unique order ID 
+// Generate a unique order ID 
 async function generateOrderId() {
-  const lastOrder = await Order.findOne().sort({ orderId: -1 });  // Get the last order
-  return lastOrder ? lastOrder.orderId + 1 : 1;  // Increment orderId or start from 1
+  const lastOrder = await Order.findOne().sort({ orderId: -1 });
+  return lastOrder ? lastOrder.orderId + 1 : 1;
 }
 
 // Renders the shopping cart page
@@ -68,74 +57,54 @@ async function showCart(req, res) {
   let cart = req.session.cart || [];
   let total = 0;
 
-  // Calculate total price for the cart
   for (const item of cart) {
     total += item.price * item.quantity;
   }
 
-  // extract data from session
-  var sessionCustumer = req.session.customer;
-  var isAuthenticated = sessionCustumer ? true : false;
+  const sessionCustomer = req.session.customer;
+  const isAuthenticated = sessionCustomer ? true : false;
+  const isAdmin = sessionCustomer ? sessionCustomer.isAdmin : null;
 
-  if (sessionCustumer) {
-    var isAdmin = sessionCustumer.isAdmin;
-  } else {
-    var isAdmin = null;
-  }
+  // Fetch store locations
+  const stores = await Store.find({});
 
-  res.render("cart", { cart, total, isAuthenticated, isAdmin }); // Pass cart and total price to the view
+  res.render('cart', { cart, total, isAuthenticated, isAdmin, stores }); // Pass cart, total, and stores to the view
 }
 
-
-// Validates the address using SmartyStreets International API
+// Validate address using SmartyStreets API
 async function validateAddress(req, res) {
   const { street, locality, postal_code, country = "ISR" } = req.body;
 
-  // API URL for international address validation
   const url = `https://international-street.api.smartystreets.com/verify?auth-id=${AUTH_ID}&auth-token=${AUTH_TOKEN}&address1=${encodeURIComponent(street)}&locality=${encodeURIComponent(locality)}&postal_code=${encodeURIComponent(postal_code)}&country=${encodeURIComponent(country)}`;
 
   try {
-    console.log('Sending GET request to SmartyStreets:', url);  // Log the full URL
-
     const response = await axios.get(url);
     const data = response.data;
 
-    console.log('SmartyStreets API response status:', response.status);  // Log the response status
-    console.log('SmartyStreets API response data:', data);  // Log the API response data
-
     if (response.status === 200 && data.length > 0) {
       const addressAnalysis = data[0].analysis;
-      console.log('data[0].analysis=', data[0].analysis, 'length:', data.length);
-      console.log('addressAnalysis.verification_status-', addressAnalysis.verification_status);
 
-      // Check the verification status
       switch (addressAnalysis.verification_status) {
         case 'Verified':
         case 'Partial': {
-          // Address is valid, now create an order
           if (!req.session.customer || !req.session.cart) {
-            console.log('cart or customer info missing');
             return res.json({ valid: false, message: 'Cart or customer information is missing. Please try again.' });
           }
 
           const shippingAddress = `${street}, ${locality}, ${postal_code}, ${country}`;
-
-          // Generate new orderId
           const newOrderId = await generateOrderId();
 
-          // Create a new order object
           const newOrder = new Order({
             orderId: newOrderId,
-            customerId: req.session.customer._id,  // Correct the variable
+            customerId: req.session.customer._id,
             cards: req.session.cart.map(item => ({
               cardId: item.cardId,
-              greeting: `Enjoy your ${item.cardName}!`  // Or ask the user for the greeting message
+              greeting: `Enjoy your ${item.cardName}!`
             })),
             totalPrice: req.session.cart.reduce((total, item) => total + (item.price * item.quantity), 0),
             shippingAdress: shippingAddress
           });
 
-          // Save the order to the database
           await newOrder.save();
           return res.json({ valid: true, message: 'Address is valid!', order: newOrder, address: data[0] });
         }
@@ -149,16 +118,45 @@ async function validateAddress(req, res) {
       return res.json({ valid: false, message: 'Address not found or invalid.' });
     }
   } catch (error) {
-    console.error('Error during address validation:', error);  // Log any unexpected errors
     res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
   }
 }
 
+// Handle Pickup Order
+async function handlePickupOrder(req, res) {
+  if (!req.session.customer || !req.session.cart) {
+    return res.json({ success: false, message: 'Cart or customer information is missing.' });
+  }
+
+  const storeAddress = req.body.storeAddress;
+  const customerId = req.session.customer._id;
+
+  try {
+    const newOrderId = await generateOrderId();
+
+    const newOrder = new Order({
+      orderId: newOrderId,
+      customerId: customerId,
+      cards: req.session.cart.map(item => ({
+        cardId: item.cardId,
+        greeting: `Enjoy your ${item.cardName}!`
+      })),
+      totalPrice: req.session.cart.reduce((total, item) => total + (item.price * item.quantity), 0),
+      shippingAdress: `PICKUP - ${storeAddress}`
+    });
+
+    await newOrder.save();
+    return res.json({ success: true, message: 'Pickup order placed!', order: newOrder });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error placing pickup order' });
+  }
+}
 
 module.exports = {
   addToCart,
   removeFromCart,
   generateOrderId,
   showCart,
-  validateAddress
+  validateAddress,
+  handlePickupOrder
 };

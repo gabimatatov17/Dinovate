@@ -91,7 +91,6 @@ body {
     color: #0072ff;  /* Match the blue of the login button */
 }
 
-
 /* Container to hold the image and button */
 .item-image-and-button {
     display: flex;
@@ -118,4 +117,33 @@ body {
 .generate-greeting-btn:hover {
     background: linear-gradient(90deg, #0072ff, #00c6ff);
     transform: scale(1.05);
+}
+
+/* Pickup button */
+#pickup-order-btn {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);  /* Match place order button */
+    color: white;
+    border: none;
+    font-size: 16px;  
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;  
+    width: 100%;      text-align: center;
+    margin-top: 10px;
+}
+
+#pickup-order-btn:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);  /* Hover effect to match */
+}
+
+/* Store selection dropdown */
+#store-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#confirm-pickup-btn {
+    margin-top: 10px;
 }
