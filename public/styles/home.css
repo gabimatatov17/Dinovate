@@ -185,10 +185,34 @@ body {
 .image-block:hover p{
     opacity: 1;
     position: absolute;
-    bottom: 0;
+    color: white;
+    bottom: 50px;
+}
+
+.image-block:hover #add-to-cart-button {
+    opacity: 1;
+}
+
+#add-to-cart-button{
+    opacity: 0;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    transition: background 0.3s;
+    bottom: 12px;
+    position: absolute;
+}
+
+#add-to-cart-button:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
 }
 
 .image-block:hover{
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.5);
     background-blend-mode: multiply;
 }
