@@ -26,6 +26,8 @@
         <%- include('navbar') %>
     </header>
 
+    <canvas id="backgroundCanvas"></canvas>
+
     <!-- Profile Content -->
     <div class="container mt-5">
         <h2><%= customer.firstName %>'s Profile</h2>
@@ -123,8 +125,6 @@
         </div>
     </div>
 
-    <!-- Profile JS -->
-    <%- include('footer') %>
 
     <script src="/js/profile.js"></script>
 </body>
