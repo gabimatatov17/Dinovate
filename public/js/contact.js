@@ -11,16 +11,16 @@ window.addEventListener('resize', () => {
 });
 
 const cards = [];
-const numberOfCards = 10; // Reduced number of cards
+const numberOfCards = 10; 
 
 function createCard() {
     return {
         x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height - canvas.height, // Start above the canvas
-        size: 50 + Math.random() * 50, // Random size
-        speed: 2 + Math.random() * 3, // Random speed
-        alpha: Math.random() * 0.5 + 0.2, // Random transparency (0.2 - 0.7)
-        color: Math.random() * 360, // Random color hue
+        y: Math.random() * canvas.height - canvas.height, 
+        size: 50 + Math.random() * 50, 
+        speed: 2 + Math.random() * 3, 
+        alpha: Math.random() * 0.5 + 0.2, 
+        color: Math.random() * 360, 
     };
 }
 
@@ -34,7 +34,7 @@ function animateCards() {
 
     cards.forEach(card => {
         // Set color with transparency
-        ctx.fillStyle = `hsla(${card.color}, 100%, 75%, ${card.alpha})`; // Use HSLA for color with transparency
+        ctx.fillStyle = `hsla(${card.color}, 100%, 75%, ${card.alpha})`; 
 
         // Draw the card
         ctx.fillRect(card.x, card.y, card.size, card.size);

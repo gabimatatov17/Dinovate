@@ -27,12 +27,12 @@ async function showProfile(req, res) {
 // Handle profile updates
 async function updateProfile(req, res) {
     try {
-        const { firstName, lastName, email, gender, birthDate } = req.body;
+        const { firstName, lastName, email, gender, birthDate, password } = req.body;
 
         // Update the user's information in the database
         await Customer.updateOne(
             { _id: req.session.customer._id },
-            { firstName, lastName, email, gender, birthDate }
+            { firstName, lastName, email, gender, birthDate, password }
         );
 
         // Fetch updated customer details

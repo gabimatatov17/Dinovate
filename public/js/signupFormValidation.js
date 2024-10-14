@@ -55,7 +55,7 @@ function validateForm() {
         errorMessage += '<h4>Passwords do not match.</h4>';
         isValid = false;
     } else if (password.length < 6) {
-        errorMessage += '<h4>Password must be at least 6 characters.</h4>';
+        errorMessage += '<h4>Password must be at least 6 characters long.</h4>';
         isValid = false;
     }
 
