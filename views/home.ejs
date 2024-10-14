@@ -49,8 +49,12 @@
     <div class="blocks-container">
         <% filterdProducts.forEach(function(item) { %>
             <div class="image-block" style="background-image: url('<%= item.image_location %>');">
-                <p><%= item.cardName.replace(/_/g, " ") %></p>
-                <button id="add-to-cart-button" onclick="addToCart('<%= JSON.stringify(item) %>')" type="submit" >Add to Cart</button>
+                <h1>Name: <%= item.cardName.replace(/_/g, " ") %></h1>
+                <h2>Price: <%= item.price %>$</h2>
+                <h2>Added Date: <%= item.dateAdded.getDate() %>/<%= item.dateAdded.getMonth() + 1 %>/<%= item.dateAdded.getFullYear() %></h2>
+                <% if (isAuthenticated) { %>
+                    <button id="add-to-cart-button" onclick="addToCart('<%= JSON.stringify(item) %>')" type="submit" >Add to Cart</button>
+                <% } %>
             </div>
         <% }); %>
     </div>
