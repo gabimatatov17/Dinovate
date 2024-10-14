@@ -166,7 +166,7 @@ body {
     width: 100%;        /* Make the image fill the block */
     border-radius: 8px;
     bottom: 0;
-    text-align: center;
+    text-align: left;
     height: 400px;
     color: white;
     display: flex;
@@ -177,16 +177,30 @@ body {
 
 }
 
-.image-block p{
+.image-block h1{
     color: black;
     opacity: 0;
 }
 
-.image-block:hover p{
+.image-block:hover h1{
     opacity: 1;
-    position: absolute;
+    font-size: 16px;
     color: white;
     bottom: 50px;
+    text-align: left;
+}
+
+.image-block h2{
+    color: black;
+    opacity: 0;
+}
+
+.image-block:hover h2{
+    opacity: 1;
+    font-size: 14px;
+    color: white;
+    bottom: 50px;
+    text-align: left;
 }
 
 .image-block:hover #add-to-cart-button {
@@ -213,6 +227,6 @@ body {
 }
 
 .image-block:hover{
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.7);
     background-blend-mode: multiply;
 }
