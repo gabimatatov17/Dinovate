@@ -15,7 +15,7 @@ body {
     max-width: 800px;
     margin: 80px auto;
     flex: 1;
-    z-index: 1000;
+    z-index: 0;
 }
 
 h2, h3 {
@@ -122,4 +122,22 @@ footer {
     z-index: 1000;
     bottom: 0;
     width: 100%;
+}
+
+
+/* Client Error Banner */
+.client-error-banner {
+    background-color: #f44336;
+    color: white; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    border-radius: 5px; 
+    text-align: center;  
+    font-weight: normal; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.client-error-banner h4 {
+    font-size: 17px;
 }

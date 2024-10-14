@@ -35,22 +35,22 @@
         <!-- Personal Information Form -->
         <div class="profile-section mt-4">
             <h3>Personal Information</h3>
-            <form action="/profile/update" method="POST">
+            <form id="profile-form" action="/profile/update" method="POST">
                 <div class="form-group mb-3">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" name="firstName" value="<%= customer.firstName %>" required>
+                    <input type="text" class="form-control" name="firstName" id="first-name" value="<%= customer.firstName %>" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" value="<%= customer.lastName %>" required>
+                    <input type="text" class="form-control" name="lastName" id="last-name" value="<%= customer.lastName %>" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" value="<%= customer.email %>" required>
+                    <input type="email" class="form-control" name="email" id="email" value="<%= customer.email %>" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="gender">Gender</label>
-                    <select name="gender" class="form-control" required>
+                    <select id="gender" name="gender" class="form-control" required>
                         <option value="Male" <%= customer.gender === 'Male' ? 'selected' : '' %>>Male</option>
                         <option value="Female" <%= customer.gender === 'Female' ? 'selected' : '' %>>Female</option>
                         <option value="Other" <%= customer.gender === 'Other' ? 'selected' : '' %>>Other</option>
@@ -58,16 +58,19 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="birthDate">Birth Date</label>
-                    <input type="date" class="form-control" name="birthDate" value="<%= customer.birthDate.toISOString().substring(0, 10) %>" required>
+                    <input type="date" class="form-control" id="dob" name="birthDate" value="<%= customer.birthDate.toISOString().substring(0, 10) %>" required>
                 </div>
 
                 <!-- Password Change Option -->
                 <div class="form-group mb-3">
                     <label for="password">New Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" id="password" name="password">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update Information</button>
+                <div class="client-error-banner">
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="update-user-btn">Update Information</button>
             </form>
 
             <!-- Delete User Button -->
