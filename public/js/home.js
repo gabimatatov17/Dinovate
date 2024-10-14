@@ -67,8 +67,6 @@ function updateContent() {
 
 function addToCart(cardId) {
 
-    console.log(cardId)
-
     fetch('/cart/add', {
         method: 'POST',
         headers: {

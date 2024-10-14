@@ -54,7 +54,7 @@ async function showCatalog(req, res) {
 
 async function addToCart(req, res){
     try {
-        const { cardId } = req.body;  // Extract cardId from JSON body
+        const cardId = req.body;  // Extract cardId from JSON body
 
         // Initialize cart in session if it doesn't exist
         if (!req.session.cart) {
@@ -63,12 +63,13 @@ async function addToCart(req, res){
 
         // Add card to session cart (if it's not already there)
         const cart = req.session.cart;
-        const existingItem = cart.find(item => item._id === cardId);
+        const existingItem = cart.find(item => item.cardId === cardId);
 
         if (existingItem) {
             existingItem.quantity += 1;  // Increment quantity if card is already in the cart
         } else {
-            cart.push({ ...cardId, quantity: 1 });  // Add new card to the cart with quantity 1
+            cardId['quantity'] = 1;
+            cart.push(cardId);  // Add new card to the cart with quantity 1
         }
 
         req.session.cart = cart;  // Save updated cart in session
