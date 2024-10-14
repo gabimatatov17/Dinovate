@@ -166,7 +166,7 @@ body {
     width: 100%;        /* Make the image fill the block */
     border-radius: 8px;
     bottom: 0;
-    text-align: center;
+    text-align: left;
     height: 400px;
     color: white;
     display: flex;
@@ -177,18 +177,56 @@ body {
 
 }
 
-.image-block p{
+.image-block h1{
     color: black;
     opacity: 0;
 }
 
-.image-block:hover p{
+.image-block:hover h1{
     opacity: 1;
+    font-size: 16px;
+    color: white;
+    bottom: 50px;
+    text-align: left;
+}
+
+.image-block h2{
+    color: black;
+    opacity: 0;
+}
+
+.image-block:hover h2{
+    opacity: 1;
+    font-size: 14px;
+    color: white;
+    bottom: 50px;
+    text-align: left;
+}
+
+.image-block:hover #add-to-cart-button {
+    opacity: 1;
+}
+
+#add-to-cart-button{
+    opacity: 0;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    transition: background 0.3s;
+    bottom: 12px;
     position: absolute;
-    bottom: 0;
+}
+
+#add-to-cart-button:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
 }
 
 .image-block:hover{
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.7);
     background-blend-mode: multiply;
 }
