@@ -51,6 +51,40 @@ async function showCatalog(req, res) {
     }
 }
 
+
+async function addToCart(req, res){
+    try {
+        const cardId = req.body;  // Extract cardId from JSON body
+
+        // Initialize cart in session if it doesn't exist
+        if (!req.session.cart) {
+            req.session.cart = [];
+        }
+
+        // Add card to session cart (if it's not already there)
+        const cart = req.session.cart;
+        const existingItem = cart.find(item => item.cardId === cardId);
+
+        if (existingItem) {
+            existingItem.quantity += 1;  // Increment quantity if card is already in the cart
+        } else {
+            cardId['quantity'] = 1;
+            cart.push(cardId);  // Add new card to the cart with quantity 1
+        }
+
+        req.session.cart = cart;  // Save updated cart in session
+
+        // Send a JSON response back
+        res.json({ message: 'Card added to cart', cart });  // Respond with a success message and updated cart
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to add card to cart' });  // Handle any errors
+    }
+
+    console.log(req.session.cart)
+}
+
+
 module.exports = {
-    showCatalog
+    showCatalog,
+    addToCart
 }
