@@ -12,20 +12,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to handle adding an item to the cart
+
+// Function to show the popup and refresh the page after a delay
+function showItemAddedPopup(message) {
+    const popup = document.getElementById('item-added-popup');
+    const popupText = document.getElementById('popup-text');
+
+    popupText.innerText = message; 
+    popup.style.display = 'block'; 
+
+    // Hide the popup after 2 seconds and refresh the page
+    setTimeout(() => {
+        popup.style.display = 'none'; 
+        location.reload(); 
+    }, 1000); 
+}
+
+
+// Function to handle adding an item to the cart (increment)
 async function handleAddToCart(event) {
     const button = event.target;
-    const cardId = button.closest('tr').dataset.cardid;
+    const cardId = button.closest('tr').dataset.cardid;  // Get card ID from the row
 
     try {
-        const response = await axios.post('/cart/add', { cardId });
+        const response = await axios.post('/cart/add', { cardId: parseInt(cardId) });
         const result = response.data;
-
-        if (result.success) {
-            updateCartTotal();  // Update cart total after success
-            location.reload();  // Reload the page to reflect the changes
+        
+       console.log('Adding result', result)
+        
+        // Check if the message indicates success
+        if (result.message === "Card added to cart") {
+            showItemAddedPopup('Quantity updated in your cart!');
         } else {
-            alert(result.message);  // Show message for large orders
+            alert(result.message);  // Show any other messages (e.g., errors)
         }
     } catch (error) {
         console.error('Error adding item to cart:', error);
@@ -39,20 +58,27 @@ async function handleRemoveFromCart(event) {
     const cardId = button.closest('tr').dataset.cardid;
 
     try {
-        const response = await axios.post('/cart/remove', { cardId });
+        const response = await axios.post('/cart/remove', { cardId: parseInt(cardId) });
         const result = response.data;
 
+        console.log("Remove result", result); // Debugging to see the full result
+
+        // Check if the message indicates success
         if (result.success) {
-            updateCartTotal();  // Update cart total after success
-            location.reload();  // Reload the page to reflect the changes
+            showItemAddedPopup('Item quantity updated in your cart!'); // Show popup message
+            setTimeout(() => {
+                location.reload(); // Reload the page after a short delay to show updated quantity
+            }, 1000); // Delay before reloading
         } else {
-            alert('Error removing item from cart');
+            alert(result.message);  // Show any other messages (e.g., errors)
         }
     } catch (error) {
         console.error('Error removing item from cart:', error);
         alert('Error removing item from cart');
     }
 }
+
+
 
 // Function to update cart total
 function updateCartTotal() {
@@ -69,6 +95,7 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100;
     document.getElementById('items-total').innerText = total.toFixed(2);
 }
+
 
 // Address validation submission for regular orders only (Place Order button)
 document.getElementById('address-form').addEventListener('submit', async function(event) {

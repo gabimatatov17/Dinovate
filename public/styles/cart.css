@@ -147,3 +147,30 @@ body {
 #confirm-pickup-btn {
     margin-top: 10px;
 }
+
+/* Popup styling */
+.item-added-popup {
+    position: fixed;
+    top: 10%; /* Adjusted to display at the top */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 10px;
+    display: none; /* Hidden initially */
+    text-align: center;
+    width: 300px;
+}
+
+#popup-text {
+    font-size: 16px;
+    color: black; /* Black text */
+}
+
+.fa-check-circle {
+    font-size: 30px;
+    color: green; /* Green check icon */
+}
