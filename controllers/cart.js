@@ -1,12 +1,15 @@
 const axios = require('axios');
 const Order = require('../models/orders'); // Import the Order model
 const Store = require('../models/stores'); // Import the Store model
+const products = require('../models/products'); 
+
 const AUTH_ID = process.env.AUTH_ID;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
 
 // A function to increase the quantity of an item in the cart
 async function addToCart(req, res) {
-  const { cardId } = req.body;
+  let { cardId } = req.body;
+  cardId = parseInt(cardId); // Ensure cardId is treated as an integer
 
   if (!req.session.cart) {
     return res.status(400).json({ success: false, message: "Cart is empty" });
@@ -16,35 +19,59 @@ async function addToCart(req, res) {
   const item = cart.find(item => item.cardId === cardId);
 
   if (item) {
-    if (item.quantity >= 5) {
-      return res.status(400).json({ success: false, message: "For large orders, please contact our support" });
+    item.quantity += 1;  // Increment quantity if card is already in the cart
+  } else {
+    const cardData = await products.findOne({ cardId }); // Fetch card data from DB if not in cart
+    if (cardData) {
+      cart.push({
+        cardId: cardData.cardId,
+        cardName: cardData.cardName,
+        price: cardData.price,
+        image: cardData.image_location,
+        quantity: 1
+      });
+    } else {
+      return res.status(400).json({ success: false, message: "Item not found" });
     }
-
-    item.quantity += 1;
   }
 
   req.session.cart = cart;  // Update the cart in the session
-  res.json({ success: true, cart });
+  console.log("Cart updated:", cart);
+  
+  // Return success response
+  return res.json({ success: true, message: "Card added to cart", cart });
 }
 
-// A function to remove an item from the cart
+
+// A function to remove an item or decrease its quantity from the cart
 async function removeFromCart(req, res) {
   const { cardId } = req.body;
 
   if (!req.session.cart) {
-    return res.status(400).json({ success: false, message: "Cart is empty" });
+      return res.status(400).json({ success: false, message: "Cart is empty" });
   }
 
   let cart = req.session.cart;
-  const itemIndex = cart.findIndex(item => item.cardId === cardId);
+  const itemIndex = cart.findIndex(item => item.cardId === parseInt(cardId)); // Ensure cardId is treated as an integer
 
   if (itemIndex !== -1) {
-    cart.splice(itemIndex, 1);  // Remove the item from the cart
+    if (cart[itemIndex].quantity > 1) {
+      // If quantity is more than 1, just decrease it
+      cart[itemIndex].quantity -= 1;
+    } else {
+      // If quantity is 1, remove the item from the cart
+      cart.splice(itemIndex, 1);
+    }
+    req.session.cart = cart;  // Update the cart in the session
+    console.log("Cart updated:", cart);
+    return res.json({ success: true, message: "Item updated in cart", cart });
+  } else {
+    return res.status(400).json({ success: false, message: "Item not found in cart" });
   }
-
-  req.session.cart = cart;  // Update the cart in the session
-  res.json({ success: true, cart });
 }
+
+
+
 
 // Generate a unique order ID 
 async function generateOrderId() {
