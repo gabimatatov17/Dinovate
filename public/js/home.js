@@ -65,19 +65,39 @@ function updateContent() {
 
 }
 
-function addToCart(cardId) {
-
+function addToCart(cardId, cardName, price, image) {
     fetch('/cart/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: cardId
-    }).then(response => response.json())
-      .then(data => {
-          // Handle response (e.g., show a message, update cart display)
-          console.log('Card added:', data);
-      }).catch(error => {
-          console.error('Error:', error);
-      });
+        body: JSON.stringify({ cardId, cardName, price, image })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response (e.g., show a message, update cart display)
+        console.log('Card added:', data);
+        if (data.cart) {
+            showAddedToCartPopup(cardName);  // Show popup when item is added
+        }
+    })
+    .catch(error => {
+        console.error('Error adding item to cart:', error);
+    });
+}
+
+// Function to show popup when item is added to cart
+function showAddedToCartPopup(cardName) {
+    const popup = document.getElementById('item-added-popup');
+    const popupText = document.getElementById('popup-text');
+    
+    // Set the message
+    popupText.innerText = `${cardName} has been added to your cart!`;
+    
+    popup.style.display = 'flex';  // Show popup
+    
+    // Hide the popup after 3 seconds
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000);
 }
