@@ -72,7 +72,7 @@ async function addToCart(req, res){
         }
 
         req.session.cart = cart;  // Save updated cart in session
-        console.log('Cart updated:', req.session.cart);
+        console.log('Cart quantitys updated:', req.session.cart);
 
         // Send a JSON response back
         res.json({ message: 'Card added to cart', cart });  // Respond with success and updated cart
