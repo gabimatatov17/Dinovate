@@ -250,11 +250,15 @@
             
         </div>
 
-        <div id = "overview" style = "display: none; display: flex; justify-content: center;">
-            <svg id="chart" width="600" height="300">
-                <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Average Daily Orders per Month</text>
-            </svg>
-            <div id="chart2"></div>
+        <div id = "overview" style = "display: none;">
+            <div style = " display: flex; justify-content: center;">
+                <svg id="chart" width="600" height="300">
+                    <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Average Daily Orders per Month</text>
+                </svg>
+                <svg id="chart2Svg" width="800" height="400">
+                    <text x="300" y="15" text-anchor="middle" font-size="20" font-weight="bold">Daily Orders</text>
+                </svg>
+            </div>
         </div>
 
         <div id = "popupSection"></div>
@@ -312,17 +316,21 @@
             console.log(dailyOrders);
 
             // Set up dimensions for the graph
-            const margin = { top: 20, right: 30, bottom: 40, left: 40 },
+            const margin = { top: 40, right: 30, bottom: 60, left: 40 }, // Maintain consistent margins
                 width = 800 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
+                height = 400 - margin.top - margin.bottom; // Same height as original chart
 
-            const svg = d3.select("#chart2")
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
+            const svg = d3.select("#chart2Svg")
                 .append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
 
+            // Add a label
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", -20)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "16px")
+                .attr("font-weight", "bold");
             // X scale and axis
             const x = d3.scaleBand()
                 .domain(dailyOrders.map(d => d._id))  // Use the date string as the domain
@@ -356,8 +364,9 @@
                 .attr("width", x.bandwidth())
                 .attr("height", d => height - y(d.count))
                 .attr("fill", "steelblue");
-            
         }
+
+
         renderAverageOrdersChart(data);
         dailyOrders();
     </script>

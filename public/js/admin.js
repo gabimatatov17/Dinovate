@@ -375,8 +375,8 @@ function getUsers() {
                     <table class="table table-hover table-striped table-bordered" id="dataTable" style="width: 60%; max-width: 800px;">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">User ID</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">User ID</th>
                             </tr>
                         </thead>
                         <tbody id="dataBody">
