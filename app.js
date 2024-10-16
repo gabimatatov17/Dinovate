@@ -21,7 +21,7 @@ const signup = require('./routes/signup');
 const stores = require('./routes/stores')
 const profileRoute = require('./routes/profile');
 const contact = require('./routes/contact');
-const greetingRoutes = require('./routes/greeting-greeting'); 
+const greetingRoutes = require('./routes/greetingRoutes'); 
 
 
 
