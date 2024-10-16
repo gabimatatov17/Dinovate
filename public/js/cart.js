@@ -10,7 +10,93 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.remove-button').forEach(button => {
         button.addEventListener('click', handleRemoveFromCart);
     });
+
+    // Event Listener for New Greeting button (tied to each card)
+    document.querySelectorAll('.newGreetingBtn').forEach(button => {
+        button.addEventListener('click', function () {
+            const cardId = this.getAttribute('data-cardid');
+            document.getElementById('greetingModal').setAttribute('data-cardid', cardId);  // Attach card ID to the modal
+            document.getElementById('greetingDisplay').style.display = 'none';  // Hide previous greeting, if any
+            var myModal = new bootstrap.Modal(document.getElementById('greetingModal'));
+            myModal.show();
+        });
+    });
+
+    // Handle greeting generation when 'Generate Greeting' button is clicked
+    document.getElementById('generateGreetingBtn').addEventListener('click', function () {
+        generateGreeting();
+    });
+
+    // Function to generate the greeting
+    function generateGreeting() {
+        const cardId = document.getElementById('greetingModal').getAttribute('data-cardid');
+        const date = document.getElementById('greetingDate').value;
+        const name = document.getElementById('greetingName').value;
+        const event = document.getElementById('greetingEvent').value;
+
+        if (date && name && event) {
+            // Send data to the server to generate the greeting
+            fetch('/greetings/generate-greeting', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ date, name, event, cardId }),  // Include cardId in the request
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('generatedGreeting').textContent = data.greeting;
+                document.getElementById('greetingDisplay').style.display = 'block';
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please fill out all fields.');
+        }
+    }
+
+    // Accept the greeting and add it to the cart (session)
+    document.getElementById('acceptGreeting').addEventListener('click', function () {
+        const cardId = document.getElementById('greetingModal').getAttribute('data-cardid');
+        const greeting = document.getElementById('generatedGreeting').textContent;
+
+        if (greeting) {
+            // Send the accepted greeting to the backend to save it in the session
+            fetch('/greetings/save-greeting', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cardId, greeting }),  // Include cardId and greeting in the request
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Greeting added to the cart!');
+                // Optionally, close the modal after the greeting is saved
+                var myModalEl = document.getElementById('greetingModal');
+                var modal = bootstrap.Modal.getInstance(myModalEl);
+                modal.hide();
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please generate a greeting before accepting.');
+        }
+    });
+
+    // Try again (regenerate the greeting)
+    document.getElementById('tryAgainGreeting').addEventListener('click', function () {
+        generateGreeting();  // Call the function to regenerate the greeting
+    });
+
+    // Edit the greeting manually
+    document.getElementById('editGreeting').addEventListener('click', function () {
+        const currentGreeting = document.getElementById('generatedGreeting').textContent;
+        const editedGreeting = prompt('Edit your greeting:', currentGreeting);
+        if (editedGreeting) {
+            document.getElementById('generatedGreeting').textContent = editedGreeting;
+        }
+    });
 });
+
 
 
 // Function to show the popup and refresh the page after a delay
@@ -28,7 +114,6 @@ function showItemAddedPopup(message) {
     }, 1000); 
 }
 
-
 // Function to handle adding an item to the cart (increment)
 async function handleAddToCart(event) {
     const button = event.target;
@@ -38,7 +123,7 @@ async function handleAddToCart(event) {
         const response = await axios.post('/cart/add', { cardId: parseInt(cardId) });
         const result = response.data;
         
-       console.log('Adding result', result)
+        console.log('Adding result', result);
         
         // Check if the message indicates success
         if (result.message === "Card added to cart") {
@@ -78,8 +163,6 @@ async function handleRemoveFromCart(event) {
     }
 }
 
-
-
 // Function to update cart total
 function updateCartTotal() {
     let total = 0;
@@ -95,7 +178,6 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100;
     document.getElementById('items-total').innerText = total.toFixed(2);
 }
-
 
 // Address validation submission for regular orders (Place Order button)
 document.getElementById('address-form').addEventListener('submit', async function(event) {
@@ -171,7 +253,6 @@ document.getElementById('confirm-pickup-btn').addEventListener('click', async (e
         messageElement.style.color = 'red';
     }
 });
-
 
 // Function to show the order placed popup with order ID (for both types of orders)
 function showOrderPlacedMessage(orderId) {

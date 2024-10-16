@@ -1,3 +1,8 @@
+// services/greetingService.js
+
+require('dotenv').config();  // Load environment variables from .env file
+
+// Import OpenAI SDK (Ensure you have the correct version installed)
 const OpenAI = require('openai');  // Correct import for recent versions of the SDK
 
 // Set up OpenAI API configuration
@@ -10,7 +15,9 @@ exports.generateGreeting = async (date, name, event) => {
         // Call OpenAI to generate a greeting based on the inputs
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            messages: [{ role: 'user', content: `Create a greeting for ${name} for the event of ${event} happening on ${date}.` }],
+            messages: [
+                { role: 'user', content: `Create a greeting for ${name} for the event of ${event} happening on ${date}. Keep it under 20 words.` }
+            ],
             max_tokens: 50,
         });
 
