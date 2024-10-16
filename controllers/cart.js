@@ -192,7 +192,10 @@ async function validateAddress(req, res) {
                   console.log('Saving new order:', newOrder);
                   await newOrder.save();
                   console.log('Order saved successfully.');
-
+                  
+                  // Reset cart session to empty after successful order
+                  req.session.cart = [];
+                  
                   return res.json({ valid: true, message: 'Address is valid!', order: newOrder, address: data[0] });
               }
               case 'Ambiguous':
@@ -256,6 +259,10 @@ async function handlePickupOrder(req, res) {
     });
 
     await newOrder.save();
+    
+    // Reset cart session to empty after successful order
+    req.session.cart = [];
+    
     return res.json({ success: true, message: 'Pickup order placed successfully!', order: newOrder });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error placing pickup order.' });
