@@ -97,7 +97,7 @@ function updateCartTotal() {
 }
 
 
-// Address validation submission for regular orders only (Place Order button)
+// Address validation submission for regular orders (Place Order button)
 document.getElementById('address-form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -108,7 +108,6 @@ document.getElementById('address-form').addEventListener('submit', async functio
     const messageElement = document.getElementById('validation-message');
     messageElement.textContent = ''; // Clear previous messages
 
-    // Client-side validation to ensure all fields are filled for regular orders only
     if (!street || !locality || !postal_code) {
         messageElement.textContent = 'Please fill in all the required fields.';
         messageElement.style.color = 'red';
@@ -116,6 +115,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
     }
 
     try {
+        console.log("Sending request to validate address...");
         const response = await axios.post('/cart/validate-address', {
             street,
             locality,
@@ -124,14 +124,16 @@ document.getElementById('address-form').addEventListener('submit', async functio
         });
 
         const result = response.data;
+        console.log("Result after address validation:", result);
 
-        if (result.valid) {
-            showOrderPlacedMessage(result.order.orderId); // Show order placed popup with order ID
-        } else {
+        if (!result.valid) {
             messageElement.textContent = result.message;
             messageElement.style.color = 'red';
+        } else {
+            showOrderPlacedMessage(result.order.orderId);
         }
     } catch (error) {
+        console.error("Error validating address:", error);
         messageElement.textContent = 'Error occurred while validating the address. Please try again later.';
         messageElement.style.color = 'red';
     }
@@ -150,19 +152,26 @@ document.getElementById('confirm-pickup-btn').addEventListener('click', async (e
     event.preventDefault();  // Prevent form submission
 
     const storeAddress = document.getElementById('store-select').value;
+    const messageElement = document.getElementById('validation-message');
+    messageElement.textContent = ''; // Clear previous messages
 
     try {
         const response = await axios.post('/cart/pickup-order', { storeAddress });
-        if (response.data.success) {
-            showOrderPlacedMessage(response.data.order.orderId); // Show the same popup with order ID for pickup
+
+        const result = response.data;
+        if (!result.success) {
+            messageElement.textContent = result.message;
+            messageElement.style.color = 'red';
         } else {
-            alert('Error placing pickup order');
+            showOrderPlacedMessage(result.order.orderId);
         }
     } catch (error) {
         console.error('Error placing pickup order:', error);
-        alert('Error placing pickup order');
+        messageElement.textContent = 'Error placing pickup order.';
+        messageElement.style.color = 'red';
     }
 });
+
 
 // Function to show the order placed popup with order ID (for both types of orders)
 function showOrderPlacedMessage(orderId) {

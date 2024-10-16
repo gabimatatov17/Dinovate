@@ -1,6 +1,6 @@
 const axios = require('axios');
-const Order = require('../models/orders'); // Import the Order model
-const Store = require('../models/stores'); // Import the Store model
+const Order = require('../models/orders');
+const Store = require('../models/stores'); 
 const products = require('../models/products'); 
 
 const AUTH_ID = process.env.AUTH_ID;
@@ -19,9 +19,9 @@ async function addToCart(req, res) {
   const item = cart.find(item => item.cardId === cardId);
 
   if (item) {
-    item.quantity += 1;  // Increment quantity if card is already in the cart
+    item.quantity += 1; 
   } else {
-    const cardData = await products.findOne({ cardId }); // Fetch card data from DB if not in cart
+    const cardData = await products.findOne({ cardId }); 
     if (cardData) {
       cart.push({
         cardId: cardData.cardId,
@@ -35,7 +35,7 @@ async function addToCart(req, res) {
     }
   }
 
-  req.session.cart = cart;  // Update the cart in the session
+  req.session.cart = cart;  
   console.log("Cart updated:", cart);
   
   // Return success response
@@ -62,7 +62,8 @@ async function removeFromCart(req, res) {
       // If quantity is 1, remove the item from the cart
       cart.splice(itemIndex, 1);
     }
-    req.session.cart = cart;  // Update the cart in the session
+    // Update the cart in the session
+    req.session.cart = cart;  
     console.log("Cart updated:", cart);
     return res.json({ success: true, message: "Item updated in cart", cart });
   } else {
@@ -98,92 +99,192 @@ async function showCart(req, res) {
   res.render('cart', { cart, total, isAuthenticated, isAdmin, stores }); // Pass cart, total, and stores to the view
 }
 
+// Function to validate cart items
+async function validateCartItemsInDB(cart) {
+  let unavailableItems = [];
+  let validCart = [];
+
+  // Loop through cart items and validate if they exist in the database
+  for (let item of cart) {
+    const productExists = await products.findOne({ cardId: item.cardId });
+
+    if (!productExists) {
+      unavailableItems.push(item); // Add unavailable item to the list
+    } else {
+      validCart.push(item); // If available, add to the valid cart list
+    }
+  }
+
+  // Map unavailableItems to just their cardName for displaying in the message
+  const unavailableCardNames = unavailableItems.map(item => item.cardName);
+
+  return { validCart, unavailableItems: unavailableCardNames }; // Return the card names of unavailable items
+}
+
+
+
 // Validate address using SmartyStreets API
 async function validateAddress(req, res) {
   const { street, locality, postal_code, country = "ISR" } = req.body;
 
-  const url = `https://international-street.api.smartystreets.com/verify?auth-id=${AUTH_ID}&auth-token=${AUTH_TOKEN}&address1=${encodeURIComponent(street)}&locality=${encodeURIComponent(locality)}&postal_code=${encodeURIComponent(postal_code)}&country=${encodeURIComponent(country)}`;
-
   try {
-    const response = await axios.get(url);
-    const data = response.data;
+      console.log('--- Start of validateAddress ---');
+      console.log('Received request body:', req.body);
 
-    if (response.status === 200 && data.length > 0) {
-      const addressAnalysis = data[0].analysis;
+      // Check if cart exists and log its contents
+      const cart = req.session.cart || [];
+      console.log('Cart contents:', cart);
 
-      switch (addressAnalysis.verification_status) {
-        case 'Verified':
-        case 'Partial': {
-          if (!req.session.customer || !req.session.cart) {
-            return res.json({ valid: false, message: 'Cart or customer information is missing. Please try again.' });
-          }
-
-          const shippingAddress = `${street}, ${locality}, ${postal_code}, ${country}`;
-          const newOrderId = await generateOrderId();
-
-          const newOrder = new Order({
-            orderId: newOrderId,
-            customerId: req.session.customer._id,
-            cards: req.session.cart.map(item => ({
-              cardId: item.cardId,
-              greeting: `Enjoy your ${item.cardName}!`
-            })),
-            totalPrice: req.session.cart.reduce((total, item) => total + (item.price * item.quantity), 0),
-            shippingAdress: shippingAddress
-          });
-
-          await newOrder.save();
-          return res.json({ valid: true, message: 'Address is valid!', order: newOrder, address: data[0] });
-        }
-        case 'Ambiguous':
-          return res.json({ valid: false, message: 'Multiple addresses found. Please provide more precise information.' });
-        case 'None':
-        default:
-          return res.json({ valid: false, message: 'Address could not be validated. Please reenter shipping address' });
+      if (!cart.length) {
+          console.log('Cart is empty.');
+          return res.json({ valid: false, message: 'Your cart is empty.' });
       }
-    } else {
-      return res.json({ valid: false, message: 'Address not found or invalid.' });
-    }
+
+      // Validate cart items and log the result
+      console.log('Validating cart items in DB...');
+      const { validCart, unavailableItems } = await validateCartItemsInDB(cart);
+      console.log('Valid cart items:', validCart);
+      console.log('Unavailable items:', unavailableItems);
+
+      if (unavailableItems.length > 0) {
+          console.log('Unavailable items found. Prompting customer.');
+          return res.json({
+              valid: false,
+              message: `The following items are no longer available: ${unavailableItems.join(', ')}. Please remove them from your cart`
+          });
+      }
+
+      // Address validation via SmartyStreets
+      const url = `https://international-street.api.smartystreets.com/verify?auth-id=${AUTH_ID}&auth-token=${AUTH_TOKEN}&address1=${encodeURIComponent(street)}&locality=${encodeURIComponent(locality)}&postal_code=${encodeURIComponent(postal_code)}&country=${encodeURIComponent(country)}`;
+      console.log('Sending request to SmartyStreets with URL:', url);
+      
+      const response = await axios.get(url);
+      const data = response.data;
+
+      console.log('SmartyStreets response status:', response.status);
+      console.log('SmartyStreets response data:', data);
+
+      if (response.status === 200 && data.length > 0) {
+          const addressAnalysis = data[0].analysis;
+          console.log('Address analysis:', addressAnalysis);
+
+          switch (addressAnalysis.verification_status) {
+              case 'Verified':
+              case 'Partial': {
+                  console.log('Address is verified/partial, processing order...');
+                  
+                  const shippingAddress = `${street}, ${locality}, ${postal_code}, ${country}`;
+                  const newOrderId = await generateOrderId();
+
+                  console.log('Generated new order ID:', newOrderId);
+
+                  const newOrder = new Order({
+                      orderId: newOrderId,
+                      customerId: req.session.customer._id,
+                      cards: validCart.map(item => ({
+                          cardId: item.cardId,
+                          greeting: `Enjoy your ${item.cardName}!`
+                      })),
+                      totalPrice: validCart.reduce((total, item) => total + (item.price * item.quantity), 0),
+                      shippingAdress: shippingAddress
+                  });
+
+                  console.log('Saving new order:', newOrder);
+                  await newOrder.save();
+                  console.log('Order saved successfully.');
+
+                  return res.json({ valid: true, message: 'Address is valid!', order: newOrder, address: data[0] });
+              }
+              case 'Ambiguous':
+                  console.log('Address is ambiguous, prompting user for more details.');
+                  return res.json({ valid: false, message: 'Multiple addresses found. Please provide more precise information.' });
+              case 'None':
+              default:
+                  console.log('Address could not be validated.');
+                  return res.json({ valid: false, message: 'Address could not be validated. Please reenter shipping address' });
+          }
+      } else {
+          console.log('Address not found or invalid.');
+          return res.json({ valid: false, message: 'Address not found or invalid.' });
+      }
   } catch (error) {
-    res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
+      console.error("Error during address validation:", error);  // Log the entire error object
+      return res.status(500).json({ valid: false, message: 'Server error while validating the address. Please try again later.', error });
   }
 }
 
-// Handle Pickup Order
+
+// Handle Pickup Order and check cart items
 async function handlePickupOrder(req, res) {
+
   if (!req.session.customer || !req.session.cart) {
-    return res.json({ success: false, message: 'Cart or customer information is missing.' });
+      return res.json({ success: false, message: 'Cart or customer information is missing.' });
   }
 
-  const storeAddress = req.body.storeAddress;
-  const customerId = req.session.customer._id;
+  const cart = req.session.cart;
+  
+  // Validate cart items and log the result
+  console.log('Validating cart items in DB...');
+  const { validCart, unavailableItems } = await validateCartItemsInDB(cart);
+  console.log('Valid cart items:', validCart);
+  console.log('Unavailable items:', unavailableItems);
+
+
+  if (unavailableItems.length > 0) {
+    console.log('Unavailable items found. Prompting customer.');
+    return res.json({
+        success: false,
+        message: `The following items are no longer available: ${unavailableItems.join(', ')}. Please remove them from your cart`
+    });
+  }
 
   try {
+    const storeAddress = req.body.storeAddress;
+    const customerId = req.session.customer._id;
+
     const newOrderId = await generateOrderId();
 
     const newOrder = new Order({
       orderId: newOrderId,
       customerId: customerId,
-      cards: req.session.cart.map(item => ({
+      cards: cart.map(item => ({
         cardId: item.cardId,
         greeting: `Enjoy your ${item.cardName}!`
       })),
-      totalPrice: req.session.cart.reduce((total, item) => total + (item.price * item.quantity), 0),
+      totalPrice: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
       shippingAdress: `PICKUP - ${storeAddress}`
     });
 
     await newOrder.save();
-    return res.json({ success: true, message: 'Pickup order placed!', order: newOrder });
+    return res.json({ success: true, message: 'Pickup order placed successfully!', order: newOrder });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error placing pickup order' });
+    res.status(500).json({ success: false, message: 'Error placing pickup order.' });
   }
 }
+
+// Function to clean the cart by removing unavailable items
+async function cleanCart(req, res) {
+  const unavailableItems = req.body.unavailableItems;
+
+  if (req.session.cart) {
+      // Remove unavailable items from the session cart
+      req.session.cart = req.session.cart.filter(item => 
+          !unavailableItems.some(unavailable => unavailable.cardId === item.cardId)
+      );
+  }
+
+  res.json({ success: true, message: "Cart updated without unavailable items." });
+}
+
+
 
 module.exports = {
   addToCart,
   removeFromCart,
   generateOrderId,
   showCart,
+  validateCartItemsInDB,
   validateAddress,
-  handlePickupOrder
+  handlePickupOrder,
+  cleanCart
 };
