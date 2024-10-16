@@ -28,11 +28,19 @@ async function showProfile(req, res) {
 async function updateProfile(req, res) {
     try {
         const { firstName, lastName, email, gender, birthDate, password } = req.body;
-
+    
+        // Create the update object
+        let updateFields = { firstName, lastName, email, gender, birthDate };
+    
+        // If password exists and is not empty, include it in the update
+        if (password) {
+            updateFields.password = password;
+        }
+    
         // Update the user's information in the database
         await Customer.updateOne(
             { _id: req.session.customer._id },
-            { firstName, lastName, email, gender, birthDate, password }
+            { $set: updateFields }
         );
 
         // Fetch updated customer details
@@ -56,6 +64,9 @@ async function deleteUser(req, res) {
 
         // Remove the customer from the database
         await Customer.deleteOne({ _id: customerId });
+
+
+        // Delete user orders 
 
         // Clear session
         req.session.destroy();
