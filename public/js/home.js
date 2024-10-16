@@ -29,10 +29,40 @@ function updateContent() {
                 block.className = 'image-block';
                 block.style.backgroundImage = `url('${item.image_location}')`;
 
-                const cardName = document.createElement('p');
-                cardName.textContent = item.cardName;
+                // Create the h1 for card name
+                const cardName = document.createElement('h1');
+                cardName.textContent = `Name: ${item.cardName.replace(/_/g, " ")}`;
+
+                // Create the h2 for card price
+                const cardPrice = document.createElement('h2');
+                cardPrice.textContent = `Price: ${item.price}$`;
+
+                // Create the h2 for added date
+                const cardDate = document.createElement('h2');
+                const addedDate = new Date(item.dateAdded);
+                cardDate.textContent = `Added Date: ${addedDate.getDate()}/${addedDate.getMonth() + 1}/${addedDate.getFullYear()}`;
 
                 block.appendChild(cardName);
+                block.appendChild(cardPrice);
+                block.appendChild(cardDate);
+
+                const isAuthenticated = '<% isAuthenticated %>'
+
+                if (isAuthenticated) {
+                    const addToCartButton = document.createElement('button');
+                    addToCartButton.id = 'add-to-cart-button';
+                    addToCartButton.textContent = 'Add to Cart';
+                    addToCartButton.type = 'button';
+
+                    // Set the onclick event handler to call addToCart function
+                    addToCartButton.onclick = function () {
+                        addToCart(item.cardId, item.cardName, item.price, item.image_location);
+                    };
+
+                    // Append the button to the imageBlock
+                    block.appendChild(addToCartButton);
+                }
+
                 container.appendChild(block);
 
             });
