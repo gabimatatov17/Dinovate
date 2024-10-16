@@ -54,7 +54,7 @@ async function showCatalog(req, res) {
 
 async function addToCart(req, res){
     try {
-        const cardId = req.body;  // Extract cardId from JSON body
+        const { cardId, cardName, price, image } = req.body;  // Extract card details from the request
 
         // Initialize cart in session if it doesn't exist
         if (!req.session.cart) {
@@ -68,20 +68,20 @@ async function addToCart(req, res){
         if (existingItem) {
             existingItem.quantity += 1;  // Increment quantity if card is already in the cart
         } else {
-            cardId['quantity'] = 1;
-            cart.push(cardId);  // Add new card to the cart with quantity 1
+            cart.push({ cardId, cardName, price, image, quantity: 1 });  // Add new card with details and quantity 1
         }
 
         req.session.cart = cart;  // Save updated cart in session
+        console.log('Cart quantitys updated:', req.session.cart);
 
         // Send a JSON response back
-        res.json({ message: 'Card added to cart', cart });  // Respond with a success message and updated cart
+        res.json({ message: 'Card added to cart', cart });  // Respond with success and updated cart
     } catch (error) {
         res.status(500).json({ error: 'Failed to add card to cart' });  // Handle any errors
     }
 
-    console.log(req.session.cart)
 }
+
 
 
 module.exports = {

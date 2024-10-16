@@ -53,11 +53,21 @@
                 <h2>Price: <%= item.price %>$</h2>
                 <h2>Added Date: <%= item.dateAdded.getDate() %>/<%= item.dateAdded.getMonth() + 1 %>/<%= item.dateAdded.getFullYear() %></h2>
                 <% if (isAuthenticated) { %>
-                    <button id="add-to-cart-button" onclick="addToCart('<%= JSON.stringify(item) %>')" type="submit" >Add to Cart</button>
+                    <button id="add-to-cart-button" 
+                            onclick="addToCart(<%= item.cardId %>, '<%= item.cardName %>', <%= item.price %>, '<%= item.image_location %>')" 
+                            type="button">Add to Cart</button>
                 <% } %>
             </div>
         <% }); %>
     </div>
+    
+    <div id="item-added-popup" class="item-added-popup">
+        <div class="popup-content">
+            <span id="popup-text"></span>
+            <i class="fa fa-check-circle" style="color: green;"></i>
+        </div>
+    </div>    
+
 </main>
 
     <%- include('footer') %>

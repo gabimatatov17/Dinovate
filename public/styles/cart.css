@@ -91,7 +91,6 @@ body {
     color: #0072ff;  /* Match the blue of the login button */
 }
 
-
 /* Container to hold the image and button */
 .item-image-and-button {
     display: flex;
@@ -118,4 +117,60 @@ body {
 .generate-greeting-btn:hover {
     background: linear-gradient(90deg, #0072ff, #00c6ff);
     transform: scale(1.05);
+}
+
+/* Pickup button */
+#pickup-order-btn {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);  /* Match place order button */
+    color: white;
+    border: none;
+    font-size: 16px;  
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;  
+    width: 100%;      text-align: center;
+    margin-top: 10px;
+}
+
+#pickup-order-btn:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);  /* Hover effect to match */
+}
+
+/* Store selection dropdown */
+#store-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#confirm-pickup-btn {
+    margin-top: 10px;
+}
+
+/* Popup styling */
+.item-added-popup {
+    position: fixed;
+    top: 10%; /* Adjusted to display at the top */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 10px;
+    display: none; /* Hidden initially */
+    text-align: center;
+    width: 300px;
+}
+
+#popup-text {
+    font-size: 16px;
+    color: black; /* Black text */
+}
+
+.fa-check-circle {
+    font-size: 30px;
+    color: green; /* Green check icon */
 }

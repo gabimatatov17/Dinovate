@@ -230,3 +230,29 @@ body {
     background-color: rgba(0,0,0,0.7);
     background-blend-mode: multiply;
 }
+
+/* Popup styling */
+.item-added-popup {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 2px solid #00c6ff;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+.popup-content i {
+    margin-left: 10px;
+}

@@ -1,5 +1,4 @@
 // public/js/cart.js
-
 document.addEventListener('DOMContentLoaded', () => {
     updateCartTotal();
 
@@ -13,20 +12,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to handle adding an item to the cart
+
+// Function to show the popup and refresh the page after a delay
+function showItemAddedPopup(message) {
+    const popup = document.getElementById('item-added-popup');
+    const popupText = document.getElementById('popup-text');
+
+    popupText.innerText = message; 
+    popup.style.display = 'block'; 
+
+    // Hide the popup after 2 seconds and refresh the page
+    setTimeout(() => {
+        popup.style.display = 'none'; 
+        location.reload(); 
+    }, 1000); 
+}
+
+
+// Function to handle adding an item to the cart (increment)
 async function handleAddToCart(event) {
     const button = event.target;
-    const cardId = button.closest('tr').dataset.cardid;
+    const cardId = button.closest('tr').dataset.cardid;  // Get card ID from the row
 
     try {
-        const response = await axios.post('/cart/add', { cardId });
+        const response = await axios.post('/cart/add', { cardId: parseInt(cardId) });
         const result = response.data;
-
-        if (result.success) {
-            updateCartTotal();  // Update cart total after success
-            location.reload();  // Reload the page to reflect the changes
+        
+       console.log('Adding result', result)
+        
+        // Check if the message indicates success
+        if (result.message === "Card added to cart") {
+            showItemAddedPopup('Quantity updated in your cart!');
         } else {
-            alert(result.message);  // Show message for large orders
+            alert(result.message);  // Show any other messages (e.g., errors)
         }
     } catch (error) {
         console.error('Error adding item to cart:', error);
@@ -40,20 +58,26 @@ async function handleRemoveFromCart(event) {
     const cardId = button.closest('tr').dataset.cardid;
 
     try {
-        const response = await axios.post('/cart/remove', { cardId });
+        const response = await axios.post('/cart/remove', { cardId: parseInt(cardId) });
         const result = response.data;
 
+        console.log("Remove result", result); // Debugging to see the full result
+
+        // Check if the message indicates success
         if (result.success) {
-            updateCartTotal();  // Update cart total after success
-            location.reload();  // Reload the page to reflect the changes
+            showItemAddedPopup('Item quantity updated in your cart!'); // Show popup message
+            setTimeout(() => {
+                location.reload(); // Reload the page after a short delay to show updated quantity
+            }, 1000); // Delay before reloading
         } else {
-            alert('Error removing item from cart');
+            alert(result.message);  // Show any other messages (e.g., errors)
         }
     } catch (error) {
         console.error('Error removing item from cart:', error);
         alert('Error removing item from cart');
     }
 }
+
 
 
 // Function to update cart total
@@ -72,7 +96,8 @@ function updateCartTotal() {
     document.getElementById('items-total').innerText = total.toFixed(2);
 }
 
-// Address validation submission
+
+// Address validation submission for regular orders (Place Order button)
 document.getElementById('address-form').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -83,7 +108,6 @@ document.getElementById('address-form').addEventListener('submit', async functio
     const messageElement = document.getElementById('validation-message');
     messageElement.textContent = ''; // Clear previous messages
 
-    // Client-side validation to ensure all fields are filled
     if (!street || !locality || !postal_code) {
         messageElement.textContent = 'Please fill in all the required fields.';
         messageElement.style.color = 'red';
@@ -91,7 +115,7 @@ document.getElementById('address-form').addEventListener('submit', async functio
     }
 
     try {
-        // Send the address data to the server for validation
+        console.log("Sending request to validate address...");
         const response = await axios.post('/cart/validate-address', {
             street,
             locality,
@@ -100,43 +124,68 @@ document.getElementById('address-form').addEventListener('submit', async functio
         });
 
         const result = response.data;
+        console.log("Result after address validation:", result);
 
-        console.log('result=', result)
-        // Handle the API response and display the result to the user
-        if (result.valid) {
-            // Display the order placed message with animation
-            const orderPlacedMessage = document.getElementById('order-placed-message');
-            const orderIdElement = document.getElementById('order-id');
-
-            console.log('result.order.orderId', result.order.orderId)
-            // Update the message to include the order ID
-            orderIdElement.innerText = `Your order ID is: ${result.order.orderId}`;
-
-            orderPlacedMessage.style.display = 'flex'; // Show popup
-
-            // Optionally, redirect to another page after a delay
-            setTimeout(() => {
-                // Redirect or hide the message
-                orderPlacedMessage.style.display = 'none';
-                window.location.href = '/profile'; // Redirect if needed
-            }, 3000);
-        } else {
-            messageElement.textContent = result.message; // Display error message from the server
+        if (!result.valid) {
+            messageElement.textContent = result.message;
             messageElement.style.color = 'red';
+        } else {
+            showOrderPlacedMessage(result.order.orderId);
         }
     } catch (error) {
-        // Handle unexpected errors (e.g., network issues)
+        console.error("Error validating address:", error);
         messageElement.textContent = 'Error occurred while validating the address. Please try again later.';
         messageElement.style.color = 'red';
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Add event listener for the "Generate Greeting" button
-    document.querySelectorAll('.generate-greeting-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            alert('Generate Greeting button clicked!');  // Placeholder functionality
-        });
-    });
+// Pickup Order Button - Show store locations when the "Pickup Order" button is clicked
+document.getElementById('pickup-order-btn').addEventListener('click', (event) => {
+    event.preventDefault();  // Prevent form submission
+
+    const storeLocations = document.getElementById('store-locations');
+    storeLocations.style.display = 'block';  // Show store locations dropdown
 });
 
+// Handle the confirmation of the store pickup without address validation
+document.getElementById('confirm-pickup-btn').addEventListener('click', async (event) => {
+    event.preventDefault();  // Prevent form submission
+
+    const storeAddress = document.getElementById('store-select').value;
+    const messageElement = document.getElementById('validation-message');
+    messageElement.textContent = ''; // Clear previous messages
+
+    try {
+        const response = await axios.post('/cart/pickup-order', { storeAddress });
+
+        const result = response.data;
+        if (!result.success) {
+            messageElement.textContent = result.message;
+            messageElement.style.color = 'red';
+        } else {
+            showOrderPlacedMessage(result.order.orderId);
+        }
+    } catch (error) {
+        console.error('Error placing pickup order:', error);
+        messageElement.textContent = 'Error placing pickup order.';
+        messageElement.style.color = 'red';
+    }
+});
+
+
+// Function to show the order placed popup with order ID (for both types of orders)
+function showOrderPlacedMessage(orderId) {
+    const orderPlacedMessage = document.getElementById('order-placed-message');
+    const orderIdElement = document.getElementById('order-id');
+
+    // Update the message to include the order ID
+    orderIdElement.innerText = `Your order ID is: ${orderId}`;
+    
+    orderPlacedMessage.style.display = 'flex'; // Show popup
+
+    // Optionally, redirect to another page after a delay
+    setTimeout(() => {
+        orderPlacedMessage.style.display = 'none';
+        window.location.href = '/profile'; // Redirect if needed
+    }, 3000);
+}
