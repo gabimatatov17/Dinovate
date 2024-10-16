@@ -87,7 +87,7 @@ function updateCartTotal() {
 
     for (let i = 0; i < cartItems.length; i++) {
         const priceElement = cartItems[i].getElementsByClassName('cart-price')[0];
-        const price = parseFloat(priceElement.innerText.replace('₪', ''));
+        const price = parseFloat(priceElement.innerText.replace('$', ''));
         const quantity = parseInt(cartItems[i].getElementsByClassName('quantity')[0].innerText);
         total += price * quantity;
     }
