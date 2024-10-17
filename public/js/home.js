@@ -46,22 +46,18 @@ function updateContent() {
                 block.appendChild(cardPrice);
                 block.appendChild(cardDate);
 
-                const isAuthenticated = '<% isAuthenticated %>'
+                const addToCartButton = document.createElement('button');
+                addToCartButton.id = 'add-to-cart-button';
+                addToCartButton.textContent = 'Add to Cart';
+                addToCartButton.type = 'button';
 
-                if (isAuthenticated) {
-                    const addToCartButton = document.createElement('button');
-                    addToCartButton.id = 'add-to-cart-button';
-                    addToCartButton.textContent = 'Add to Cart';
-                    addToCartButton.type = 'button';
+                // Set the onclick event handler to call addToCart function
+                addToCartButton.onclick = function () {
+                    addToCart(item.cardId, item.cardName, item.price, item.image_location);
+                };
 
-                    // Set the onclick event handler to call addToCart function
-                    addToCartButton.onclick = function () {
-                        addToCart(item.cardId, item.cardName, item.price, item.image_location);
-                    };
-
-                    // Append the button to the imageBlock
-                    block.appendChild(addToCartButton);
-                }
+                // Append the button to the imageBlock
+                block.appendChild(addToCartButton);
 
                 container.appendChild(block);
 
