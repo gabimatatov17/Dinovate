@@ -6,4 +6,3 @@ models/sample-data/Dinovate/*
 configuration/
 configuration/.env
 .env
-.env
