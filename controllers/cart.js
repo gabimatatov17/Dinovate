@@ -185,7 +185,7 @@ async function validateAddress(req, res) {
                       customerId: req.session.customer._id,
                       cards: validCart.map(item => ({
                           cardId: item.cardId,
-                          greeting: `Enjoy your ${item.cardName}!`
+                          greeting: item.greeting
                       })),
                       totalPrice: validCart.reduce((total, item) => total + (item.price * item.quantity), 0),
                       shippingAdress: shippingAddress
