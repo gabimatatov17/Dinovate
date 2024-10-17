@@ -236,7 +236,13 @@ async function handlePickupOrder(req, res) {
   }
 
   const cart = req.session.cart;
-  
+
+  if (!cart.length) {
+    console.log('Cart is empty.');
+    return res.json({ valid: false, message: 'Your cart is empty.' });
+  }
+
+
   // Validate cart items and log the result
   console.log('Validating cart items in DB...');
   const { validCart, unavailableItems } = await validateCartItemsInDB(cart);
