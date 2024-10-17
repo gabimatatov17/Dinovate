@@ -209,3 +209,7 @@
     overflow: scroll;
     border: 0px solid white;
 }
+
+#orders {
+    margin-bottom: 80px;
+}
