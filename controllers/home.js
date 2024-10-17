@@ -68,7 +68,7 @@ async function addToCart(req, res){
         if (existingItem) {
             existingItem.quantity += 1;  // Increment quantity if card is already in the cart
         } else {
-            cart.push({ cardId, cardName, price, image, quantity: 1 });  // Add new card with details and quantity 1
+            cart.push({ cardId, cardName, price, image, quantity: 1, greeting: '' });  // Add new card with details and quantity 1
         }
 
         req.session.cart = cart;  // Save updated cart in session
