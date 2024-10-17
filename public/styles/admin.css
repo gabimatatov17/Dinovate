@@ -31,6 +31,35 @@
     left: 0;
 }
 
+/* Limit the width of the "Cards" column and ensure text wraps */
+.orders td.cards {
+    max-width: 300px;  /* Adjust width as needed */
+    word-wrap: break-word;  /* Ensure text wraps within the cell */
+    white-space: normal;  /* Allow text to break onto multiple lines */
+}
+
+/* Ensure the other columns have consistent widths */
+.orders th, .orders td {
+    vertical-align: middle;  /* Align content vertically in the middle */
+    text-align: center;      /* Center-align text in the table cells */
+}
+
+/* Set fixed widths for specific columns to maintain alignment */
+.orders th, .orders td:nth-child(1),  /* Order ID */
+.orders th, .orders td:nth-child(2),  /* Date Added */
+.orders th, .orders td:nth-child(6),  /* Actions */
+.orders th, .orders td:nth-child(5),  /* Price */
+.orders th, .orders td:nth-child(4) { /* Customer ID */
+    width: 100px;  /* Set a fixed width for these columns */
+}
+
+/* Limit the width of the Shipping Address column */
+.orders th, .orders td:nth-child(7) {
+    max-width: 150px;  /* Set a maximum width for the Shipping Address column */
+    white-space: normal;  /* Ensure text wraps within the cell */
+}
+
+
 .product-grid .product-links {
     padding: 0;
     margin: 0;
