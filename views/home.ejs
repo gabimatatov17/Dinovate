@@ -54,11 +54,9 @@
                 <h1>Name: <%= item.cardName.replace(/_/g, " ") %></h1>
                 <h2>Price: <%= item.price %>$</h2>
                 <h2>Added Date: <%= item.dateAdded.getDate() %>/<%= item.dateAdded.getMonth() + 1 %>/<%= item.dateAdded.getFullYear() %></h2>
-                <% if (isAuthenticated) { %>
-                    <button id="add-to-cart-button" 
-                            onclick="addToCart(<%= item.cardId %>, '<%= item.cardName %>', <%= item.price %>, '<%= item.image_location %>')" 
-                            type="button">Add to Cart</button>
-                <% } %>
+                    <button id="add-to-cart-button" onclick="addToCart(<%= item.cardId %>, '<%= item.cardName %>', <%= item.price %>, '<%= item.image_location %>')" type="button">
+                        Add to Cart
+                    </button>
             </div>
         <% }); %>
     </div>
