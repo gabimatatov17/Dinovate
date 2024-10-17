@@ -65,9 +65,6 @@ Dinovate/configuration/.env
 3. OpenAI API for generating greetings.
 
 
-## API Integrations
-
-
 ## Contributors
 1. Mia Woolfson 332287093
 2. Gavriel Matatov 322404088
