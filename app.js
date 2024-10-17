@@ -37,36 +37,6 @@ app.use(session({
     cookie: { secure: false }  // Set to true if using HTTPS
 }));
 
-// !!delete this bit before pulling from main
-// // Simulate session cart data and customer by fetching from MongoDB 
-// app.use(async (req, res, next) => {
-//     // Simulate cart data
-//     if (!req.session.cart) {
-//         try {
-//             // Fetch two random cards from the database
-//             const cards = await Card.aggregate([{ $sample: { size: 2 } }]);
-
-//             if (cards.length >= 2) {
-//                 req.session.cart = cards.map(card => ({
-//                     cardId: card.cardId,
-//                     cardName: card.cardName,
-//                     price: card.price,
-//                     quantity: 1,  // Default quantity
-//                     image: card.image_location
-//                 }));
-//                 console.log('Simulated cart data added to session');
-//             } else {
-//                 console.log('Not enough cards in the database to simulate the cart');
-//             }
-//         } catch (error) {
-//             console.error('Error fetching cards from MongoDB:', error.message);
-//         }
-//     }
-//     next();
-// });
-
-
-
 // express settings
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs");
