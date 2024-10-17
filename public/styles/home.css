@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Dinovate;
+    src: url(/fonts/Champagne.ttf);
+}
+
 /* Reset and Box-Sizing */
 * {
     margin: 0;
@@ -7,7 +12,7 @@
 
 /* Body styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Dinovate', 'Arial', sans-serif;
     background-color: #f2f2f2 !important;  /* Match background color of login page */
     margin: 0;
     padding: 0;
@@ -187,7 +192,7 @@ body {
     font-size: 16px;
     color: white;
     bottom: 50px;
-    text-align: left;
+    text-align: center;
 }
 
 .image-block h2{
