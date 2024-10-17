@@ -3,3 +3,6 @@ node_modules/
 .idea
 models/sample-data/Dinovate/
 models/sample-data/Dinovate/*
+configuration/
+configuration/.env
+.env
