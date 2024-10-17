@@ -20,7 +20,7 @@ confirmDeleteBtn.addEventListener('click', async () => {
         const response = await fetch('/profile/delete', {
             method: 'DELETE',
         });
-        
+
         if (response.ok) {
             window.location.href = '/signup';  // Redirect to signup page
         } else {
@@ -85,9 +85,11 @@ function validateForm() {
     }
 
     // validate password
-    if (password.length > 0 && password.length < 6) {
-        errorMessage += '<h4>Password must be at least 6 characters long.</h4>';
-        isValid = false;
+    if(password.length != 0){
+        if (password.length < 6) {
+            errorMessage += '<h4>Password must be at least 6 characters long.</h4>';
+            isValid = false;
+        }
     }
 
     // validate dob
