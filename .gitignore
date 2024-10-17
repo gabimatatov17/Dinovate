@@ -4,3 +4,4 @@ node_modules/
 models/sample-data/Dinovate/
 models/sample-data/Dinovate/*
 configuration/
+configuration/.env
