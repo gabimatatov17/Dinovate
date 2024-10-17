@@ -10,10 +10,28 @@ async function getCustomerByEmail(email) {
     }
 }
 
-async function getCustomers(searchDict) {
-
+async function getCustomers(admin) {
     try {
-        const customers = await Customer.find(searchDict).exec(); 
+        const customers = await Customer.aggregate([
+            {
+                $match: {isAdmin: admin}
+            },
+            {
+                $lookup: {
+                    from: 'orders',
+                    localField: '_id',
+                    foreignField: 'customerId',
+                    as: 'userOrders'
+                }
+            },
+            {
+                $project: {
+                    email: 1,
+                    id: '$_id',
+                    amountOfOrders: { $size: '$userOrders' }
+                }
+            }
+        ]);
         return {status: 200, message: customers};
     } catch (error) {
         console.error('Error finding customers by ', searchDict, error);

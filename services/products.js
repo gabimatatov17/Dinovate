@@ -56,7 +56,7 @@ async function createProduct(name, price, labels, image) {
             cardId: cardCount + 1,
             cardName: name,
             price,
-            labels: labels.split(',').map(label => label.trim()), // Convert labels from comma-separated string to array
+            labels: labels.split(',').map(label => label.trim()),
             image_location: image
         });
 

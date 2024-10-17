@@ -377,6 +377,7 @@ function getUsers() {
                             <tr>
                                 <th scope="col">Email</th>
                                 <th scope="col">User ID</th>
+                                <th scope="col">Total Orders</th>
                             </tr>
                         </thead>
                         <tbody id="dataBody">
@@ -389,6 +390,7 @@ function getUsers() {
                                 <tr>
                                     <th scope="row">${user.email}</th>
                                     <td>${user._id}</td>
+                                    <td>${user.amountOfOrders}</td>
                                 </tr>
                             `
 

@@ -264,13 +264,11 @@ async function createItem(req, res) {
 
 async function getUsers(req, res) {
 
-    const admin = req.params.admin;
+    let admin = req.params.admin == "true" ? true : false;
+
     try {
         
-        const searchDict = {
-            isAdmin: admin
-        }
-        const response = await usersService.getCustomers(searchDict);
+        const response = await usersService.getCustomers(admin);
         return res.send(response);
 
     } catch (err) {
