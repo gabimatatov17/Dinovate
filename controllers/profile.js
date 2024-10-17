@@ -1,22 +1,17 @@
-const mongoose = require('mongoose'); // Import mongoose
-const Customer = require('../models/customers');
-const Order = require('../models/orders');
+const profileServices = require('../services/profileServices');
 
 // Show the user's profile page with their information and orders
 async function showProfile(req, res) {
     try {
-        // Fetch the logged-in user's details from the session
-        const customer = await Customer.findOne({ _id: req.session.customer._id });
+        // Fetch the logged-in user's details and their orders from services
+        const customer = await profileServices.getCustomerById(req.session.customer._id);
+        const orders = await profileServices.getOrdersByCustomerId(customer._id);
 
-        // Fetch the user's orders based on their customerId
-        const orders = await Order.find({ customerId: customer._id });
-
-        // Check session details
         const sessionCustomer = req.session.customer;
         const isAuthenticated = sessionCustomer ? true : false;
         const isAdmin = sessionCustomer?.isAdmin || false;
 
-        // Render the profile page and pass customer data and orders
+        // Render the profile page with customer data and orders
         res.render('profile', { customer, orders, isAuthenticated, isAdmin });
     } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -38,15 +33,10 @@ async function updateProfile(req, res) {
         }
     
         // Update the user's information in the database
-        await Customer.updateOne(
-            { _id: req.session.customer._id },
-            { $set: updateFields }
-        );
+        await profileServices.updateCustomerProfile(req.session.customer._id, updateFields);
 
-        // Fetch updated customer details
-        const updatedCustomer = await Customer.findOne({ _id: req.session.customer._id });
-
-        // Update session with new customer data
+        // Fetch updated customer details and update session
+        const updatedCustomer = await profileServices.getCustomerById(req.session.customer._id);
         req.session.customer = updatedCustomer;
 
         // Redirect back to profile page after updating
@@ -62,11 +52,9 @@ async function deleteUser(req, res) {
     try {
         const customerId = req.session.customer._id;
 
-        // Remove the customer from the database
-        await Customer.deleteOne({ _id: customerId });
-
-
-        // Delete user orders 
+        // Remove the customer and their orders
+        await profileServices.deleteCustomerById(customerId);
+        await profileServices.deleteOrdersByCustomerId(customerId);
 
         // Clear session
         req.session.destroy();
