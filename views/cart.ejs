@@ -61,12 +61,12 @@
                                             <%= item.cardName %>
                                         </span>
                                     </td>
-                                    <td class="cart-price">₪<%= item.price.toFixed(2) %>
+                                    <td class="cart-price">$<%= item.price.toFixed(2) %>
                                     </td>
                                     <td class="quantity">
                                         <%= item.quantity %>
                                     </td>
-                                    <td>₪<%= (item.price * item.quantity).toFixed(2) %>
+                                    <td><%= (item.price * item.quantity).toFixed(2) %>
                                     </td>
                                     <td>
                                         <button class="btn btn-secondary add-button"
@@ -91,7 +91,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5>Cart Summary</h5>
-                        <p><strong>Items Total:</strong> ₪ <span id="items-total">50.00</span></p>
+                        <p><strong>Items Total:</strong> $ <span id="items-total">50.00</span></p>
 
                         <!-- Address Form -->
                         <h5 class="mt-4">Shipping Address</h5>
@@ -104,11 +104,12 @@
                                 <input type="text" id="locality" name="locality" class="form-control" placeholder="City"
                                     required>
                             </div>
-                            <div class="mb-3">
-                                <input type="text" id="postal_code" name="postal_code" class="form-control"
-                                    placeholder="Postal Code" pattern="[0-9]*" title="Postal code must be a number"
-                                    required>
-                            </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <input type="text" id="postal_code" name="postal_code" class="form-control" placeholder="Postal Code" pattern="[0-9]*" title="Postal code must be a number" required>
+                                <a href="https://israelpost.co.il/%D7%A9%D7%99%D7%A8%D7%95%D7%AA%D7%99%D7%9D/%D7%90%D7%99%D7%AA%D7%95%D7%A8-%D7%9E%D7%99%D7%A7%D7%95%D7%93/" target="_blank" class="ms-2" title="Find Postal Code">
+                                    <i class="fa fa-info-circle" style="font-size: 1.5rem; color: #007bff;"></i>
+                                </a>
+                            </div>                            
                             <input type="hidden" id="country" name="country" value="ISR">
                             <!-- Hidden field for Israel -->
                             <button type="submit" class="btn btn-primary w-100">Place Order</button>
