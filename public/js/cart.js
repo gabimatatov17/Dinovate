@@ -75,11 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 var myModalEl = document.getElementById('greetingModal');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
+                setTimeout(() => {
+                    location.reload(); 
+                }, 500); 
             })
             .catch(error => console.error('Error:', error));
         } else {
             alert('Please generate a greeting before accepting.');
         }
+        
     });
 
     // Try again (regenerate the greeting)
