@@ -12,7 +12,7 @@ const twitterClient = new TwitterApi({
 async function postProductToTwitter(product) {
     try {
         const tweetText = `
-        New Card Alert: ${product.cardName}!\nPrice: ₪${product.price}.\nGo Check it out at Dinovate.com\n#dinovate`;
+        New Card Alert: ${product.cardName}!\nPrice: $${product.price}.\nGo Check it out at Dinovate.com\n#dinovate`;
         
         const tweet = await twitterClient.v2.tweet(tweetText);  // Posting the tweet
         return tweet;

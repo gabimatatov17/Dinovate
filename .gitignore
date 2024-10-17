@@ -5,3 +5,4 @@ models/sample-data/Dinovate/
 models/sample-data/Dinovate/*
 configuration/
 configuration/.env
+.env
