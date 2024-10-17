@@ -8,8 +8,6 @@ require('dotenv').config({ path: path.join(__dirname, 'configuration', '.env') }
 
 const app = express();
 
-// simulation for cart session
-const Card = require('./models/products');  // Adjust the path if necessary
 
 // routes
 const home = require('./routes/home');
