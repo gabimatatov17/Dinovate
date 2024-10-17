@@ -56,7 +56,7 @@
                                             <img src="<%= item.image %>" alt="<%= item.cardName %>"
                                                 class="img-thumbnail" width="100" height="100">
                                             <div class="generate-greeting-btn-container mt-2">
-                                                <button class="btn generate-greeting-btn">New Greeting</button>
+                                                <button class="newGreetingBtn btn btn-primary" data-cardid="<%= item.cardId %>">New Greeting</button>
                                             </div>
                                         </div>
                                         <span class="ms-3">
@@ -153,6 +153,46 @@
         <div class="popup-content">
             <span id="popup-text"></span>
             <i class="fa fa-check-circle" style="color: green;"></i> <!-- Optional icon -->
+        </div>
+    </div>
+
+    <!-- Greeting Modal -->
+    <div class="modal fade" id="greetingModal" tabindex="-1" aria-labelledby="greetingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="greetingModalLabel">Create New Greeting</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="greetingForm">
+                        <div class="mb-3">
+                            <label for="greetingDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="greetingDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="greetingName" class="form-label">Recipient's Name</label>
+                            <input type="text" class="form-control" id="greetingName" placeholder="Enter recipient's name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="greetingEvent" class="form-label">Event</label>
+                            <input type="text" class="form-control" id="greetingEvent" placeholder="Enter the event (e.g., Birthday)" required>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="generateGreetingBtn">Generate Greeting</button>
+                    </div>
+                    
+                    <!-- Display Greeting Section inside the Modal -->
+                    <div id="greetingDisplay" style="display:none;" class="mt-4">
+                        <h3 id="generatedGreeting"></h3>
+                        <button class="btn btn-success" id="acceptGreeting">Accept</button>
+                        <button class="btn btn-warning" id="tryAgainGreeting">Try Again</button>
+                        <button class="btn btn-info" id="editGreeting">Edit Manually</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
    
