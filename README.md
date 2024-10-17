@@ -61,8 +61,12 @@ Dinovate/configuration/.env
 
 ## API Integrations
 1. Google API for Google Maps.
-2. Twitter API for posting Twitter.
+2. Twitter API for posting Tweets.
 3. OpenAI API for generating greetings.
+4. Smarty API for Shipping address validation.
+
+## Tweitter Page
+https://x.com/ddinovate
 
 
 ## Contributors
