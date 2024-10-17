@@ -21,8 +21,6 @@ const signup = require('./routes/signup');
 const stores = require('./routes/stores')
 const profileRoute = require('./routes/profile');
 const contact = require('./routes/contact');
-const greetingRoutes = require('./routes/greetingRoutes'); 
-
 
 
 // Connecting to MongoDB instance
@@ -89,7 +87,6 @@ app.use("/stores", stores);
 app.use('/profile', profileRoute);
 app.use('/admin', admin);
 app.use('/contact', contact);
-app.use('/greetings', greetingRoutes);
 
 
 // Start the server
