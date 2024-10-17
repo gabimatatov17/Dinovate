@@ -65,7 +65,7 @@ Dinovate/configuration/.env
 3. OpenAI API for generating greetings.
 4. Smarty API for Shipping address validation.
 
-## Tweitter Page
+## Twitter Page
 https://x.com/ddinovate
 
 
