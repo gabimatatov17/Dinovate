@@ -8,8 +8,7 @@ router.get('/', (req, res) => {
         if (err) {
             return res.status(500).send("Could not log out.");
         }
-        // Redirect to the login page or home page after logout
-        // Or redirect to login page
+        // Redirect to home page after logout
         res.redirect('/');
     });
 });
