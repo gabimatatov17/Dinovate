@@ -55,13 +55,13 @@ body {
     font-style: italic; /* Italic style for the brand name */
 }
 
-.headline p {
-    font-size: 1.4rem; /* Slightly larger font for the description */
-    color: #555; /* Darker color for readability */
+.headline aside {
+    font-size: 1.4rem;
+    color: #555; 
     margin-top: 0;
-    opacity: 0; /* Start hidden for animation */
-    animation: fadeIn 1s forwards; /* Animation for the paragraph */
-    animation-delay: 0.5s; /* Delay to sync with headline */
+    opacity: 0;
+    animation: fadeIn 1s forwards; 
+    animation-delay: 0.5s; 
 }
 
 /* Animation for the headline */
