@@ -61,16 +61,20 @@
                                             <%= item.cardName %>
                                         </span>
                                     </td>
-                                    <td class="cart-price">₪<%= item.price.toFixed(2) %></td>
+                                    <td class="cart-price">$<%= item.price.toFixed(2) %>
+                                    </td>
                                     <td class="quantity">
                                         <%= item.quantity %>
                                     </td>
-                                    <td>₪<%= (item.price * item.quantity).toFixed(2) %></td>
+                                    <td><%= (item.price * item.quantity).toFixed(2) %>
+                                    </td>
                                     <td>
-                                        <button class="btn btn-secondary add-button" aria-label="Add another item">+</button>
+                                        <button class="btn btn-secondary add-button"
+                                            aria-label="Add another item">+</button>
                                         <button class="btn btn-danger ms-2 remove-button">Remove</button>
                                     </td>
                                 </tr>
+
                             <% }) %>
                         <% } else { %>
                             <tr>
@@ -93,15 +97,19 @@
                         <h5 class="mt-4">Shipping Address</h5>
                         <form id="address-form" class="mt-3">
                             <div class="mb-3">
-                                <input type="text" id="street" name="street" class="form-control" placeholder="Street" required>
+                                <input type="text" id="street" name="street" class="form-control" placeholder="Street"
+                                    required>
                             </div>
                             <div class="mb-3">
-                                <input type="text" id="locality" name="locality" class="form-control" placeholder="City" required>
+                                <input type="text" id="locality" name="locality" class="form-control" placeholder="City"
+                                    required>
                             </div>
-                            <div class="mb-3">
-                                <input type="text" id="postal_code" name="postal_code" class="form-control"
-                                    placeholder="Postal Code" pattern="[0-9]*" title="Postal code must be a number" required>
-                            </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <input type="text" id="postal_code" name="postal_code" class="form-control" placeholder="Postal Code" pattern="[0-9]*" title="Postal code must be a number" required>
+                                <a href="https://israelpost.co.il/%D7%A9%D7%99%D7%A8%D7%95%D7%AA%D7%99%D7%9D/%D7%90%D7%99%D7%AA%D7%95%D7%A8-%D7%9E%D7%99%D7%A7%D7%95%D7%93/" target="_blank" class="ms-2" title="Find Postal Code">
+                                    <i class="fa fa-info-circle" style="font-size: 1.5rem; color: #007bff;"></i>
+                                </a>
+                            </div>                            
                             <input type="hidden" id="country" name="country" value="ISR">
                             <!-- Hidden field for Israel -->
                             <button type="submit" class="btn btn-primary w-100">Place Order</button>
@@ -128,6 +136,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Order Placed Message -->
+    <div id="order-placed-message" class="order-placed-message">
+        <div class="message-content">
+            <i class="fa fa-check-circle fa-5x text-success mb-3 animate-check"></i>
+            <h3>Thank you for your order!</h3>
+            <h4 id="order-id">Your order ID is: </h4> <!-- Placeholder for dynamic orderId -->
+        </div>
+    </div>
+
+    <!-- Item quantity changed popup -->
+    <div id="item-added-popup" class="item-added-popup" style="display: none;">
+        <div class="popup-content">
+            <span id="popup-text"></span>
+            <i class="fa fa-check-circle" style="color: green;"></i> <!-- Optional icon -->
+        </div>
+    </div>
 
     <!-- Greeting Modal -->
     <div class="modal fade" id="greetingModal" tabindex="-1" aria-labelledby="greetingModalLabel" aria-hidden="true">
@@ -168,8 +193,12 @@
             </div>
         </div>
     </div>
+   
 
     <%- include('footer') %>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
