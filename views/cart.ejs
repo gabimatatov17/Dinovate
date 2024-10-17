@@ -61,12 +61,12 @@
                                             <%= item.cardName %>
                                         </span>
                                     </td>
-                                    <td class="cart-price">₪<%= item.price.toFixed(2) %>
+                                    <td class="cart-price">$<%= item.price.toFixed(2) %>
                                     </td>
                                     <td class="quantity">
                                         <%= item.quantity %>
                                     </td>
-                                    <td>₪<%= (item.price * item.quantity).toFixed(2) %>
+                                    <td><%= (item.price * item.quantity).toFixed(2) %>
                                     </td>
                                     <td>
                                         <button class="btn btn-secondary add-button"
@@ -91,7 +91,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5>Cart Summary</h5>
-                        <p><strong>Items Total:</strong> ₪ <span id="items-total">50.00</span></p>
+                        <p><strong>Items Total:</strong> $ <span id="items-total">50.00</span></p>
 
                         <!-- Address Form -->
                         <h5 class="mt-4">Shipping Address</h5>
