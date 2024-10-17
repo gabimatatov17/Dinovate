@@ -1,9 +1,7 @@
 const axios = require('axios');
 const Order = require('../models/orders');
 const Store = require('../models/stores'); 
-const Customer = require('../models/customers'); 
 const products = require('../models/products'); 
-const customers = require('../services/customers');
 
 const AUTH_ID = process.env.AUTH_ID;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
@@ -72,6 +70,8 @@ async function removeFromCart(req, res) {
     return res.status(400).json({ success: false, message: "Item not found in cart" });
   }
 }
+
+
 
 
 // Generate a unique order ID 
@@ -192,16 +192,7 @@ async function validateAddress(req, res) {
                   console.log('Saving new order:', newOrder);
                   await newOrder.save();
                   console.log('Order saved successfully.');
-
-                  // Update user orders array
-                  const customer = customers.getCustomerByEmail(req.session.customer.email);
-                  if (customer) {
-                    await Customer.updateOne(
-                      { email: req.session.customer.email }, // Find the customer by email
-                      { $push: { orders: newOrderId } } // Push the new order ID to the orders array
-                    );
-                  }
-
+                  
                   // Reset cart session to empty after successful order
                   req.session.cart = [];
                   
@@ -268,15 +259,6 @@ async function handlePickupOrder(req, res) {
     });
 
     await newOrder.save();
-
-    // Update user orders array
-    const customer = await customers.getCustomerByEmail(req.session.customer.email);
-    if (customer) {
-      await Customer.updateOne(
-        { email: req.session.customer.email }, 
-        { $push: { orders: newOrderId } } 
-      );
-    }
     
     // Reset cart session to empty after successful order
     req.session.cart = [];
