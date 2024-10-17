@@ -16,7 +16,7 @@ exports.generateGreeting = async (date, name, event) => {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
-                { role: 'user', content: `Create a greeting for ${name} for the event of ${event} happening on ${date}, 40 words max.` }
+                { role: 'user', content: `Create a greeting for ${name} for the event of ${event} happening on ${date}, no more then 40 words.` }
             ],
             max_tokens: 50,
         });
