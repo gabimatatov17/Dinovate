@@ -263,7 +263,7 @@ async function handlePickupOrder(req, res) {
       customerId: customerId,
       cards: cart.map(item => ({
         cardId: item.cardId,
-        greeting: `Enjoy your ${item.cardName}!`
+        greeting: item.greeting
       })),
       totalPrice: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
       shippingAdress: `PICKUP - ${storeAddress}`
