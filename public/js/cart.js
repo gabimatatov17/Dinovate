@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (date && name && event) {
             // Send data to the server to generate the greeting
-            fetch('/greetings/generate-greeting', {
+            fetch('/cart/generate-greeting', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (greeting) {
             // Send the accepted greeting to the backend to save it in the session
-            fetch('/greetings/save-greeting', {
+            fetch('/cart/save-greeting', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,11 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 var myModalEl = document.getElementById('greetingModal');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
+                setTimeout(() => {
+                    location.reload(); 
+                }, 500); 
             })
             .catch(error => console.error('Error:', error));
         } else {
             alert('Please generate a greeting before accepting.');
         }
+        
     });
 
     // Try again (regenerate the greeting)

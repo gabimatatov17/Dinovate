@@ -26,4 +26,8 @@ router.post('/pickup-order', cartController.handlePickupOrder);
 // Route to handle removing unavailble items
 router.post('/clean-cart', cartController.cleanCart);
 
+router.post('/generate-greeting', cartController.generateGreeting);
+router.post('/save-greeting', cartController.saveGreeting);
+
+
 module.exports = router;

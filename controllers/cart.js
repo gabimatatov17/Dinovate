@@ -4,6 +4,7 @@ const Store = require('../models/stores');
 const Customer = require('../models/customers'); 
 const products = require('../models/products'); 
 const customers = require('../services/customers');
+const greetingService = require('../services/greetingService');
 
 const AUTH_ID = process.env.AUTH_ID;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
@@ -30,7 +31,8 @@ async function addToCart(req, res) {
         cardName: cardData.cardName,
         price: cardData.price,
         image: cardData.image_location,
-        quantity: 1
+        quantity: 1,
+        greeting: ''
       });
     } else {
       return res.status(400).json({ success: false, message: "Item not found" });
@@ -261,7 +263,7 @@ async function handlePickupOrder(req, res) {
       customerId: customerId,
       cards: cart.map(item => ({
         cardId: item.cardId,
-        greeting: `Enjoy your ${item.cardName}!`
+        greeting: item.greeting
       })),
       totalPrice: cart.reduce((total, item) => total + (item.price * item.quantity), 0),
       shippingAdress: `PICKUP - ${storeAddress}`
@@ -301,6 +303,41 @@ async function cleanCart(req, res) {
   res.json({ success: true, message: "Cart updated without unavailable items." });
 }
 
+async function generateGreeting (req, res) {
+  const { date, name, event } = req.body;
+
+  try {
+      const greeting = await greetingService.generateGreeting(date, name, event);
+      res.json({ greeting });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error generating the greeting' });
+  }
+};
+
+async function saveGreeting(req, res) {
+  const { cardId, greeting } = req.body;
+
+  if (!req.session.cart) {
+      return res.status(400).json({ success: false, message: "Cart is empty" });
+  }
+
+  const cart = req.session.cart;
+  const item = cart.find(item => item.cardId === parseInt(cardId)); // Find the item in the cart by cardId
+
+  if (item) {
+      // Save the greeting for the specific item
+      item.greeting = greeting;
+
+      // Update the session with the modified cart
+      req.session.cart = cart;
+
+      return res.json({ success: true, message: "Greeting saved to the cart item", cart });
+  } else {
+      return res.status(400).json({ success: false, message: "Item not found in cart" });
+  }
+}
+
 
 
 module.exports = {
@@ -311,5 +348,7 @@ module.exports = {
   validateCartItemsInDB,
   validateAddress,
   handlePickupOrder,
-  cleanCart
+  cleanCart,
+  generateGreeting,
+  saveGreeting
 };
