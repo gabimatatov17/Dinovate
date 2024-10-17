@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardId = this.getAttribute('data-cardid');
             document.getElementById('greetingModal').setAttribute('data-cardid', cardId);  // Attach card ID to the modal
             document.getElementById('greetingDisplay').style.display = 'none';  // Hide previous greeting, if any
+            document.getElementById('greetingDisplayButton').style.display = 'none';  // Hide previous greeting, if any
             var myModal = new bootstrap.Modal(document.getElementById('greetingModal'));
             myModal.show();
         });
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 document.getElementById('generatedGreeting').textContent = data.greeting;
                 document.getElementById('greetingDisplay').style.display = 'block';
+                document.getElementById('greetingDisplayButton').style.display = 'block';
             })
             .catch(error => console.error('Error:', error));
         } else {

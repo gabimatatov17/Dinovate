@@ -55,6 +55,12 @@ body {
     font-size: 16px;
 }
 
+.table-cart td.greeting {
+    max-width: 300px; /* Adjust this width as per your design */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 /* Order Placed Message Styling */
 .order-placed-message {
     display: none;  /* Hidden by default */
