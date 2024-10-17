@@ -41,9 +41,9 @@
                     <thead>
                         <tr>
                             <th>Item</th>
+                            <th>greeting</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th>Subtotal</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -59,16 +59,13 @@
                                                 <button class="newGreetingBtn btn btn-primary" data-cardid="<%= item.cardId %>">New Greeting</button>
                                             </div>
                                         </div>
-                                        <span class="ms-3">
-                                            <%= item.greeting %>
-                                        </span>
+                                    </td>
+                                    <td class="greeting"><%= item.greeting %>
                                     </td>
                                     <td class="cart-price">$<%= item.price.toFixed(2) %>
                                     </td>
                                     <td class="quantity">
                                         <%= item.quantity %>
-                                    </td>
-                                    <td><%= (item.price * item.quantity).toFixed(2) %>
                                     </td>
                                     <td>
                                         <button class="btn btn-secondary add-button"
@@ -186,7 +183,10 @@
                     
                     <!-- Display Greeting Section inside the Modal -->
                     <div id="greetingDisplay" style="display:none;" class="mt-4">
-                        <h3 id="generatedGreeting"></h3>
+                        <h11 id="generatedGreeting"></h11>
+                    </div>
+
+                    <div id="greetingDisplayButton" style="display:none;" class="mt-4">
                         <button class="btn btn-success" id="acceptGreeting">Accept</button>
                         <button class="btn btn-warning" id="tryAgainGreeting">Try Again</button>
                         <button class="btn btn-info" id="editGreeting">Edit Manually</button>
